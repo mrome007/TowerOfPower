@@ -14,10 +14,14 @@ public class DestroyOnContact : MonoBehaviour {
 	
 	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		Debug.Log (other.gameObject.tag);
-		if(other.gameObject.tag == "Enemy" || other.gameObject.tag == "Ground")
-			Destroy (gameObject);
+	void OnCollisionEnter(Collision collision) {
+		Debug.Log("Hit something");
+		GameObject collisionObject = collision.gameObject;
+		if (collisionObject.tag == "Enemy") {
+			Debug.Log ("Collided with enemy");
+			Destroy (collisionObject);
+		}
+		Destroy (this.gameObject);
 	}
+
 }
