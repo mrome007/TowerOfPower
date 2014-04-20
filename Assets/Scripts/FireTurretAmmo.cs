@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireTurretAmmo : MonoBehaviour {
+public class FireTurretAmmo : TurretAmmoBase {
 
 	public float turretAmmoSpeed = 20.0f;
 	public float turretAmmoRange = 20.0f;

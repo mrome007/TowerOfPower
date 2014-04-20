@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurretFireScript : MonoBehaviour {
+public class TurretFireScript : Weapons {
 	public GameObject projectile;
 	public float reloadTime = 0.5f;
 	public float turnSpeed = 100.0f;
 	public float firePauseTime = 0.1f;
 	private Transform target;
+	public float range;
 	public Transform turretsPos;
 	public Transform turretPan;
 	public Transform aimPan;
@@ -77,7 +78,10 @@ public class TurretFireScript : MonoBehaviour {
 			                            Random.Range (turretsPos.position.y - turretAmmoSpawnRange,
 			              							  	turretsPos.position.y + turretAmmoSpawnRange),
 			                            turretsPos.position.z);
-			Instantiate (projectile, spawn, turretsPos.rotation);
+			GameObject theAmmo = (GameObject)Instantiate (projectile, spawn, turretsPos.rotation);
+			FireTurretAmmo fta = theAmmo.GetComponent<FireTurretAmmo>();
+			fta.turretAmmoRange = range;
+			fta.mTheDamage = damage;
 			//MoveCanonBall temp = rotateAmmo.GetComponent<MoveCanonBall>();
 			//temp.transform.LookAt(target);
 			//temp.transform.eulerAngles = new Vector3(0.0f, temp.transform.eulerAngles.y - 30.0f, 0.0f);
