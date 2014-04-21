@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class DestroyOnContact : MonoBehaviour {
+
+	private float mDamage = 100.0f;
 	// Use this for initialization
 	void Start () {
 	
@@ -24,9 +26,13 @@ public class DestroyOnContact : MonoBehaviour {
 				SpawnWaves sw = gc.GetComponent<SpawnWaves>();
 				sw.numEnemiesRemaining--;
 			}
-			Destroy (collisionObject);
-
+			EnemyHealth enemyHealth = collisionObject.GetComponent<EnemyHealth>();
+			enemyHealth.mTheEnemyHealth -= mDamage;
+			if (enemyHealth.mTheEnemyHealth <= 0) {
+				Destroy (collisionObject);
+			}
 		}
+		Destroy (this);
 	}
 
 }

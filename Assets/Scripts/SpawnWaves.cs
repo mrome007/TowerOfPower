@@ -66,7 +66,7 @@ public class SpawnWaves : MonoBehaviour {
 				if(selectEnemy < enemy.Length-1)
 					Instantiate(enemy[selectEnemy], startPoint,Quaternion.identity);
 				else 
-					Instantiate(enemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),0.0f,
+					Instantiate(enemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
 					                                                                   Random.Range(-50,50)),Quaternion.identity);
 				numEnemies--;
 				numEnemiesRemaining++;
