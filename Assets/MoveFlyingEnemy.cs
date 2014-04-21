@@ -35,8 +35,10 @@ public class MoveFlyingEnemy : MonoBehaviour {
 					sw.numEnemiesRemaining--;
 				}
 				Destroy (gameObject);
-
 			}
+		}
+		if (gameObject.transform.position.x <= -100) {
+			Destroy (gameObject);
 		}
 	}
 }
