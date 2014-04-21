@@ -27,7 +27,6 @@ public class DestroyOnContact : MonoBehaviour {
 			Destroy (collisionObject);
 
 		}
-		Destroy (this.gameObject);
 	}
 
 }

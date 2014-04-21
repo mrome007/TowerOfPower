@@ -37,6 +37,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//for the upgrades.
 	private GridForUnits grid;
+
 	// Use this for initialization
 	void Start () 
 	{
