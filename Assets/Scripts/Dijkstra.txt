@@ -1,0 +1,83 @@
+Node* findMinInMap(std::map<Node*,double> temp)
+{
+  Node * s = NULL;
+  double comp = INFINITY;
+  
+  for(std::map<Node*,double>:: iterator it = temp.begin(); it != temp.end(); it++)
+    {
+      if(!it->first->isVisited())
+	{
+	  if(it->second < comp)
+	    s = it->first;
+	  comp = it->second;
+	}
+   
+    }
+ 
+  return s;
+
+}
+
+
+//Follows Dijkstra's algorithm
+double Graph :: GetMinDistance1(string city1, string city2){
+  if(graph->find(city1) != graph->end() && graph->find(city2) != graph->end())
+    {
+      queue<Node*> minVisits;
+      std::map<string,Node*>::iterator it1 = graph->find(city1);
+      std::map<string,Node*>::iterator it2 = graph->find(city2);
+      
+    
+      map<Node*,double> distances;
+      for(std::map<string,Node*>::iterator it = graph->begin(); it != graph->end(); it++)
+	{
+	  distances.insert(pair<Node*,double>(it->second,INFINITY));
+	  it->second->setVisited(0);
+	}
+
+    
+      std::map<Node*,double>::iterator srce = distances.find(it1->second);
+      srce->second = 0;
+      
+      Node * c1 = it1->second;
+      minVisits.push(c1);
+      c1->setVisited(1);
+
+      while(!minVisits.empty())
+	 {
+	   Node * curr = minVisits.front();
+	   for(int i = 0; i < curr->degree(); i++)
+	     {
+	       double currVal = distances.find(curr)->second;
+	       Edge * temp = curr->adjacentsList()->at(i);
+	       Node * neighbor = temp->getNode();
+	       double dist = distances.find(neighbor)->second;
+	       double dist1 = temp->getWeight() + currVal;
+	       if(dist1 < dist)
+		 {
+		   distances.find(neighbor)->second = dist1;
+		 }
+	     }
+	   //std::cout << "===" << distances.find(curr)->second << std::endl;
+	   Node * l = findMinInMap(distances);
+	   std::cout << "===" << distances.find(l)->second << std::endl;
+	   if(l != NULL)
+	     {
+	       l->setVisited(1);
+	       minVisits.push(l);
+	     }
+	   else
+	     {
+	       minVisits.pop();
+	     }
+	 }
+      for(std::map<Node*,double>::iterator it = distances.begin(); it != distances.end(); it++)
+      {
+       cout << it->first->getPayload() << " " << it->second << endl;
+      }
+
+    std::map<Node*,double>::iterator minToCity2 = distances.find(it2->second);
+    return minToCity2->second;
+    }
+  return -1;
+}

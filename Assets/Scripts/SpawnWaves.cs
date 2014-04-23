@@ -36,7 +36,7 @@ public class SpawnWaves : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		//Debug.Log (waveNo);
+		Debug.Log (waveNo);
 		if(waveDuration >= 0.0)
 		{
 			if(enemy.Length > 0)

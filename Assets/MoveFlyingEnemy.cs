@@ -28,16 +28,17 @@ public class MoveFlyingEnemy : MonoBehaviour {
 			transform.Translate(mDirection * mSpeed * Time.deltaTime);
 			if((mTarget.position - transform.position).sqrMagnitude <= 1.0f)
 			{
-				GameObject gc = GameObject.FindGameObjectWithTag("GameController");
-				if(gc)
-				{
-					SpawnWaves sw = gc.GetComponent<SpawnWaves>();
-					sw.numEnemiesRemaining--;
-				}
-				Destroy (gameObject);
+
 			}
 		}
 		if (gameObject.transform.position.x <= -100) {
+			Destroy (gameObject);
+			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
+			if(gc)
+			{
+				SpawnWaves sw = gc.GetComponent<SpawnWaves>();
+				sw.numEnemiesRemaining--;
+			}
 			Destroy (gameObject);
 		}
 	}
