@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Buy_Shoot_Modes : MonoBehaviour {
 
-	private const float TOWER_FIRE_X = -55.0f;
-	private const float TOWER_FIRE_Y = 40.0f;
-	private const float TOWER_FIRE_Z = -5.0f;
+	private const float TOWER_FIRE_X = -80.0f;
+	private const float TOWER_FIRE_Y = 20.0f;
+	private const float TOWER_FIRE_Z = 0.0f;
 
 	private Vector3 TOWER_FIRE_VECTOR = new Vector3(TOWER_FIRE_X, TOWER_FIRE_Y, TOWER_FIRE_Z);
 
@@ -176,11 +176,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				/** Create the cannon shot */
 				FireTowersBasicAmmo cannon = theTower.GetComponent<FireTowersBasicAmmo>();
 				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
-				/** Take the sin of the angle and add it to the y direction */
-				if (Mathf.Sin(fireAngle) != 0) {
-					dir.y -= dir.y * Mathf.Sin(fireAngle);
-				}
 				cannon.dir = dir.normalized;
+				cannon.mAngle = fireAngle;
 			}
 		}
 	}
