@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Buy_Shoot_Modes : MonoBehaviour {
 
@@ -38,10 +39,100 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//for the upgrades.
 	private GridForUnits grid;
 
+
+	//for pathfinding
+	List<GameObject> distances;
+	Queue<GameObject> minVisits;
+	public List<GameObject> thePath;
+	public GameObject findMinInList(List<GameObject> lst)
+	{
+		GameObject temp = null;
+		int compare = 10000;
+		for(int i = 0; i < lst.Count; i++)
+		{
+			GridForUnits gfn = lst[i].GetComponent<GridForUnits>();
+			if(gfn)
+			{
+				if(!gfn.hasBeenVisited)
+				{
+					if(gfn.distance < compare)
+						temp = lst[i];
+					compare = gfn.distance;
+				}
+			}
+		}
+		return temp;
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
-	
+		//make this as a public function to easily use
+		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
+
+		distances = new List<GameObject> ();
+		minVisits = new Queue<GameObject> ();
+		thePath = new List<GameObject> ();
+		foreach(Transform child in walkablePlaneParent.transform)
+		{
+			GridForUnits gfn = child.gameObject.GetComponent<GridForUnits>();
+			gfn.distance = 10000;
+			gfn.hasBeenVisited = false;
+			distances.Add(child.gameObject);
+		}
+		//Debug.Log (distances.Count);
+		GameObject start = GameObject.Find ("UnitsAllowedStart");
+		if(start)
+		{
+			GridForUnits gfnStart = start.GetComponent<GridForUnits> ();
+			gfnStart.distance = 0;
+
+			minVisits.Enqueue(start);
+			gfnStart.hasBeenVisited = true;
+			//Debug.Log(minVisits.Count);
+
+			while(minVisits.Count != 0)
+			{
+				GameObject curr = minVisits.Peek();
+				GridForUnits visitCurr = curr.GetComponent<GridForUnits>();
+				for(int neigh = 0; neigh < visitCurr.nextTo.Length; neigh++)
+				{
+					int currentDist = visitCurr.distance;
+					GridForUnits nodesToVisitGFN = visitCurr.nextTo[neigh].GetComponent<GridForUnits>();
+					int oldDis = nodesToVisitGFN.distance;
+					int newDis = currentDist + 1;
+					if(newDis < oldDis)
+					{
+						nodesToVisitGFN.distance = newDis;
+						nodesToVisitGFN.previous = curr;
+					}
+				}
+				GameObject theMin = findMinInList(distances);
+				if(theMin != null)
+				{
+					GridForUnits theMinGFN = theMin.GetComponent<GridForUnits>();
+					theMinGFN.hasBeenVisited = true;
+					minVisits.Enqueue(theMin);
+				}
+				else
+				{
+					minVisits.Dequeue();
+				}
+			}
+
+			GameObject end = GameObject.Find("UnitsAllowedFinish");
+			if(end)
+			{
+				while(end.name != "UnitsAllowedStart")
+				{
+					thePath.Add(end);
+					GridForUnits gfnEnd = end.GetComponent<GridForUnits>();
+					end = gfnEnd.previous;
+				}
+				thePath.Add(end);
+			}
+			Debug.Log(thePath.Count);
+		}
 	}
 	
 	// Update is called once per frame

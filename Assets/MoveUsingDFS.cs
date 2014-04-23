@@ -4,21 +4,21 @@ using System.Collections.Generic;
 
 public class MoveUsingDFS : MonoBehaviour {
 	
-	public Transform[] wayPoints;
+	//public Transform[] wayPoints;
 	public float walkSpeed = 10.0f;
 	public float turnSpeed = 1.0f;
 	public GameObject mTheStart;
 	// Use this for initialization
 	int i;
 	Vector3 dir;
-	List<Vector3> lst;
-	List<GameObject> visited;
-	Stack<GameObject> stk;
+	//List<Vector3> lst;
+	public List<GameObject> wayPoints;
+	//Stack<GameObject> stk;
 	public Transform rotateEnem;
 	void Start () 
 	{
-	
-		i = 0;
+		i = wayPoints.Count-1;
+		/*
 		mTheStart = GameObject.Find ("UnitsAllowedStart");
 		stk = new Stack<GameObject> ();
 		lst = new List<Vector3> ();
@@ -47,23 +47,23 @@ public class MoveUsingDFS : MonoBehaviour {
 		}
 		dir = lst[0] - transform.position;
 		dir = dir.normalized;
-				  
+		*/		  
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(i < lst.Count)
+		if(i >= 0)
 		{
 			transform.Translate (dir * Time.deltaTime * walkSpeed);
 			//transform.position = Vector3.Lerp(transform.position, wayPoints[i].position, 
 			//Time.deltaTime * walkSpeed);
-			if((transform.position - lst[i]).sqrMagnitude <= 1.0f)
+			if((transform.position - wayPoints[i].transform.position).sqrMagnitude <= 1.0f)
 			{
-				i++;
-				if(i < lst.Count)
+				i--;
+				if(i >= 0)
 				{
-					dir = lst[i] - transform.position;
+					dir = wayPoints[i].transform.position - transform.position;
 					dir = dir.normalized;
 				}
 			}
