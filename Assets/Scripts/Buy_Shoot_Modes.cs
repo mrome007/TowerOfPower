@@ -16,7 +16,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	/** TODO: Replace with int and have constants defining what mode/weapon */
 	private bool buyMode =	 false;
 	private bool shootMode = true;
-	private bool whichWeapon = true;
+	private bool selecting = false;
 
 	private int theWeapon = 0;
 
@@ -44,6 +44,12 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	List<GameObject> distances;
 	Queue<GameObject> minVisits;
 	public List<GameObject> thePath;
+
+
+	//for switching modes by clicking things on the scene
+	private GameObject lastButton;
+	public LayerMask buttonMask;
+	public Material oldButton;
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -67,6 +73,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		theWeapon = 0;
 		//make this as a public function to easily use
 		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
 
@@ -138,6 +145,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		/*
 		if (Input.GetKey (KeyCode.B))
 		{	
 			buyMode = true;
@@ -154,19 +162,47 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				lastPlane = null;
 			}
 		}
-
-		if(buyMode)
+		*/
+		Ray ra = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit ht;
+		if(Physics.Raycast(ra,out ht,1000,buttonMask))
 		{
-			if(Input.GetKey(KeyCode.W))
+			if(lastButton)
+				lastButton.renderer.material = oldButton;
+			lastButton = ht.collider.gameObject;
+			lastButton.renderer.material = hoverMaterial;
+
+		}
+		else
+		{
+			if(lastButton)
+				lastButton.renderer.material = oldButton;
+			lastButton = null;
+		}
+		if(Input.GetMouseButtonDown(0) && lastButton && lastButton.gameObject.tag == "SwitchMode")
+		{
+			shootMode = !shootMode;
+			buyMode = !buyMode;
+			lastButton.renderer.material = oldButton;
+			if(!buyMode)
 			{
-				whichWeapon = false;
-				//theWeapon = 1;
+				if(lastPlane)
+				{
+					lastPlane.renderer.material = oldMaterial;
+					lastPlane = null;
+				}
 			}
-			if(Input.GetKey(KeyCode.T))
-			{
-				whichWeapon = true;
-				//theWeapon = 0;
-			}
+			Debug.Log("hello");
+		}
+		else if(Input.GetMouseButtonDown(0) && lastButton && buyMode)
+		{
+			theWeapon = (theWeapon+1) % weapons.Length;
+			lastButton.renderer.material = oldButton;
+			Debug.Log(theWeapon);
+		}
+
+		if(buyMode && lastButton == null)
+		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray,out hit,1000,buyPlane))
@@ -193,17 +229,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					if(weapons.Length > 0)
 					{
 						Vector3 spawn = lastPlane.transform.position;
-
-						if(!whichWeapon)
-						{
-							//spawn.y+=3.0f;
-							theWeapon = 1;
-						}
-						else
-						{
-							//spawn.y += 6.5f;
-							theWeapon = 0;
-						}
 						GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
 						                                                	Quaternion.identity);
 						//temp.transform.localEulerAngles = new Vector3(0.0f, Random.Range(0,360), 0.0f);
@@ -232,7 +257,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			}
 		}
 
-		if(shootMode)
+		if(shootMode && lastButton == null)
 		{
 			if(Input.GetMouseButtonDown(0))
 			{
