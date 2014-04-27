@@ -16,7 +16,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	/** TODO: Replace with int and have constants defining what mode/weapon */
 	private bool buyMode =	 false;
 	private bool shootMode = true;
-	private bool selecting = false;
+	//private bool selecting = false;
 
 	private int theWeapon = 0;
 
@@ -41,10 +41,12 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 
 	//for pathfinding
-	List<GameObject> distances;
-	Queue<GameObject> minVisits;
+	//List<GameObject> distances;
+	//Queue<GameObject> minVisits;
 	public List<GameObject> thePath;
-
+	public List<GameObject> thePath2;
+	private GameObject start;
+	private GameObject start2;
 
 	//for switching modes by clicking things on the scene
 	private GameObject lastButton;
@@ -70,34 +72,35 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		return temp;
 	}
 
-	// Use this for initialization
-	void Start () 
-	{
-		theWeapon = 0;
-		//make this as a public function to easily use
-		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
 
-		distances = new List<GameObject> ();
-		minVisits = new Queue<GameObject> ();
-		thePath = new List<GameObject> ();
+	public List<GameObject> dijkstraPath(GameObject start)
+	{
+		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
+		
+		List<GameObject> distances = new List<GameObject> ();
+		Queue<GameObject> minVisits = new Queue<GameObject> ();
+		List<GameObject> currPath = new List<GameObject> ();
 		foreach(Transform child in walkablePlaneParent.transform)
 		{
-			GridForUnits gfn = child.gameObject.GetComponent<GridForUnits>();
-			gfn.distance = 10000;
-			gfn.hasBeenVisited = false;
-			distances.Add(child.gameObject);
+			if(child.gameObject.tag != "Taken")
+			{
+				GridForUnits gfn = child.gameObject.GetComponent<GridForUnits>();
+				gfn.distance = 10000;
+				gfn.hasBeenVisited = false;
+				distances.Add(child.gameObject);
+			}
 		}
 		//Debug.Log (distances.Count);
-		GameObject start = GameObject.Find ("UnitsAllowedStart");
+		//start = GameObject.Find ("UnitsAllowedStart");
 		if(start)
 		{
 			GridForUnits gfnStart = start.GetComponent<GridForUnits> ();
 			gfnStart.distance = 0;
-
+			
 			minVisits.Enqueue(start);
 			gfnStart.hasBeenVisited = true;
 			//Debug.Log(minVisits.Count);
-
+			
 			while(minVisits.Count != 0)
 			{
 				GameObject curr = minVisits.Peek();
@@ -126,20 +129,36 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					minVisits.Dequeue();
 				}
 			}
-
+			
 			GameObject end = GameObject.Find("UnitsAllowedFinish");
-			if(end)
+			GridForUnits checkend = end.GetComponent<GridForUnits>();
+			if(end && checkend.hasBeenVisited)
 			{
-				while(end.name != "UnitsAllowedStart")
+				while(end.name != start.gameObject.name)
 				{
-					thePath.Add(end);
+					currPath.Add(end);
 					GridForUnits gfnEnd = end.GetComponent<GridForUnits>();
 					end = gfnEnd.previous;
 				}
-				thePath.Add(end);
+				currPath.Add(end);
 			}
-			Debug.Log(thePath.Count);
+			else
+				currPath = thePath;
+			Debug.Log(currPath.Count);
 		}
+		return currPath;
+	}
+
+	// Use this for initialization
+	void Start () 
+	{
+		theWeapon = 0;
+		//make this as a public function to easily use
+		start = GameObject.Find ("UnitsAllowedStart");
+		thePath = dijkstraPath (start);
+		start2 = GameObject.Find ("UnitsAllowed18");
+		thePath2 = dijkstraPath (start2);
+		Debug.Log (thePath2.Count);
 	}
 	
 	// Update is called once per frame
@@ -235,6 +254,17 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						grid.whatsInside = currWeapon;
 						grid.isAvailable = false;
 						lastPlane.gameObject.tag = "Taken";
+						//GameObject start = GameObject.Find ("UnitsAllowedStart");
+						GameObject theTaken = lastPlane;
+						if(thePath.Contains(theTaken))
+						{
+							thePath = dijkstraPath(start);
+							Debug.Log("Change Paths");
+						}
+						if(thePath2.Contains(theTaken))
+						{
+							thePath2 = dijkstraPath(start2);
+						}
 					}
 				}
 				else
