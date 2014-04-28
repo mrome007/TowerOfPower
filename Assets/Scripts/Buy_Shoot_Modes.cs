@@ -144,7 +144,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			}
 			else
 				currPath = thePath;
-			Debug.Log(currPath.Count);
+			//Debug.Log(currPath.Count);
 		}
 		return currPath;
 	}
@@ -158,7 +158,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		thePath = dijkstraPath (start);
 		start2 = GameObject.Find ("UnitsAllowed18");
 		thePath2 = dijkstraPath (start2);
-		Debug.Log (thePath2.Count);
+		//Debug.Log (thePath2.Count);
 	}
 	
 	// Update is called once per frame
@@ -211,13 +211,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					lastPlane = null;
 				}
 			}
-			Debug.Log("hello");
+			//Debug.Log("hello");
 		}
 		else if(Input.GetMouseButtonDown(0) && lastButton && buyMode)
 		{
 			theWeapon = (theWeapon+1) % weapons.Length;
 			lastButton.renderer.material = oldButton;
-			Debug.Log(theWeapon);
+			//Debug.Log(theWeapon);
 		}
 
 		if(buyMode && lastButton == null)
@@ -259,7 +259,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						if(thePath.Contains(theTaken))
 						{
 							thePath = dijkstraPath(start);
-							Debug.Log("Change Paths");
+							//Debug.Log("Change Paths");
 						}
 						if(thePath2.Contains(theTaken))
 						{
@@ -301,7 +301,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					if(playerPlane.Raycast(ray, out hitdist))
 					{
 						targetPosition = ray.GetPoint(hitdist);
-						Debug.Log(targetPosition);
+						//Debug.Log(targetPosition);
 					}
 				}
 			} else if (Input.GetMouseButtonUp(0)) {

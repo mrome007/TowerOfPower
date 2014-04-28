@@ -11,7 +11,7 @@ public class EnemyHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(mTheEnemyHealth < 0)
+		if(mTheEnemyHealth <= 0)
 		{
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			if(gc)

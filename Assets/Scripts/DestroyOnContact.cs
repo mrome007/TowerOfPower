@@ -19,7 +19,7 @@ public class DestroyOnContact : MonoBehaviour {
 		//Debug.Log("Hit something");
 		GameObject collisionObject = collision.gameObject;
 		if (collisionObject.tag == "Enemy") {
-			//Debug.Log ("Collided with enemy");
+			Debug.Log ("Collided with enemy");
 
 			EnemyHealth enemyHealth = collisionObject.GetComponent<EnemyHealth>();
 			enemyHealth.mTheEnemyHealth -= mDamage;
