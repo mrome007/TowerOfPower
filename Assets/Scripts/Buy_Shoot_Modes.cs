@@ -14,8 +14,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private const float MAX_FIRE_ANGLE = Mathf.PI / 2; /** 45 degrees */
 
 	/** TODO: Replace with int and have constants defining what mode/weapon */
-	private bool buyMode =	 false;
-	private bool shootMode = true;
+	public bool buyMode =	 false;
+	public bool shootMode = true;
 
 	//private bool selecting = false;
 
