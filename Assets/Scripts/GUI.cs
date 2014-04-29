@@ -5,7 +5,7 @@ public class GUI : MonoBehaviour {
 
 	string button1Text = "BUILD TOWER" ;
 	string button2Text = "BUILD WALL" ;
-
+	
 	void OnGUI () 
 	{
 		if (UnityEngine.GUI.Button (new Rect (10, 600, 105, 50), button1Text))
