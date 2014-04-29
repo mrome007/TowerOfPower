@@ -26,11 +26,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private Vector3 targetPosition;
 
 	private GameObject lastPlane;
-	private GameObject theTower;
+	private GameObject towerAmmo;
 
 	public Material oldMaterial;
 	public Material hoverMaterial;
-	
+
 	public LayerMask buyPlane;
 	
 	public GameObject[] weapons;
@@ -52,6 +52,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private GameObject lastButton;
 	public LayerMask buttonMask;
 	public Material oldButton;
+
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -71,7 +72,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		}
 		return temp;
 	}
-
 
 	public List<GameObject> dijkstraPath(GameObject start)
 	{
@@ -289,6 +289,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 		if(shootMode && lastButton == null)
 		{
+			GameObject theTower = GameObject.FindGameObjectWithTag("TheTower");	
+			float fireRate = theTower.GetComponent<TowerStats>().mFireRate;
+			float lastFired = theTower.GetComponent<TowerStats>().mLastFired;
+			int playerHealth = theTower.GetComponent<TowerStats>().mHealth;
 			if(Input.GetMouseButtonDown(0))
 			{
 				if(towerWeapons.Length > 0)
@@ -304,7 +308,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						//Debug.Log(targetPosition);
 					}
 				}
-			} else if (Input.GetMouseButtonUp(0)) {
+			} else if (Input.GetMouseButtonUp(0) && Time.time - lastFired >= fireRate && playerHealth > 0) {
 				mReleaseY = Input.mousePosition.y;
 				/** Calculate the delta Y position of the mouse and get the angle */
 				float maxAngleScreenRatio = Screen.height / 2;
@@ -316,14 +320,15 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				}
 				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
 				/** Get the tower */
-				theTower = (GameObject)Instantiate(towerWeapons[0], 
+				towerAmmo = (GameObject)Instantiate(towerWeapons[0], 
 				                                   TOWER_FIRE_VECTOR,
 				                                   Quaternion.identity);
 				/** Create the cannon shot */
-				FireTowersBasicAmmo cannon = theTower.GetComponent<FireTowersBasicAmmo>();
+				FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
 				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
 				cannon.dir = dir.normalized;
 				cannon.mAngle = fireAngle;
+				theTower.GetComponent<TowerStats>().mLastFired = Time.time;
 			}
 		}
 	}
