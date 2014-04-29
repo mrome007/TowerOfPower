@@ -52,6 +52,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private GameObject lastButton;
 	public LayerMask buttonMask;
 	public Material oldButton;
+
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -71,7 +72,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		}
 		return temp;
 	}
-
 
 	public List<GameObject> dijkstraPath(GameObject start)
 	{
