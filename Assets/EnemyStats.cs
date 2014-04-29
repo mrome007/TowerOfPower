@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyHealth : MonoBehaviour {
-	public float mTheEnemyHealth = 100.0f;
+public class EnemyStats : MonoBehaviour {
+	public float mHealth = 100.0f;
+	public int mScore;
+	public int mResources;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -11,7 +14,7 @@ public class EnemyHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(mTheEnemyHealth <= 0)
+		if(mHealth <= 0)
 		{
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			if(gc)
@@ -19,8 +22,11 @@ public class EnemyHealth : MonoBehaviour {
 				SpawnWaves sw = gc.GetComponent<SpawnWaves>();
 				sw.numEnemiesRemaining--;
 			}
+			GameObject theTower = GameObject.FindGameObjectWithTag("TheTower");
+			TowerStats towerStats = theTower.GetComponent<TowerStats>();
+			towerStats.mScore += mScore;
+			towerStats.mResources += mResources;
 			Destroy (gameObject);
-			
 		}
 	}
 
@@ -31,9 +37,7 @@ public class EnemyHealth : MonoBehaviour {
 			Destroy (other.gameObject);
 			TurretAmmoBase getAmmoInfo = other.gameObject.GetComponent<TurretAmmoBase>();
 			float damageRate = getAmmoInfo.mTheDamage;
-			if(mTheEnemyHealth >= 0)
-				mTheEnemyHealth -= damageRate;
+			mHealth -= damageRate;
 		}
-
 	}
 }
