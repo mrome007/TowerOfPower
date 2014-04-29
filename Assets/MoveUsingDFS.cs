@@ -53,6 +53,49 @@ public class MoveUsingDFS : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		GameObject gct = GameObject.FindGameObjectWithTag ("GameController");
+		if(gct)
+		{
+			Buy_Shoot_Modes bsm = gct.GetComponent<Buy_Shoot_Modes>();
+			if(bsm.thePathsHaveChanged)
+			{
+				if(wayPoints.Contains(bsm.theTaken))
+				{
+					int currI = wayPoints.IndexOf(bsm.theTaken);
+					Debug.Log (currI);
+					if(currI <= i)
+					{
+						wayPoints = bsm.dijkstraPath(wayPoints[i]);
+						//Debug.Log (wayPoints.Count);
+						i = wayPoints.Count-1;
+						dir = wayPoints[i].transform.position - transform.position;
+						dir = dir.normalized;
+					}
+					//Debug.Log ("change it");
+				}
+			}
+			/*
+			if(bsm.thePathsHaveChanged1)
+			{
+				if(wayPoints.Contains(bsm.theTaken))
+				{
+					int currI = wayPoints.IndexOf(bsm.theTaken);
+					Debug.Log ("hello");
+					if(currI <= i)
+					{
+						wayPoints = bsm.dijkstraPath(wayPoints[i]);
+						//Debug.Log (wayPoints.Count);
+						i = wayPoints.Count-1;
+						dir = wayPoints[i].transform.position - transform.position;
+						dir = dir.normalized;
+					}
+					//Debug.Log ("change it");
+				}
+			}
+			*/
+			//bsm.thePathsHaveChanged = false;
+
+		}
 		if(i >= 0)
 		{
 			transform.Translate (dir * Time.deltaTime * walkSpeed);

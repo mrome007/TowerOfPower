@@ -16,6 +16,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	/** TODO: Replace with int and have constants defining what mode/weapon */
 	private bool buyMode =	 false;
 	private bool shootMode = true;
+
 	//private bool selecting = false;
 
 	private int theWeapon = 0;
@@ -47,6 +48,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public List<GameObject> thePath2;
 	private GameObject start;
 	private GameObject start2;
+	public bool thePathsHaveChanged = false;
+	public bool thePathsHaveChanged1 = false;
+	public GameObject theTaken;
 
 	//for switching modes by clicking things on the scene
 	private GameObject lastButton;
@@ -108,14 +112,18 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				for(int neigh = 0; neigh < visitCurr.nextTo.Length; neigh++)
 				{
 					int currentDist = visitCurr.distance;
-					GridForUnits nodesToVisitGFN = visitCurr.nextTo[neigh].GetComponent<GridForUnits>();
-					int oldDis = nodesToVisitGFN.distance;
-					int newDis = currentDist + 1;
-					if(newDis < oldDis)
+					if(visitCurr.isAvailable)
 					{
-						nodesToVisitGFN.distance = newDis;
-						nodesToVisitGFN.previous = curr;
+						GridForUnits nodesToVisitGFN = visitCurr.nextTo[neigh].GetComponent<GridForUnits>();
+						int oldDis = nodesToVisitGFN.distance;
+						int newDis = currentDist + 1;
+						if(newDis < oldDis)
+						{
+							nodesToVisitGFN.distance = newDis;
+							nodesToVisitGFN.previous = curr;
+						}
 					}
+
 				}
 				GameObject theMin = findMinInList(distances);
 				if(theMin != null)
@@ -164,6 +172,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (thePathsHaveChanged)
+			thePathsHaveChanged = false;
+		if(thePathsHaveChanged1)
+			thePathsHaveChanged1 = false;
 		/*
 		if (Input.GetKey (KeyCode.B))
 		{	
@@ -211,13 +223,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					lastPlane = null;
 				}
 			}
-			//Debug.Log("hello");
+			Debug.Log("SWITCH");
 		}
 		else if(Input.GetMouseButtonDown(0) && lastButton && buyMode)
 		{
 			theWeapon = (theWeapon+1) % weapons.Length;
 			lastButton.renderer.material = oldButton;
-			//Debug.Log(theWeapon);
+			Debug.Log(theWeapon);
 		}
 
 		if(buyMode && lastButton == null)
@@ -255,16 +267,21 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						grid.isAvailable = false;
 						lastPlane.gameObject.tag = "Taken";
 						//GameObject start = GameObject.Find ("UnitsAllowedStart");
-						GameObject theTaken = lastPlane;
+						theTaken = lastPlane;
+						theTaken.gameObject.tag = "Taken";
+						thePathsHaveChanged = true;
 						if(thePath.Contains(theTaken))
 						{
 							thePath = dijkstraPath(start);
+							//thePathsHaveChanged = true;
 							//Debug.Log("Change Paths");
 						}
 						if(thePath2.Contains(theTaken))
 						{
 							thePath2 = dijkstraPath(start2);
+							//thePathsHaveChanged1 = true;
 						}
+						//thePathsHaveChanged = false;
 					}
 				}
 				else
