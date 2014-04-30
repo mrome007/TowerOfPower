@@ -25,6 +25,7 @@ public class DestroyOnContact : MonoBehaviour {
 			Destroy (this);
 		}
 
+	
 	}
 
 }
