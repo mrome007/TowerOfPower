@@ -22,8 +22,9 @@ public class DestroyOnContact : MonoBehaviour {
 
 			EnemyStats enemyStats = collisionObject.GetComponent<EnemyStats>();
 			enemyStats.mHealth -= mDamage;
+			Destroy (this);
 		}
-		Destroy (this);
+
 	}
 
 }
