@@ -63,9 +63,9 @@ public class MoveUsingDFS : MonoBehaviour {
 				{
 					int currI = wayPoints.IndexOf(bsm.theTaken);
 					Debug.Log (currI);
-					if(currI <= i)
+					if(currI < i)
 					{
-						wayPoints = bsm.dijkstraPath(wayPoints[i]);
+						wayPoints = bsm.dijkstraPath(wayPoints[i],wayPoints);
 						//Debug.Log (wayPoints.Count);
 						i = wayPoints.Count-1;
 						dir = wayPoints[i].transform.position - transform.position;

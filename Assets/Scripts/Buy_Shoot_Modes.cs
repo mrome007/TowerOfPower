@@ -77,7 +77,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		return temp;
 	}
 
-	public List<GameObject> dijkstraPath(GameObject start)
+	public List<GameObject> dijkstraPath(GameObject start, List<GameObject>paths)
 	{
 		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
 		
@@ -151,7 +151,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				currPath.Add(end);
 			}
 			else
-				currPath = thePath;
+				currPath = paths;
 			//Debug.Log(currPath.Count);
 		}
 		return currPath;
@@ -163,9 +163,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		theWeapon = 0;
 		//make this as a public function to easily use
 		start = GameObject.Find ("UnitsAllowedStart");
-		thePath = dijkstraPath (start);
+		thePath = dijkstraPath (start,thePath);
 		start2 = GameObject.Find ("UnitsAllowed18");
-		thePath2 = dijkstraPath (start2);
+		thePath2 = dijkstraPath (start2,thePath2);
 		//Debug.Log (thePath2.Count);
 	}
 	
@@ -272,13 +272,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						thePathsHaveChanged = true;
 						if(thePath.Contains(theTaken))
 						{
-							thePath = dijkstraPath(start);
+							thePath = dijkstraPath(start,thePath);
 							//thePathsHaveChanged = true;
 							//Debug.Log("Change Paths");
 						}
 						if(thePath2.Contains(theTaken))
 						{
-							thePath2 = dijkstraPath(start2);
+							thePath2 = dijkstraPath(start2,thePath2);
 							//thePathsHaveChanged1 = true;
 						}
 						//thePathsHaveChanged = false;
