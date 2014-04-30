@@ -17,11 +17,16 @@ public class TowerStats : MonoBehaviour {
 		mHealth = MAX_HEALTH;
 		mFireRate = 0.5f;
 		mLastFired = 0.0f;
+		mResources = 800;
+		//Debug.Log (mResources);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (mHealth <= 0) {
+			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
+			Buy_Shoot_Modes bsm = gc.GetComponent<Buy_Shoot_Modes>();
+			bsm.gameover = true;
 			GameObject[] towerPieces = GameObject.FindGameObjectsWithTag("TowerPiece");
 			for (int i = 0; i < towerPieces.Length; ++i) {
 				GameObject towerPiece = towerPieces[i];
@@ -48,6 +53,9 @@ public class TowerStats : MonoBehaviour {
 			healthGUI.GetComponent<TowerHealthBar>().ChangeHealth(-1);
 			mHealth--;
 			Destroy (collisionObject);
+			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
+			SpawnWaves sw = gc.GetComponent<SpawnWaves>();
+			sw.numEnemiesRemaining--;
 			Debug.Log(mHealth);
 		}
 	}

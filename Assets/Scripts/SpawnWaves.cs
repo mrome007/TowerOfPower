@@ -9,7 +9,7 @@ public class SpawnWaves : MonoBehaviour {
 	public float waveDuration = 90.0f;
 	private int initEnemies = 8;
 	public int numEnemies = 0;
-	int waveNo = 1;
+	public int waveNo = 1;
 
 	private float spawnTime = 2.0f;
 	private float outSpawnTime = 3.0f;
@@ -32,6 +32,7 @@ public class SpawnWaves : MonoBehaviour {
 		Debug.Log (waveNo);
 		numEnemies = initEnemies;
 		selectEnemy = Random.Range(0,enemy.Length);
+		numEnemiesRemaining = 0;
 		newEnem = numEnemies / 2;
 		newEnem1 = numEnemies / 2;
 		theGC = GameObject.Find ("GameController");
@@ -56,6 +57,8 @@ public class SpawnWaves : MonoBehaviour {
 			waveTime += 20.0f;
 			waveDuration = waveTime;
 			spawnDuration = endOfWaveBreak;
+			outsideSpawnDuration = endOfWaveBreak;
+			outsideSpawnDuration1 = endOfWaveBreak;
 			initEnemies += 4;
 			numEnemies = initEnemies;
 			newEnem = numEnemies/2;
@@ -114,7 +117,7 @@ public class SpawnWaves : MonoBehaviour {
 			}
 		}
 		//i'll clean this up later and make it a function
-		if(waveNo == 1 || waveNo % 4 == 0)
+		if(waveNo == 1 || waveNo % 3 == 0)
 		{
 			if(newEnem1 > 0)
 			{

@@ -19,7 +19,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//private bool selecting = false;
 
-	private int theWeapon = 0;
+	public int theWeapon = 0;
 
 	private float mClickY;
 	private float mReleaseY;
@@ -49,7 +49,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private GameObject start;
 	private GameObject start2;
 	public bool thePathsHaveChanged = false;
-	public bool thePathsHaveChanged1 = false;
 	public GameObject theTaken;
 
 	//for switching modes by clicking things on the scene
@@ -57,6 +56,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public LayerMask buttonMask;
 	public Material oldButton;
 
+
+	//for gameover
+	public bool gameover;
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -160,13 +162,15 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		gameover = false;
 		theWeapon = 0;
+		thePathsHaveChanged = false;
 		//make this as a public function to easily use
 		start = GameObject.Find ("UnitsAllowedStart");
 		thePath = dijkstraPath (start,thePath);
 		start2 = GameObject.Find ("UnitsAllowed18");
 		thePath2 = dijkstraPath (start2,thePath2);
-		//Debug.Log (thePath2.Count);
+		//Debug.Log ("START");
 	}
 	
 	// Update is called once per frame
@@ -174,8 +178,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	{
 		if (thePathsHaveChanged)
 			thePathsHaveChanged = false;
-		if(thePathsHaveChanged1)
-			thePathsHaveChanged1 = false;
 		/*
 		if (Input.GetKey (KeyCode.B))
 		{	
@@ -194,6 +196,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			}
 		}
 		*/
+		/*
 		Ray ra = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit ht;
 		if(Physics.Raycast(ra,out ht,1000,buttonMask))
@@ -231,8 +234,15 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			lastButton.renderer.material = oldButton;
 			Debug.Log(theWeapon);
 		}
+		*/
+		if(gameover)
+		{
+			SpawnWaves sw = gameObject.GetComponent<SpawnWaves>();
+			sw.waveDuration = -1.0f;
+			sw.numEnemiesRemaining = 1000;
 
-		if(buyMode && lastButton == null)
+		}
+		if(buyMode && !gameover)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
@@ -259,27 +269,35 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				{
 					if(weapons.Length > 0)
 					{
-						Vector3 spawn = lastPlane.transform.position;
-						GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
+						int costToBuy = weapons[theWeapon].GetComponent<Weapons>().cost;
+						GameObject twr = GameObject.FindGameObjectWithTag("TheTower");
+						int resource = twr.GetComponent<TowerStats>().mResources;
+						Debug.Log(resource);
+						if((resource - costToBuy) >= 0)
+						{
+							twr.GetComponent<TowerStats>().mResources -= costToBuy;
+							Vector3 spawn = lastPlane.transform.position;
+							GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
 						                                                	Quaternion.identity);
-						//temp.transform.localEulerAngles = new Vector3(0.0f, Random.Range(0,360), 0.0f);
-						grid.whatsInside = currWeapon;
-						grid.isAvailable = false;
-						lastPlane.gameObject.tag = "Taken";
-						//GameObject start = GameObject.Find ("UnitsAllowedStart");
-						theTaken = lastPlane;
-						theTaken.gameObject.tag = "Taken";
-						thePathsHaveChanged = true;
-						if(thePath.Contains(theTaken))
-						{
-							thePath = dijkstraPath(start,thePath);
-							//thePathsHaveChanged = true;
-							//Debug.Log("Change Paths");
-						}
-						if(thePath2.Contains(theTaken))
-						{
-							thePath2 = dijkstraPath(start2,thePath2);
-							//thePathsHaveChanged1 = true;
+							//temp.transform.localEulerAngles = new Vector3(0.0f, Random.Range(0,360), 0.0f);
+							grid.whatsInside = currWeapon;
+							grid.isAvailable = false;
+							lastPlane.gameObject.tag = "Taken";
+							//GameObject start = GameObject.Find ("UnitsAllowedStart");
+							theTaken = lastPlane;
+							theTaken.gameObject.tag = "Taken";
+							thePathsHaveChanged = true;
+							if(thePath.Contains(theTaken))
+							{
+								thePath = dijkstraPath(start,thePath);
+								//thePathsHaveChanged = true;
+								//Debug.Log("Change Paths");
+							}
+							if(thePath2.Contains(theTaken))
+							{
+								thePath2 = dijkstraPath(start2,thePath2);
+								//thePathsHaveChanged1 = true;
+							}
 						}
 						//thePathsHaveChanged = false;
 					}
@@ -292,19 +310,26 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						GameObject whatToUpgrade = getUpgrade.upgradeIt;
 						if(whatToUpgrade != null)
 						{
-							Vector3 tempPos = getUpgrade.transform.position;
-							Quaternion tempRot = getUpgrade.transform.rotation;
-							Destroy(getUpgrade.gameObject);
-							GameObject currWeapon = (GameObject)Instantiate(whatToUpgrade, 
+							int costToBuy = whatToUpgrade.GetComponent<Weapons>().cost;
+							GameObject twr = GameObject.FindGameObjectWithTag("TheTower");
+							int resource = twr.GetComponent<TowerStats>().mResources;
+							if(resource - costToBuy >= 0)
+							{
+								twr.GetComponent<TowerStats>().mResources -= costToBuy;
+								Vector3 tempPos = getUpgrade.transform.position;
+								Quaternion tempRot = getUpgrade.transform.rotation;
+								Destroy(getUpgrade.gameObject);
+								GameObject currWeapon = (GameObject)Instantiate(whatToUpgrade, 
 							                                                tempPos, tempRot);
-							grid.whatsInside = currWeapon;
+								grid.whatsInside = currWeapon;
+							}
 						}
 					}
 				}
 			}
 		}
 
-		if(shootMode && lastButton == null)
+		if(shootMode && !gameover)
 		{
 			GameObject theTower = GameObject.FindGameObjectWithTag("TheTower");	
 			float fireRate = theTower.GetComponent<TowerStats>().mFireRate;

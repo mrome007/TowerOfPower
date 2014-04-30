@@ -36,5 +36,7 @@ public class TowerHealthBar : MonoBehaviour {
 	void OnGUI()
 	{
 		UnityEngine.GUI.Box (new Rect(10,10, healthLength, 20), curHealth + "/" + maxHealth);
+		UnityEngine.GUI.Box (new Rect (550, 10, 150, 20), 
+		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources);
 	}
 }
