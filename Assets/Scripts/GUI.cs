@@ -16,6 +16,7 @@ public class GUI : MonoBehaviour {
 			{
 				mode.GetComponent<Buy_Shoot_Modes>().shootMode = false ;
 				mode.GetComponent<Buy_Shoot_Modes>().buyMode = true ;
+				mode.GetComponent<Buy_Shoot_Modes>().theWeapon = 0;
 				button1Text = "ARM WEAPON" ;
 			}
 			else if( mode.GetComponent<Buy_Shoot_Modes>().buyMode == true)
