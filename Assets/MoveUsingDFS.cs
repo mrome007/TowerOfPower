@@ -17,6 +17,7 @@ public class MoveUsingDFS : MonoBehaviour {
 	public Transform rotateEnem;
 	void Start () 
 	{
+		walkSpeed = gameObject.GetComponent<EnemyStats> ().mSpeed;
 		i = wayPoints.Count-1;
 		/*
 		mTheStart = GameObject.Find ("UnitsAllowedStart");
@@ -59,12 +60,14 @@ public class MoveUsingDFS : MonoBehaviour {
 			Buy_Shoot_Modes bsm = gct.GetComponent<Buy_Shoot_Modes>();
 			if(bsm.thePathsHaveChanged)
 			{
+				//wayPoints = bsm.thePath;
 				if(wayPoints.Contains(bsm.theTaken))
 				{
 					int currI = wayPoints.IndexOf(bsm.theTaken);
-					Debug.Log (currI);
+					//Debug.Log (currI);
 					if(currI < i)
 					{
+					
 						wayPoints = bsm.dijkstraPath(wayPoints[i],wayPoints);
 						//Debug.Log (wayPoints.Count);
 						i = wayPoints.Count-1;
@@ -98,6 +101,7 @@ public class MoveUsingDFS : MonoBehaviour {
 		}
 		if(i >= 0)
 		{
+			walkSpeed = gameObject.GetComponent<EnemyStats>().mSpeed;
 			transform.Translate (dir * Time.deltaTime * walkSpeed);
 			//transform.position = Vector3.Lerp(transform.position, wayPoints[i].position, 
 			//Time.deltaTime * walkSpeed);

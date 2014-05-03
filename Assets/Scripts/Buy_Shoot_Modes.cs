@@ -83,9 +83,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	{
 		GameObject walkablePlaneParent = GameObject.Find ("UnitsApproved");
 		
-		List<GameObject> distances = new List<GameObject> ();
-		Queue<GameObject> minVisits = new Queue<GameObject> ();
+		//List<GameObject> distances = new List<GameObject> ();
+		//Queue<GameObject> minVisits = new Queue<GameObject> ();
 		List<GameObject> currPath = new List<GameObject> ();
+		BinaryHeap bhp = new BinaryHeap (200);
 		foreach(Transform child in walkablePlaneParent.transform)
 		{
 			if(child.gameObject.tag != "Taken")
@@ -93,7 +94,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				GridForUnits gfn = child.gameObject.GetComponent<GridForUnits>();
 				gfn.distance = 10000;
 				gfn.hasBeenVisited = false;
-				distances.Add(child.gameObject);
+				//distances.Add(child.gameObject);
 			}
 		}
 		//Debug.Log (distances.Count);
@@ -103,14 +104,20 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			GridForUnits gfnStart = start.GetComponent<GridForUnits> ();
 			gfnStart.distance = 0;
 			
-			minVisits.Enqueue(start);
+			//minVisits.Enqueue(start);
 			gfnStart.hasBeenVisited = true;
+			bhp.add(start);
+			//Debug.Log("bhp size: " + bhp.reserved);
 			//Debug.Log(minVisits.Count);
 			
-			while(minVisits.Count != 0)
+			while(!bhp.empty())//minVisits.Count != 0)
 			{
-				GameObject curr = minVisits.Peek();
+				GameObject curr = bhp.extractMin();//minVisits.Peek();
+				//if(!curr)
+				//	Debug.Log ("hello");
+				//Debug.Log (curr.GetComponent<GridForUnits>().distance);
 				GridForUnits visitCurr = curr.GetComponent<GridForUnits>();
+				visitCurr.hasBeenVisited = true;
 				for(int neigh = 0; neigh < visitCurr.nextTo.Length; neigh++)
 				{
 					int currentDist = visitCurr.distance;
@@ -123,10 +130,12 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						{
 							nodesToVisitGFN.distance = newDis;
 							nodesToVisitGFN.previous = curr;
+							bhp.add (visitCurr.nextTo[neigh]);
 						}
 					}
 
 				}
+				/*
 				GameObject theMin = findMinInList(distances);
 				if(theMin != null)
 				{
@@ -137,7 +146,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				else
 				{
 					minVisits.Dequeue();
-				}
+				}*/
 			}
 			
 			GameObject end = GameObject.Find("UnitsAllowedFinish");
@@ -156,6 +165,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				currPath = paths;
 			//Debug.Log(currPath.Count);
 		}
+		Debug.Log (currPath.Count);
 		return currPath;
 	}
 
@@ -172,12 +182,16 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		thePath2 = dijkstraPath (start2,thePath2);
 		//Debug.Log ("START");
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () 
 	{
 		if (thePathsHaveChanged)
+		{
 			thePathsHaveChanged = false;
+			//thePathsHaveChanged = false;
+		}
 		/*
 		if (Input.GetKey (KeyCode.B))
 		{	

@@ -5,6 +5,7 @@ public class EnemyStats : MonoBehaviour {
 	public float mHealth = 100.0f;
 	public int mScore;
 	public int mResources;
+	public float mSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +39,14 @@ public class EnemyStats : MonoBehaviour {
 			TurretAmmoBase getAmmoInfo = other.gameObject.GetComponent<TurretAmmoBase>();
 			float damageRate = getAmmoInfo.mTheDamage;
 			mHealth -= damageRate;
+		}
+		if(other.gameObject.tag == "slowAmmo")
+		{
+			if(mSpeed - other.gameObject.GetComponent<FireSlowField>().mDamage > 1.0f)
+				mSpeed -= other.gameObject.GetComponent<FireSlowField>().mDamage;
+			else
+				mSpeed = 1.0f;
+			//Debug.Log ("SLOW");
 		}
 	}
 }
