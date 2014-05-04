@@ -13,6 +13,7 @@ Vector3 dir;
 public Transform rotateEnem;
 void Start () 
 {
+	walkSpeed = gameObject.GetComponent<EnemyStats>().mSpeed;
 	i = 0;
 	if(i < wayPoints.Length)
 	{
@@ -28,6 +29,7 @@ void Update ()
 	{
 		//dir = wayPoints[i].position - transform.position;
 		//dir = dir.normalized;
+		walkSpeed = gameObject.GetComponent<EnemyStats>().mSpeed;
 		transform.Translate (dir * Time.deltaTime * walkSpeed);
 		//transform.position = Vector3.Lerp(transform.position, wayPoints[i].position, 
 		//Time.deltaTime * walkSpeed);

@@ -9,26 +9,33 @@ public class SpawnWaves : MonoBehaviour {
 	public float waveDuration = 90.0f;
 	private int initEnemies = 8;
 	public int numEnemies = 0;
-	int waveNo = 1;
+	public int waveNo = 1;
 
 	private float spawnTime = 2.0f;
 	private float outSpawnTime = 3.0f;
 	private float waveTime = 90.0f;
-	private float endOfWaveBreak = 20.0f;
+	private float endOfWaveBreak = 10.0f;
 	public int numEnemiesRemaining = 0;
 	//GameObject theEnemy;
 	MoveEnemyUsingWayPoints moveIt;
 	int newEnem = 0;
+	int newEnem1 = 0;
+	public float outsideSpawnDuration1 = 4.0f;
+	private float outSpawnTime1 = 4.0f;
 	Vector3 startPoint = new Vector3(58.5f, 0.0f, -24.4f);
 	// Use this for initialization
 	int count;
 	int selectEnemy;
+	GameObject theGC;
 	void Start ()
 	{
 		Debug.Log (waveNo);
 		numEnemies = initEnemies;
 		selectEnemy = Random.Range(0,enemy.Length);
+		numEnemiesRemaining = 0;
 		newEnem = numEnemies / 2;
+		newEnem1 = numEnemies / 2;
+		theGC = GameObject.Find ("GameController");
 	}
 	
 	// Update is called once per frame
@@ -45,14 +52,17 @@ public class SpawnWaves : MonoBehaviour {
 		}
 		else if(waveDuration < 0.0f && numEnemiesRemaining == 0)
 		{
-			Debug.Log(waveNo);
+
 			waveNo++;
 			waveTime += 20.0f;
 			waveDuration = waveTime;
 			spawnDuration = endOfWaveBreak;
+			outsideSpawnDuration = endOfWaveBreak;
+			outsideSpawnDuration1 = endOfWaveBreak;
 			initEnemies += 4;
 			numEnemies = initEnemies;
 			newEnem = numEnemies/2;
+			Debug.Log(waveNo);
 		}
 	}
 
@@ -90,8 +100,11 @@ public class SpawnWaves : MonoBehaviour {
 				if(outsideSpawnDuration <= 0.0f)
 				{
 					newEnem--;
-					Instantiate(enemyOut, new Vector3(95.0f,0.0f,15.0f), 
+					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+					GameObject eO = (GameObject)Instantiate(enemyOut, new Vector3(95.0f,0.0f,15.0f), 
 			                                   Quaternion.identity);
+					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
+					mud.wayPoints = bsm.thePath;
 					numEnemiesRemaining++;
 					outsideSpawnDuration = outSpawnTime;
 				}
@@ -103,6 +116,31 @@ public class SpawnWaves : MonoBehaviour {
 				outsideSpawnDuration = 7.0f;
 			}
 		}
+		//i'll clean this up later and make it a function
+		if(waveNo == 1 || waveNo % 3 == 0)
+		{
+			if(newEnem1 > 0)
+			{
+				if(outsideSpawnDuration1 <= 0.0f)
+				{
+					newEnem1--;
+					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+					GameObject eO = (GameObject)Instantiate(enemyOut, new Vector3(95.0f,0.0f,-45.0f), 
+					                                        Quaternion.identity);
+					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
+					mud.wayPoints = bsm.thePath2;
+					numEnemiesRemaining++;
+					outsideSpawnDuration1 = outSpawnTime1;
+				}
+				outsideSpawnDuration1 -= Time.deltaTime;
+			}
+			else
+			{
+				newEnem1 = initEnemies/2;
+				outsideSpawnDuration1 = 7.0f;
+			}
+		}
+
 
 	}
 
