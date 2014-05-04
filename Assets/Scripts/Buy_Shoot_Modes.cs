@@ -264,9 +264,14 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			{
 				if(lastPlane)
 					lastPlane.renderer.material = oldMaterial;
-				lastPlane = hit.collider.gameObject;
+				if(hit.collider.gameObject.tag != "Enemy")
+				{
+					lastPlane = hit.collider.gameObject;
 				//oldMaterial = lastPlane.renderer.material;
-				lastPlane.renderer.material = hoverMaterial;
+					lastPlane.renderer.material = hoverMaterial;
+				}
+				else
+					lastPlane = null;
 			}
 			else
 			{
