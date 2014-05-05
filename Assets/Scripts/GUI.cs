@@ -31,7 +31,9 @@ public class GUI : MonoBehaviour {
 			GameObject mode = GameObject.FindGameObjectWithTag("GameController");
 			Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes>();
 			if(sel.buyMode)
+			{
 				sel.theWeapon = (sel.theWeapon + 1) % sel.weapons.Length;
+			}
 			
 		}
 		GameObject md = GameObject.FindGameObjectWithTag ("GameController");
