@@ -62,6 +62,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//for gameover
 	public bool gameover;
+
+	//checking if everything is blocked;
+	public bool allPathsBlocked = false;
+	List<GameObject> dummyPaths = new List<GameObject>();
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -163,9 +167,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					end = gfnEnd.previous;
 				}
 				currPath.Add(end);
+				allPathsBlocked = false;
 			}
 			else
+			{
 				currPath = paths;
+				allPathsBlocked = true;
+			}
 			//Debug.Log(currPath.Count);
 		}
 		Debug.Log (currPath.Count);
@@ -195,6 +203,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			thePathsHaveChanged = false;
 			//thePathsHaveChanged = false;
 		}
+		//if(allPathsBlocked)
+		//{
+		//	allPathsBlocked = false;
+		//}
 		/*
 		if (Input.GetKey (KeyCode.B))
 		{	
@@ -309,38 +321,53 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				if(grid.isAvailable)
 				{
 					if(weapons.Length > 0)
-					{
-						int costToBuy = weapons[theWeapon].GetComponent<Weapons>().cost;
-						GameObject twr = GameObject.FindGameObjectWithTag("TheTower");
-						int resource = twr.GetComponent<TowerStats>().mResources;
-						Debug.Log(resource);
-						if((resource - costToBuy) >= 0)
+					{	
+						lastPlane.gameObject.tag = "Taken";
+						grid.isAvailable = false;
+						//theTaken.gameObject.tag = "Taken";
+						dijkstraPath(start,dummyPaths);
+						Debug.Log (allPathsBlocked);
+						if(!allPathsBlocked)
 						{
-							twr.GetComponent<TowerStats>().mResources -= costToBuy;
-							Vector3 spawn = lastPlane.transform.position;
-							GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
+							int costToBuy = weapons[theWeapon].GetComponent<Weapons>().cost;
+							GameObject twr = GameObject.FindGameObjectWithTag("TheTower");
+							int resource = twr.GetComponent<TowerStats>().mResources;
+							Debug.Log(resource);
+							if((resource - costToBuy) >= 0)
+							{
+								twr.GetComponent<TowerStats>().mResources -= costToBuy;
+								Vector3 spawn = lastPlane.transform.position;
+								GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
 						                                                	Quaternion.identity);
 							//temp.transform.localEulerAngles = new Vector3(0.0f, Random.Range(0,360), 0.0f);
-							grid.whatsInside = currWeapon;
-							grid.isAvailable = false;
-							lastPlane.gameObject.tag = "Taken";
+								grid.whatsInside = currWeapon;
+								grid.isAvailable = false;
+								lastPlane.gameObject.tag = "Taken";
 							//GameObject start = GameObject.Find ("UnitsAllowedStart");
-							theTaken = lastPlane;
-							theTaken.gameObject.tag = "Taken";
-							thePathsHaveChanged = true;
-							if(thePath.Contains(theTaken))
-							{
-								thePath = dijkstraPath(start,thePath);
+								theTaken = lastPlane;
+								theTaken.gameObject.tag = "Taken";
+								thePathsHaveChanged = true;
+								if(thePath.Contains(theTaken))
+								{
+									thePath = dijkstraPath(start,thePath);
 								//thePathsHaveChanged = true;
 								//Debug.Log("Change Paths");
-							}
-							if(thePath2.Contains(theTaken))
-							{
-								thePath2 = dijkstraPath(start2,thePath2);
+								}
+								if(thePath2.Contains(theTaken))
+								{
+									thePath2 = dijkstraPath(start2,thePath2);
+
 								//thePathsHaveChanged1 = true;
+								}
 							}
-						}
 						//thePathsHaveChanged = false;
+						}
+						else
+						{
+							lastPlane.gameObject.tag = "NotTaken";
+							grid.isAvailable = true;
+							//theTaken.gameObject.tag = "NotTaken";
+						}
 					}
 				}
 				else
