@@ -19,7 +19,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//private bool selecting = false;
 
-	public int theWeapon = 0;
+	public int theWeapon ;
 
 	private float mClickY;
 	private float mReleaseY;
