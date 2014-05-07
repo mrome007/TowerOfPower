@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Weapons : MonoBehaviour {
 	public GameObject upgradeIt;
-	public GameObject upgradeDummy;
 	public float damage;
 	public int cost;
 	// Use this for initialization
