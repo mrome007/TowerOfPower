@@ -19,7 +19,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//private bool selecting = false;
 
-	public int theWeapon ;
+	public int theWeapon = 0;
 
 	private float mClickY;
 	private float mReleaseY;
@@ -27,6 +27,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private Vector3 targetPosition;
 
 	private GameObject lastPlane;
+	private GameObject hoverObject;
 	private GameObject towerAmmo;
 
 	public Material oldMaterial;
@@ -36,6 +37,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	
 	public GameObject[] weapons;
 	public GameObject[] towerWeapons;
+
+	public GameObject[] dummyWeapons;
 
 	//for the upgrades.
 	private GridForUnits grid;
@@ -275,10 +278,33 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			if(Physics.Raycast(ray,out hit,1000,buyPlane))
 			{
 				if(lastPlane)
+				{
 					lastPlane.renderer.material = oldMaterial;
-				lastPlane = hit.collider.gameObject;
+					Destroy(hoverObject);
+				}
+				if(hit.collider.gameObject.tag != "Enemy")
+				{
+					lastPlane = hit.collider.gameObject;
 				//oldMaterial = lastPlane.renderer.material;
-				lastPlane.renderer.material = hoverMaterial;
+					lastPlane.renderer.material = hoverMaterial;
+
+					if(lastPlane.GetComponent<GridForUnits>().whatsInside != null)
+					{
+						GameObject hoverUpgrade = lastPlane.GetComponent<GridForUnits>().whatsInside.GetComponent<Weapons>().upgradeDummy;
+						if(hoverUpgrade)
+						{
+							hoverObject = (GameObject)Instantiate(hoverUpgrade, lastPlane.transform.position, 
+						                                      Quaternion.identity);
+						}
+					}
+					else
+					{
+						hoverObject = (GameObject)Instantiate(dummyWeapons[theWeapon], lastPlane.transform.position, 
+						                                      Quaternion.identity);
+					}
+				}
+				else
+					lastPlane = null;
 			}
 			else
 			{
@@ -286,6 +312,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				{
 					lastPlane.renderer.material = oldMaterial;
 					lastPlane = null;
+					Destroy(hoverObject);
 				}
 			}
 			if(Input.GetMouseButtonDown(0) && lastPlane)
