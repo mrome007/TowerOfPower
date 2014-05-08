@@ -22,7 +22,7 @@ public class GUI : MonoBehaviour {
 						} else if (mode.GetComponent<Buy_Shoot_Modes> ().buyMode == true) {
 								mode.GetComponent<Buy_Shoot_Modes> ().buyMode = false;
 								mode.GetComponent<Buy_Shoot_Modes> ().shootMode = true;
-								button1Text = "BUILD DEFENSES";
+								button1Text = "DEFENSES";
 						}
 
 				}
