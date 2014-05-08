@@ -36,6 +36,7 @@ public class GUI : MonoBehaviour {
 			
 		}
 */
+	//BUTTON AREA ; shows when buymode is true.
 				GameObject mmode = GameObject.FindGameObjectWithTag ("GameController");
 				Buy_Shoot_Modes sell = mmode.GetComponent<Buy_Shoot_Modes> ();
 				if (sell.buyMode) 
