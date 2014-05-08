@@ -33,7 +33,7 @@ public class fireTrackingTurret : Weapons {
 		if(other.gameObject.tag == "Enemy")
 		{
 			target = other.gameObject.transform;
-			Debug.Log ("heyThere");
+//			Debug.Log ("heyThere");
 		}
 		
 	}

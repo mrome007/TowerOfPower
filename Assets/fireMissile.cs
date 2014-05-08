@@ -35,29 +35,33 @@ public class fireMissile : TurretAmmoBase {
 		//myDist += Time.deltaTime * missileSpeed;
 		//if(myDist >= missileRange)
 		//	Destroy(gameObject);
-		if(target)
-		{
 			if(duration <= 0)
 			{
 				rise = false;
-				slow -= Time.deltaTime;
-				if(slow <= 0)
+				if(target)
 				{
-					missileSpeed += 6;
-					slow = 0.1f;
-				}
-				missileRot.LookAt(target);
-				transform.rotation = Quaternion.Lerp(transform.rotation, missileRot.rotation, 
+					slow -= Time.deltaTime;
+					if(slow <= 0)
+					{
+						missileSpeed += 6;
+						slow = 0.1f;
+					}
+					if((target.position - transform.position).sqrMagnitude > 5.0f)
+					{
+						missileRot.LookAt(target);
+						transform.rotation = Quaternion.Lerp(transform.rotation, missileRot.rotation, 
 			                                     	Time.deltaTime * turnSpeed);
+					}
+				}
+				else
+				{
+					myDist += Time.deltaTime * missileSpeed;
+					if(myDist >= missileRange)
+						Destroy(gameObject);
+				}
 
 			}
-		}
-		else
-		{
-			myDist += Time.deltaTime * missileSpeed;
-			if(myDist >= missileRange)
-				Destroy(gameObject);
-		}
+
 		if(transform.position.y <= 0)
 			Destroy(gameObject);
 	}

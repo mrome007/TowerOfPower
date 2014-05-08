@@ -105,6 +105,7 @@ public class SpawnWaves : MonoBehaviour {
 			                                   Quaternion.identity);
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath;
+					Debug.Log (bsm.thePath.Count);
 					numEnemiesRemaining++;
 					outsideSpawnDuration = outSpawnTime;
 				}
@@ -129,6 +130,7 @@ public class SpawnWaves : MonoBehaviour {
 					                                        Quaternion.identity);
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath2;
+					Debug.Log (mud.wayPoints.Count);
 					numEnemiesRemaining++;
 					outsideSpawnDuration1 = outSpawnTime1;
 				}
