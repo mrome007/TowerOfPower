@@ -49,7 +49,9 @@ public class TowerStats : MonoBehaviour {
 	void OnTriggerEnter(Collider collision) {
 		GameObject collisionObject = collision.gameObject;
 		if (collisionObject.CompareTag("Enemy")) {
+			//change the tower hp
 			GameObject healthGUI = GameObject.FindGameObjectWithTag("MainCamera");
+			healthGUI.GetComponent<TowerHealthBar>().health -= 5;
 			healthGUI.GetComponent<TowerHealthBar>().ChangeHealth(-1);
 			mHealth--;
 			Destroy (collisionObject);
