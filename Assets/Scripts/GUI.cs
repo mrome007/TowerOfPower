@@ -7,6 +7,7 @@ public class GUI : MonoBehaviour {
 	string button2Text = "WALL" ;
 	string button3Text = "TURRET" ;
 	string button4Text = "TESLA" ;
+	string button5Text = "TRACK";
 	
 	string restart = "Click to Restart";
 
@@ -47,7 +48,13 @@ public class GUI : MonoBehaviour {
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
 										sel.theWeapon = 2;
-			}
+						}		
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 46, Screen.height / 100 * 95, 105, 50), button5Text)) {
+								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
+								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
+								if (sel.buyMode)
+										sel.theWeapon = 3;
+						}		
 			
 		}
 		GameObject md = GameObject.FindGameObjectWithTag ("GameController");

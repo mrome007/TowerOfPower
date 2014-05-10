@@ -48,7 +48,7 @@ void Update ()
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			if(gc)
 			{
-				SpawnWaves sw = gc.GetComponent<SpawnWaves>();
+				NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
 				sw.numEnemiesRemaining--;
 			}
 			Destroy(gameObject);

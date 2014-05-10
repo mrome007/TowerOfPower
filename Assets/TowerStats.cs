@@ -54,7 +54,7 @@ public class TowerStats : MonoBehaviour {
 			mHealth--;
 			Destroy (collisionObject);
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
-			SpawnWaves sw = gc.GetComponent<SpawnWaves>();
+			NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
 			sw.numEnemiesRemaining--;
 			Debug.Log(mHealth);
 		}

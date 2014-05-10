@@ -266,7 +266,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		*/
 		if(gameover)
 		{
-			SpawnWaves sw = gameObject.GetComponent<SpawnWaves>();
+			NewSpawnWaves sw = gameObject.GetComponent<NewSpawnWaves>();
 			sw.waveDuration = -1.0f;
 			sw.numEnemiesRemaining = 1000;
 
