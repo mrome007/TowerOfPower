@@ -25,6 +25,7 @@ public class MoveFlyingEnemy : MonoBehaviour {
 			Quaternion newRot = Quaternion.LookRotation (mTarget.position - transform.position, Vector3.up);
 			newRot.y = 0;
 			newRot.z = 0;
+			mSpeed = gameObject.GetComponent<EnemyStats> ().mSpeed;
 			transform.rotation = Quaternion.Lerp (transform.rotation, newRot, Time.deltaTime * mSpeed);
 			transform.Translate(mDirection * mSpeed * Time.deltaTime);
 		}
