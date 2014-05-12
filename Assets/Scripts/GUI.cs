@@ -80,7 +80,7 @@ public class GUI : MonoBehaviour {
 		if(bsm.gameover)
 		{
 			UnityEngine.GUI.Box (new Rect(250,150, 200, 20), "Survived "+
-			                     	(md.GetComponent<SpawnWaves>().waveNo - 1)
+			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
 			                     	+ " Waves");
 			if(UnityEngine.GUI.Button(new Rect(250,200,200,50), restart))
 				Application.LoadLevel(Application.loadedLevel);

@@ -93,6 +93,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					break;
 			}
 		}
+		waveCompleted++;
 		Debug.Log ("Wave Done");
 	}
 
@@ -132,6 +133,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					break;
 			}
 		}
+		waveCompleted++;
 	}
 
 	IEnumerator SpawnOutsideWavesBottom(float waveDur, int enemyCount)
@@ -169,5 +171,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					break;
 			}
 		}
+		waveCompleted++;
 	}
+
 }
