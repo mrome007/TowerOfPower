@@ -29,8 +29,7 @@ public class GUI : MonoBehaviour {
 				}
 				GameObject mmode = GameObject.FindGameObjectWithTag ("GameController");
 				Buy_Shoot_Modes sell = mmode.GetComponent<Buy_Shoot_Modes> ();
-				if (sell.buyMode) 
-				{
+				if (sell.buyMode) {
 						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), button2Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
@@ -56,7 +55,26 @@ public class GUI : MonoBehaviour {
 										sel.theWeapon = 3;
 						}		
 			
-		}
+				} else if (sell.shootMode) {
+					if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), "grenade")) {
+						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
+						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
+						if (sel.shootMode)
+							sel.theTowerWeapon = 1;
+					}
+					if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 105, 50), "canonball")) {
+						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
+						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
+						if (sel.shootMode)
+							sel.theTowerWeapon = 0;
+					}
+					if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 35, Screen.height / 100 * 95, 105, 50), "laser")) {
+						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
+						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
+						if (sel.shootMode)
+							sel.theTowerWeapon = 2;
+					}	
+				}
 		GameObject md = GameObject.FindGameObjectWithTag ("GameController");
 		Buy_Shoot_Modes bsm = md.GetComponent<Buy_Shoot_Modes> ();
 		if(bsm.gameover)

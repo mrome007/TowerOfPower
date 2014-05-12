@@ -20,6 +20,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//private bool selecting = false;
 
 	public int theWeapon = 0;
+	public int theTowerWeapon = 0;
 
 	private float mClickY;
 	private float mReleaseY;
@@ -33,8 +34,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public Material oldMaterial;
 	public Material hoverMaterial;
 
-	public LayerMask buyPlane;
-	
+	public int buyPlane;
+	private int enemyLayer = 10;
+	private int placementPlaneLayer = 8;
 	public GameObject[] weapons;
 	public GameObject[] towerWeapons;
 
@@ -66,6 +68,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//checking if everything is blocked;
 	public bool allPathsBlocked = false;
 	List<GameObject> dummyPaths = new List<GameObject>();
+
+
+	//firing off the laser
+	public float laserFireTime = 0.35f;
+	private float laserTime = 0.35f;
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -183,8 +190,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		int enemyMask = 1 << enemyLayer;
+		int placementMask = 1 << placementPlaneLayer;
 		gameover = false;
 		theWeapon = 0;
+		theTowerWeapon = 0;
 		thePathsHaveChanged = false;
 		//make this as a public function to easily use
 		start = GameObject.Find ("UnitsAllowedStart");
@@ -192,6 +202,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		start2 = GameObject.Find ("UnitsAllowed18");
 		thePath2 = dijkstraPath (start2,thePath2);
 		//Debug.Log ("START");
+		buyPlane = enemyMask | placementMask;
 	}
 
 
@@ -418,7 +429,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						//Debug.Log(targetPosition);
 					}
 				}
-			} else if (Input.GetMouseButtonUp(0) && Time.time - lastFired >= fireRate && playerHealth > 0) {
+			} else if (Input.GetMouseButtonUp(0) && Time.time - lastFired >= fireRate && playerHealth > 0 && theTowerWeapon < towerWeapons.Length-1) {
 				mReleaseY = Input.mousePosition.y;
 				/** Calculate the delta Y position of the mouse and get the angle */
 				float maxAngleScreenRatio = Screen.height / 2;
@@ -430,16 +441,44 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				}
 				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
 				/** Get the tower */
-				towerAmmo = (GameObject)Instantiate(towerWeapons[0], 
+				towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
 				                                   TOWER_FIRE_VECTOR,
 				                                   Quaternion.identity);
 				/** Create the cannon shot */
 				FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
+				cannon.typeOfAmmo = theTowerWeapon;
 				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
 				cannon.dir = dir.normalized;
 				cannon.mAngle = fireAngle;
 				theTower.GetComponent<TowerStats>().mLastFired = Time.time;
 			}
+			else if(Input.GetMouseButton(0) && theTowerWeapon == towerWeapons.Length - 1)
+			{
+				if(laserFireTime <= 0.0f)
+				{
+					//fire laser
+					GameObject tmpAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], TOWER_FIRE_VECTOR,
+					                                    Quaternion.identity);
+					tmpAmmo.transform.LookAt(targetPosition);
+					laserFireTime = laserTime;
+				}
+				laserFireTime -= Time.deltaTime;
+				if(towerWeapons.Length > 0)
+				{
+					mClickY = Input.mousePosition.y;
+					Plane playerPlane = new Plane(Vector3.up, transform.position);
+					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+					
+					float hitdist;
+					if(playerPlane.Raycast(ray, out hitdist))
+					{
+						targetPosition = ray.GetPoint(hitdist);
+						//Debug.Log(targetPosition);
+					}
+				}
+			}
+
+
 		}
 	}
 
