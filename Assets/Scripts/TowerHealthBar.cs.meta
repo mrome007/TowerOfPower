@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 6d096f99969276149aeecf980a102295
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - HBImage: {fileID: 2800000, guid: 8c519dc1cc33aae409bb32ae5162e855, type: 3}
+  - HBbackground: {fileID: 2800000, guid: e0ed14f7d7053c444b5c1bfaf071215c, type: 3}
+  - mat: {fileID: 2100000, guid: 187a52d332bf23f4189cc616fb892de4, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
