@@ -1,7 +1,6 @@
 ﻿#pragma strict
 var exitNormal : Texture2D;
 var exitHover : Texture2D;
-var txtToPrint="bla";
 
 function Start () {
 
@@ -21,6 +20,7 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
+
 	Application.Quit();
-	Debug.Log(txtToPrint);
+	
 }
