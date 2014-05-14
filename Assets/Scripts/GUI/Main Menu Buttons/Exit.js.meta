@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 9a3275e4a6c5d40c69e1962ba3556a01
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - exitNormal: {fileID: 2800000, guid: 4eb58bf0871dd45d989a3321da98a37d, type: 3}
+  - exitHover: {fileID: 2800000, guid: fca4b2a14bfa140598e6d4e004456b9a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
