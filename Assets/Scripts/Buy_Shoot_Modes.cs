@@ -51,8 +51,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//Queue<GameObject> minVisits;
 	public List<GameObject> thePath;
 	public List<GameObject> thePath2;
-	private GameObject start;
-	private GameObject start2;
+	public GameObject start;
+	public GameObject start2;
 	public bool thePathsHaveChanged = false;
 	public GameObject theTaken;
 
@@ -350,10 +350,19 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								Vector3 spawn = lastPlane.transform.position;
 								GameObject currWeapon = (GameObject)Instantiate(weapons[theWeapon], spawn, 
 						                                                	Quaternion.identity);
+
+
 							//temp.transform.localEulerAngles = new Vector3(0.0f, Random.Range(0,360), 0.0f);
 								grid.whatsInside = currWeapon;
 								grid.isAvailable = false;
 								lastPlane.gameObject.tag = "Taken";
+
+								//wall specific placement;
+							if(theWeapon == 1)
+							{
+								wallObjectSurvive wos = currWeapon.GetComponent<wallObjectSurvive>();
+								wos.planeItsOn = lastPlane.gameObject;
+							}
 							//GameObject start = GameObject.Find ("UnitsAllowedStart");
 								theTaken = lastPlane;
 								theTaken.gameObject.tag = "Taken";

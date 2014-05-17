@@ -22,6 +22,8 @@ public class DestroyOnContact : MonoBehaviour {
 
 			EnemyStats enemyStats = collisionObject.GetComponent<EnemyStats>();
 			enemyStats.mHealth -= mDamage;
+			if(enemyStats.mHealth <= 0.0f)
+				enemyStats.mResources += 50;
 			Destroy (this);
 		}
 

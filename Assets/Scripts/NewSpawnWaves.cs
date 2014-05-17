@@ -17,11 +17,13 @@ public class NewSpawnWaves : MonoBehaviour {
 	Vector3 startPoint = new Vector3(58.5f, 0.0f, -24.4f);
 	public int waveCompleted;
 	public int advanced;
+	public bool wallsWereDestroyed = false;
 	// Use this for initialization
 	GameObject theGC;
 	public float healthMultiplier;
 	public float speedMultiplier;
-
+	private int HellWave = 0;
+	private int difficulty = 0;
 	void Start () {
 		waveDuration = waveTime;
 		waveNo = 1;
@@ -32,6 +34,10 @@ public class NewSpawnWaves : MonoBehaviour {
 		advanced = 0;
 		healthMultiplier = 1.0f;
 		speedMultiplier = 1.0f;
+		HellWave = Random.Range (0, 10);
+		Debug.Log ("HELL WAVE NO: " + HellWave);
+		wallsWereDestroyed = false;
+		difficulty = 1;
 		StartCoroutine (SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier));
 	}
 	
@@ -41,6 +47,15 @@ public class NewSpawnWaves : MonoBehaviour {
 		if((waveDuration < 0.0f && numEnemiesRemaining == 0))
 		{
 			waveNo++;
+			if(waveNo % 10 == 0)
+			{	
+				HellWave = Random.Range(waveNo, waveNo + 10);
+			}
+			if(waveNo % 15 == 0)
+			{
+				if(difficulty < 3)
+					difficulty++;
+			}
 			waveCompleted++;
 			if(advanced > 0)
 				waveCompleted += advanced;
@@ -48,24 +63,45 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveDuration = waveTime + 15;
 			waveTime += 15;
 			spawnCount+=1;
+
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
-				speedMultiplier += 0.1f;
+				if(speedMultiplier <= 2.5f)
+					speedMultiplier += 0.1f;
 			}
 			StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier));
+			for(int i = 0; i < difficulty; i++)
+			{
 			if(waveNo % 2 == 0)
 				StartCoroutine(SpawnOutsideWavesTop(waveDuration-15,spawnCount/2,healthMultiplier,speedMultiplier));
 			if(waveNo % 3 == 0)
 				StartCoroutine(SpawnOutsideWavesBottom(waveDuration-15,spawnCount/2,healthMultiplier,speedMultiplier));
-
+			}
+			if(waveNo == HellWave)
+			{
+				//spawn hell wave
+				//spawnHellWave();
+				StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				StartCoroutine(SpawnOutsideWavesTop(waveDuration-15,spawnCount/2,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				StartCoroutine(SpawnOutsideWavesBottom(waveDuration-15,spawnCount/2,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				
+			}
 			advanced = 0;
 		}
 		if(Input.GetKeyDown(KeyCode.A))
 		{
 			advanced++;
 			waveNo++;
-
+			if(waveNo % 10 == 0)
+			{	
+				HellWave = Random.Range(waveNo, waveNo + 10);
+			}
+			if(waveNo % 15 == 0)
+			{
+				if(difficulty < 3)
+					difficulty++;
+			}
 			Debug.Log("NEW WAVE === wave number: " + waveNo);
 			waveDuration = waveTime + 15;
 			waveTime += 15;
@@ -73,14 +109,35 @@ public class NewSpawnWaves : MonoBehaviour {
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
-				speedMultiplier += 0.1f;
+				if(speedMultiplier <= 2.5f)
+					speedMultiplier += 0.1f;
 			}
 			StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier));
+			for(int i = 0; i < difficulty; i++)
+			{
 			if(waveNo % 2 == 0)
 				StartCoroutine(SpawnOutsideWavesTop(waveDuration-15,spawnCount/2,healthMultiplier,speedMultiplier));
 			if(waveNo % 3 == 0)
 				StartCoroutine(SpawnOutsideWavesBottom(waveDuration-15,spawnCount/2,healthMultiplier,speedMultiplier));
+			}
+			if(waveNo == HellWave)
+			{
+				//spawn hell wave
+				//spawnHellWave();
+				StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				StartCoroutine(SpawnOutsideWavesTop(waveDuration-15,spawnCount/2,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				StartCoroutine(SpawnOutsideWavesBottom(waveDuration-15,spawnCount/2,healthMultiplier*1.2f,speedMultiplier*1.2f));
+				
+			}
+		}
 
+		if(wallsWereDestroyed)
+		{
+			Debug.Log("DEEEEEEESTROYED");
+			Buy_Shoot_Modes bsm = GameObject.FindGameObjectWithTag("GameController").GetComponent<Buy_Shoot_Modes>();
+			bsm.dijkstraPath(bsm.start,bsm.thePath);
+			bsm.dijkstraPath(bsm.start2,bsm.thePath2);
+			wallsWereDestroyed = false;	
 		}
 
 	}
@@ -203,7 +260,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 
-
+	
 				if(selectEnemy < outEnemy.Length-1)
 				{
 					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
@@ -221,5 +278,6 @@ public class NewSpawnWaves : MonoBehaviour {
 		}
 		//waveCompleted++;
 	}
+	
 
 }

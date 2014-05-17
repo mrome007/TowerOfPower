@@ -25,24 +25,33 @@ public class DestroyOnContactGrenade : MonoBehaviour {
 			
 			EnemyStats enemyStats = collisionObject.GetComponent<EnemyStats>();
 			enemyStats.mHealth -= mDamage;
-
+			if(enemyStats.mHealth <= 0.0f)
+				enemyStats.mResources += 50;
 		}
-		Collider [] hitColliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
-		Debug.Log("On destroy" + hitColliders.Length);
-		for(int i = 0; i < hitColliders.Length; i++)
+		if(collisionObject.tag == "Enemy")
 		{
-			if(hitColliders[i].gameObject.tag == "Enemy")
+			Collider [] hitColliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
+			Debug.Log("On destroy" + hitColliders.Length);
+			for(int i = 0; i < hitColliders.Length; i++)
 			{
-				float proximity = (transform.position - hitColliders[i].gameObject.transform.position).magnitude;
+				if(hitColliders[i].gameObject.tag == "Enemy")
+				{
+					float proximity = (transform.position - hitColliders[i].gameObject.transform.position).magnitude;
 				
-				float effect = (proximity/radius);
-				Debug.Log ("Enemy at " + proximity + " away!" + " damage: " + effect);
-				EnemyStats es = hitColliders[i].gameObject.GetComponent<EnemyStats>();
-				if(es)
-					es.mHealth -= mDamage * effect;
+					float effect = (proximity/radius);
+					Debug.Log ("Enemy at " + proximity + " away!" + " damage: " + effect);
+					EnemyStats es = hitColliders[i].gameObject.GetComponent<EnemyStats>();
+					if(es)
+					{
+						es.mHealth -= mDamage * effect;
+						if(es.mHealth <= 0.0f)
+							es.mResources += 50;
+					}
+				}
 			}
+			Destroy (gameObject);
 		}
 		//do physic.overlap here
-		Destroy (this);
+
 	}
 }
