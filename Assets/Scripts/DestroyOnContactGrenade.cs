@@ -37,15 +37,17 @@ public class DestroyOnContactGrenade : MonoBehaviour {
 				if(hitColliders[i].gameObject.tag == "Enemy")
 				{
 					float proximity = (transform.position - hitColliders[i].gameObject.transform.position).magnitude;
-				
-					float effect = (proximity/radius);
-					Debug.Log ("Enemy at " + proximity + " away!" + " damage: " + effect);
-					EnemyStats es = hitColliders[i].gameObject.GetComponent<EnemyStats>();
-					if(es)
+					if(proximity < radius)
 					{
-						es.mHealth -= mDamage * effect;
-						if(es.mHealth <= 0.0f)
-							es.mResources += 50;
+						float effect = 1.0f - (proximity/radius);
+						Debug.Log ("Enemy at " + proximity + " away!" + " damage: " + effect);
+						EnemyStats es = hitColliders[i].gameObject.GetComponent<EnemyStats>();
+						if(es)
+						{
+							es.mHealth -= mDamage * effect;
+							if(es.mHealth <= 0.0f)
+								es.mResources += 50;
+						}
 					}
 				}
 			}
