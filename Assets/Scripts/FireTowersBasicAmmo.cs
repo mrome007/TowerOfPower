@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class FireTowersBasicAmmo : MonoBehaviour {
-	private const float ACCEL_GRAVITY = -0.02f;
+	public const float ACCEL_GRAVITY = -0.02f;
 
 	public Vector3 dir;
 	public float mAmmoSpeed;
@@ -11,6 +11,7 @@ public class FireTowersBasicAmmo : MonoBehaviour {
 	public int typeOfAmmo = 0;
 	private int enemyLayer = 0;
 	private float mDamage;
+	private float mElapsedTime;
 	// Use this for initialization
 	void Start () {
 		mAmmoSpeed = 100;
@@ -21,9 +22,9 @@ public class FireTowersBasicAmmo : MonoBehaviour {
 			mDamage = gameObject.GetComponent<DestroyOnContactGrenade> ().mDamage;
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () 
 	{
+		mElapsedTime += Time.deltaTime;
 		float xVelocity = dir.x * Time.deltaTime * mAmmoSpeed;
 		float yVelocity = dir.y * Time.deltaTime * mAmmoSpeed;
 		float zVelocity = dir.z * Time.deltaTime * mAmmoSpeed;
@@ -36,6 +37,7 @@ public class FireTowersBasicAmmo : MonoBehaviour {
 
 			if(yPosition <= 0 && typeOfAmmo > 0)
 			{
+				Debug.Log ("Time: " + mElapsedTime);
 				Collider [] hitColliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
 				Debug.Log("fire: " + hitColliders.Length);
 				for(int i = 0; i < hitColliders.Length; i++)
