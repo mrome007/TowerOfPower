@@ -20,10 +20,11 @@ public class wallObjectSurvive : Weapons {
 		{
 			currWave = nsw.waveNo;
 			wallDuration--;
-			destroyWall(nsw);
+			//destroyWall(nsw);
 		}
 		if (wallDuration <= 0)
 		{
+			destroyWall (nsw);
 			transform.Translate(Vector3.down*Time.deltaTime*2.0f);
 			if(transform.position.y <= -4.0f)
 			{
@@ -35,15 +36,18 @@ public class wallObjectSurvive : Weapons {
 
 	void destroyWall(NewSpawnWaves n)
 	{
-		if(wallDuration <= 0)
+		if(wallDuration == 0)
 		{
 			planeItsOn.tag = "NotTaken";
 			GridForUnits grid = planeItsOn.GetComponent<GridForUnits>();
-			grid.isAvailable = true;
-			grid.whatsInside = null;
-			grid.previous = null;
-			grid.hasBeenVisited = false;
-			n.wallsWereDestroyed = true;
+			if(grid)
+			{
+				grid.isAvailable = true;
+				grid.whatsInside = null;
+				grid.previous = null;
+				grid.hasBeenVisited = false;
+				n.wallsWereDestroyed = true;
+			}
 			//Destroy(gameObject);
 			//n.wallsWereDestroyed = false;
 		}

@@ -358,7 +358,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								lastPlane.gameObject.tag = "Taken";
 
 								//wall specific placement;
-							if(theWeapon == 1)
+							if(currWeapon.tag == "WallWeapon")
 							{
 								wallObjectSurvive wos = currWeapon.GetComponent<wallObjectSurvive>();
 								wos.planeItsOn = lastPlane.gameObject;
@@ -409,6 +409,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								Destroy(getUpgrade.gameObject);
 								GameObject currWeapon = (GameObject)Instantiate(whatToUpgrade, 
 							                                                tempPos, tempRot);
+								if(currWeapon.tag == "WallWeapon")
+								{
+									wallObjectSurvive wos = currWeapon.GetComponent<wallObjectSurvive>();
+									wos.planeItsOn = lastPlane;
+								}
 								grid.whatsInside = currWeapon;
 							}
 						}

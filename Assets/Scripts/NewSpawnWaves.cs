@@ -35,7 +35,7 @@ public class NewSpawnWaves : MonoBehaviour {
 		advanced = 0;
 		healthMultiplier = 1.0f;
 		speedMultiplier = 1.0f;
-		HellWave = Random.Range (4, 10);
+		HellWave = Random.Range (8, 10);
 		Debug.Log ("HELL WAVE NO: " + HellWave);
 		wallsWereDestroyed = false;
 		difficulty = 1;
@@ -52,9 +52,9 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveNo++;
 			if(waveNo % 10 == 0)
 			{	
-				HellWave = Random.Range(waveNo+4, waveNo + 10);
+				HellWave = Random.Range(waveNo+8, waveNo + 10);
 			}
-			if(waveNo % 10 == 0)
+			if(waveNo % 15 == 0)
 			{
 				if(difficulty < 3)
 					difficulty++;
@@ -67,18 +67,15 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveTime += 15;
 			spawnCount+=1;
 
-			if(waveNo % 4 == 0)
+			if(waveNo % 6 == 0)
 			{
 				healthMultiplier += 0.5f;
 				if(speedMultiplier <= 2.5f)
 					speedMultiplier += 0.1f;
 				if(spawnWait > 1.5f)
 					spawnWait -= 0.4f;
-			}
-			if(waveNo % 6 == 0)
-			{
 				if(waveWait > 2.0f)
-					waveWait -= 0.5f;
+					waveWait -= 0.05f;
 			}
 			StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier,
 			                              waveWait,spawnWait));
@@ -112,9 +109,9 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveNo++;
 			if(waveNo % 10 == 0)
 			{	
-				HellWave = Random.Range(waveNo+4, waveNo + 10);
+				HellWave = Random.Range(waveNo+8, waveNo + 10);
 			}
-			if(waveNo % 10 == 0)
+			if(waveNo % 15 == 0)
 			{
 				if(difficulty < 3)
 					difficulty++;
@@ -123,18 +120,15 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveDuration = waveTime + 15;
 			waveTime += 15;
 			spawnCount+=1;
-			if(waveNo % 4 == 0)
+			if(waveNo % 6 == 0)
 			{
 				healthMultiplier += 0.5f;
 				if(speedMultiplier <= 2.5f)
 					speedMultiplier += 0.1f;
 				if(spawnWait > 1.5f)
 					spawnWait -= 0.4f;
-			}
-			if(waveNo % 6 == 0)
-			{
 				if(waveWait > 2.0f)
-					waveWait -= 0.5f;
+					waveWait -= 0.05f;
 			}
 			StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier,
 			                              waveWait,spawnWait));
