@@ -79,11 +79,18 @@ public class GUI : MonoBehaviour {
 		Buy_Shoot_Modes bsm = md.GetComponent<Buy_Shoot_Modes> ();
 		if(bsm.gameover)
 		{
-			UnityEngine.GUI.Box (new Rect(250,150, 200, 20), "Survived "+
+			UnityEngine.GUI.Box (new Rect(Screen.width/2,Screen.height/2-50, 200, 20), "Survived "+
 			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
 			                     	+ " Waves");
-			if(UnityEngine.GUI.Button(new Rect(250,200,200,50), restart))
+			if(UnityEngine.GUI.Button(new Rect(Screen.width/2,Screen.height/2,200,50), restart))
 				Application.LoadLevel(Application.loadedLevel);
+		}
+
+		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 95, 105, 50), "Advance Wave")) 
+		{
+			GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
+			NewSpawnWaves nsw = mode.GetComponent<NewSpawnWaves>();
+			nsw.advanceTheWave = true;
 		}
 	}
 

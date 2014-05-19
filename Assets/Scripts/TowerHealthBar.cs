@@ -17,7 +17,8 @@ public class TowerHealthBar : MonoBehaviour {
 	public float healthLength ;
 	public Rect box ;
 	public Rect boxback ;
-
+	private string numEnemies;
+	private string waveNo;
 	public void ChangeHealth( int n )
 	{
 		curHealth += n;
@@ -45,6 +46,9 @@ public class TowerHealthBar : MonoBehaviour {
 			healthy = (float)0.04 ;
 		mat.SetFloat("_Cutoff", healthy) ;
 		ChangeHealth (0);
+
+		waveNo = "" + GameObject.FindGameObjectWithTag ("GameController").GetComponent<NewSpawnWaves> ().waveNo;
+		numEnemies = "" + GameObject.FindGameObjectWithTag ("GameController").GetComponent<NewSpawnWaves> ().numEnemiesRemaining;
 	}
 
 	void OnGUI()
@@ -56,7 +60,8 @@ public class TowerHealthBar : MonoBehaviour {
 			Graphics.DrawTexture(box, HBImage, mat );
 		}
 		UnityEngine.GUI.Box (new Rect(10,Screen.height/2 + 20, Screen.width/20, 20), curHealth + "/" + maxHealth);
-		UnityEngine.GUI.Box (new Rect (550, 10, 150, 20), 
-		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources);
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *88, 10, 150, 100), 
+		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
+		                     + "\n\n" + "Current Wave: " + waveNo + "\n\n" + "Enemies Remaining: " + numEnemies + "\n" );
 	}
 }

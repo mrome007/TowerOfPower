@@ -37,6 +37,16 @@ public class fireTrackingTurret : Weapons {
 		}
 		
 	}
+
+	void OnTriggerStay(Collider other)
+	{
+		if(other.gameObject.tag == "Enemy")
+		{
+			target = other.gameObject.transform;
+			//			Debug.Log ("heyThere");
+		}
+		
+	}
 	
 	void OnTriggerExit(Collider other)
 	{

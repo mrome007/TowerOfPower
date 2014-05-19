@@ -6,6 +6,7 @@ public class EnemyStats : MonoBehaviour {
 	public int mScore;
 	public int mResources;
 	public float mSpeed;
+	public GameObject enemyDummy;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,7 @@ public class EnemyStats : MonoBehaviour {
 			TowerStats towerStats = theTower.GetComponent<TowerStats>();
 			towerStats.mScore += mScore;
 			towerStats.mResources += mResources;
+			Instantiate(enemyDummy,transform.position,transform.rotation);
 			Destroy (gameObject);
 		}
 	}
