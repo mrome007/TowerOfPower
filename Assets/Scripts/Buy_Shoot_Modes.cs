@@ -42,8 +42,12 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	public GameObject[] dummyWeapons;
 
+	private GameObject mTargetLocation;
+
 	//for the upgrades.
 	private GridForUnits grid;
+
+	private bool mIsClickDown;
 
 
 	//for pathfinding
@@ -299,7 +303,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				//oldMaterial = lastPlane.renderer.material;
 					lastPlane.renderer.material = hoverMaterial;
 
-					if(lastPlane.GetComponent<GridForUnits>().whatsInside != null)
+					if(lastPlane != null && lastPlane.GetComponent<GridForUnits>().whatsInside != null)
 					{
 						GameObject hoverUpgrade = lastPlane.GetComponent<GridForUnits>().whatsInside.GetComponent<Weapons>().upgradeDummy;
 						if(hoverUpgrade)
@@ -428,11 +432,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			float fireRate = theTower.GetComponent<TowerStats>().mFireRate;
 			float lastFired = theTower.GetComponent<TowerStats>().mLastFired;
 			int playerHealth = theTower.GetComponent<TowerStats>().mHealth;
-			if(Input.GetMouseButtonDown(0))
+			if(Input.GetMouseButtonDown(0) && !mIsClickDown)
 			{
 				if(towerWeapons.Length > 0)
 				{
+					Debug.Log("In onDown");
 					mClickY = Input.mousePosition.y;
+					mIsClickDown = true;
 					Plane playerPlane = new Plane(Vector3.up, transform.position);
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				
@@ -444,6 +450,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					}
 				}
 			} else if (Input.GetMouseButtonUp(0) && Time.time - lastFired >= fireRate && playerHealth > 0 && theTowerWeapon < towerWeapons.Length-1) {
+				Debug.Log("In onUp");
+				mIsClickDown = false;
 				mReleaseY = Input.mousePosition.y;
 				/** Calculate the delta Y position of the mouse and get the angle */
 				float maxAngleScreenRatio = Screen.height / 2;
@@ -465,14 +473,12 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				cannon.dir = dir.normalized;
 				cannon.mAngle = fireAngle;
 				theTower.GetComponent<TowerStats>().mLastFired = Time.time;
-			}
-			else if(Input.GetMouseButton(0) && theTowerWeapon == towerWeapons.Length - 1)
-			{
+			} else if(Input.GetMouseButton(0) && theTowerWeapon == towerWeapons.Length - 1) {
 				if(laserFireTime <= 0.0f)
 				{
 					//fire laser
 					GameObject tmpAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], TOWER_FIRE_VECTOR,
-					                                    Quaternion.identity);
+					                                             Quaternion.identity);
 					tmpAmmo.transform.LookAt(targetPosition);
 					laserFireTime = laserTime;
 				}
@@ -490,9 +496,34 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						//Debug.Log(targetPosition);
 					}
 				}
+			} else if (mIsClickDown && theTowerWeapon != towerWeapons.Length - 1) {
+				float maxAngleScreenRatio = Screen.height / 2;
+				float deltaY = Input.mousePosition.y - mClickY;
+				if (deltaY > maxAngleScreenRatio) {
+					deltaY = maxAngleScreenRatio;
+				} else if (deltaY < -maxAngleScreenRatio) {
+					deltaY = -maxAngleScreenRatio;
+				}
+				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
+				Debug.Log("Fire Angle: " + fireAngle);
+				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
+				dir = dir.normalized;
+				dir.y += Mathf.Sin(fireAngle);
+				dir = dir.normalized;
+				float yAccel = FireTowersBasicAmmo.ACCEL_GRAVITY;
+				float yVelocity = 2.0f * dir.y;
+				float yPosInit = TOWER_FIRE_Y;
+				float timeToHitPlus = (-yVelocity + Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
+				float timeToHitMinus = (-yVelocity - Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
+				float timeToHit = Mathf.Max(timeToHitPlus, timeToHitMinus) / 90.0f;
+				Debug.Log( "Time to hit (max): " + timeToHit);
+				Vector3 hitLocation = new Vector3(TOWER_FIRE_X + dir.x * timeToHit * 100.0f, 0, TOWER_FIRE_Z + dir.z * timeToHit * 100.0f);
+				Debug.Log ("x, y, z: " + hitLocation.x + ", " + hitLocation.y + ", " + hitLocation.z);
+				Destroy (mTargetLocation);
+				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				mTargetLocation.transform.localScale = new Vector3(5, 5, 5);
+				mTargetLocation.transform.position = hitLocation;
 			}
-
-
 		}
 	}
 
