@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyOnContactGrenade : MonoBehaviour {
+public class DestroyOnContactGrenade : TowerAmmoStats {
 
-	public float mDamage = 50.0f;
+	//public float mDamage = 50.0f;
 	public float radius;
 	private int enemyLayer;
 	// Use this for initialization

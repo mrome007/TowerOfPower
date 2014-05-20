@@ -55,8 +55,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//Queue<GameObject> minVisits;
 	public List<GameObject> thePath;
 	public List<GameObject> thePath2;
+	public List<GameObject> thePath3;
 	public GameObject start;
 	public GameObject start2;
+	public GameObject start3;
 	public bool thePathsHaveChanged = false;
 	public GameObject theTaken;
 
@@ -77,6 +79,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//firing off the laser
 	public float laserFireTime = 0.35f;
 	private float laserTime = 0.35f;
+
+	//upgrade multiplier for upgrading tower weapons
+	public float upgradeTowerMult = 1.0f;
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -205,8 +210,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		thePath = dijkstraPath (start,thePath);
 		start2 = GameObject.Find ("UnitsAllowed18");
 		thePath2 = dijkstraPath (start2,thePath2);
-		//Debug.Log ("START");
+		start3 = GameObject.Find ("UnitsAllowed1");
+		thePath3 = dijkstraPath (start3, thePath3);
+		Debug.Log ("thepath3" + thePath3.Count);
 		buyPlane = enemyMask | placementMask;
+		upgradeTowerMult = 1.0f;
 	}
 
 
@@ -371,9 +379,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								theTaken = lastPlane;
 								theTaken.gameObject.tag = "Taken";
 								thePathsHaveChanged = true;
-								if(thePath.Contains(theTaken))
+								if(thePath3.Contains(theTaken))
 								{
-									thePath = dijkstraPath(start,thePath);
+									thePath3 = dijkstraPath(start3,thePath3);
 								//thePathsHaveChanged = true;
 								//Debug.Log("Change Paths");
 								}
@@ -382,6 +390,16 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 									thePath2 = dijkstraPath(start2,thePath2);
 
 								//thePathsHaveChanged1 = true;
+								}
+								NewSpawnWaves nsw = gameObject.GetComponent<NewSpawnWaves>();
+								if(nsw.allBlue)
+								{
+									if(thePath.Contains(theTaken))
+									{
+										thePath = dijkstraPath(start,thePath);
+										
+										//thePathsHaveChanged1 = true;
+									}
 								}
 							}
 						//thePathsHaveChanged = false;
@@ -466,6 +484,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
 				                                   TOWER_FIRE_VECTOR,
 				                                   Quaternion.identity);
+				towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 				/** Create the cannon shot */
 				FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
 				cannon.typeOfAmmo = theTowerWeapon;
@@ -505,7 +524,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					deltaY = -maxAngleScreenRatio;
 				}
 				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
-				Debug.Log("Fire Angle: " + fireAngle);
+				//Debug.Log("Fire Angle: " + fireAngle);
 				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
 				dir = dir.normalized;
 				dir.y += Mathf.Sin(fireAngle);
@@ -516,9 +535,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				float timeToHitPlus = (-yVelocity + Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
 				float timeToHitMinus = (-yVelocity - Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
 				float timeToHit = Mathf.Max(timeToHitPlus, timeToHitMinus) / 90.0f;
-				Debug.Log( "Time to hit (max): " + timeToHit);
+				//Debug.Log( "Time to hit (max): " + timeToHit);
 				Vector3 hitLocation = new Vector3(TOWER_FIRE_X + dir.x * timeToHit * 100.0f, 0, TOWER_FIRE_Z + dir.z * timeToHit * 100.0f);
-				Debug.Log ("x, y, z: " + hitLocation.x + ", " + hitLocation.y + ", " + hitLocation.z);
+				//Debug.Log ("x, y, z: " + hitLocation.x + ", " + hitLocation.y + ", " + hitLocation.z);
 				Destroy (mTargetLocation);
 				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 				mTargetLocation.transform.localScale = new Vector3(5, 5, 5);

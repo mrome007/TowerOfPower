@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyLaserBeam : MonoBehaviour {
-	public float mDamage;
+public class DestroyLaserBeam : TowerAmmoStats {
+	//public float mDamage;
 	// Use this for initialization
 	void Start () {
 	

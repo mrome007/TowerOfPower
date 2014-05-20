@@ -37,9 +37,9 @@ public class FireTowersBasicAmmo : MonoBehaviour {
 
 			if(yPosition <= 0 && typeOfAmmo > 0)
 			{
-				Debug.Log ("Time: " + mElapsedTime);
+				//Debug.Log ("Time: " + mElapsedTime);
 				Collider [] hitColliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
-				Debug.Log("fire: " + hitColliders.Length);
+				//Debug.Log("fire: " + hitColliders.Length);
 				for(int i = 0; i < hitColliders.Length; i++)
 				{
 					if(hitColliders[i].gameObject.tag == "Enemy")

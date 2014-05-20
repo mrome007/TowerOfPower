@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyOnContact : MonoBehaviour {
+public class DestroyOnContact : TowerAmmoStats {
 
-	private float mDamage = 100.0f;
+	//private float mDamage = 100.0f;
 	// Use this for initialization
 	void Start () {
 	

@@ -9,6 +9,8 @@ public class TowerStats : MonoBehaviour {
 	public int mResources;
 	public int mScore;
 
+	public int upgradeCost;
+
 	public float mFireRate;
 	public float mLastFired;
 
@@ -17,7 +19,8 @@ public class TowerStats : MonoBehaviour {
 		mHealth = MAX_HEALTH;
 		mFireRate = 0.5f;
 		mLastFired = 0.0f;
-		mResources = 800;
+		mResources = 1000;
+		upgradeCost = 1000;
 		//Debug.Log (mResources);
 	}
 	
