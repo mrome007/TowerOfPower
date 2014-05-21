@@ -26,7 +26,11 @@ public class DestroyOnContactGrenade : TowerAmmoStats {
 			EnemyStats enemyStats = collisionObject.GetComponent<EnemyStats>();
 			enemyStats.mHealth -= mDamage;
 			if(enemyStats.mHealth <= 0.0f)
-				enemyStats.mResources += 50;
+			{
+				GameObject tsg = GameObject.FindGameObjectWithTag("TheTower");
+				tsg.GetComponent<TowerStats>().comboKills++;
+				//enemyStats.mResources += 50;
+			}
 		}
 		if(collisionObject.tag == "Enemy")
 		{
@@ -46,7 +50,11 @@ public class DestroyOnContactGrenade : TowerAmmoStats {
 						{
 							es.mHealth -= mDamage * effect;
 							if(es.mHealth <= 0.0f)
-								es.mResources += 50;
+							{
+								GameObject tsg = GameObject.FindGameObjectWithTag("TheTower");
+								tsg.GetComponent<TowerStats>().comboKills++;
+								//es.mResources += 50;
+							}
 						}
 					}
 				}

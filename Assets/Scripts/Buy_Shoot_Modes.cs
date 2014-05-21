@@ -82,6 +82,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//upgrade multiplier for upgrading tower weapons
 	public float upgradeTowerMult = 1.0f;
+
+	//multishot
+	public bool multiShot = false;
+
 	public GameObject findMinInList(List<GameObject> lst)
 	{
 		GameObject temp = null;
@@ -215,6 +219,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		Debug.Log ("thepath3" + thePath3.Count);
 		buyPlane = enemyMask | placementMask;
 		upgradeTowerMult = 1.0f;
+		multiShot = false;
 	}
 
 
@@ -370,11 +375,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								lastPlane.gameObject.tag = "Taken";
 
 								//wall specific placement;
-							if(currWeapon.tag == "WallWeapon")
-							{
-								wallObjectSurvive wos = currWeapon.GetComponent<wallObjectSurvive>();
-								wos.planeItsOn = lastPlane.gameObject;
-							}
+								if(currWeapon.tag == "WallWeapon")
+								{
+									wallObjectSurvive wos = currWeapon.GetComponent<wallObjectSurvive>();
+									wos.planeItsOn = lastPlane.gameObject;
+								}
 							//GameObject start = GameObject.Find ("UnitsAllowedStart");
 								theTaken = lastPlane;
 								theTaken.gameObject.tag = "Taken";
@@ -401,6 +406,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 										//thePathsHaveChanged1 = true;
 									}
 								}
+							}
+							else{
+								lastPlane.gameObject.tag = "NotTaken";
+								grid.isAvailable = true;
+
 							}
 						//thePathsHaveChanged = false;
 						}
@@ -481,16 +491,24 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				}
 				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
 				/** Get the tower */
-				towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
+				if(!multiShot)
+				{
+					towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
 				                                   TOWER_FIRE_VECTOR,
 				                                   Quaternion.identity);
-				towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
-				/** Create the cannon shot */
-				FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
-				cannon.typeOfAmmo = theTowerWeapon;
-				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
-				cannon.dir = dir.normalized;
-				cannon.mAngle = fireAngle;
+					towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
+					/** Create the cannon shot */
+					FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
+					cannon.typeOfAmmo = theTowerWeapon;
+					Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
+					cannon.dir = dir.normalized;
+					cannon.mAngle = fireAngle;
+
+				}
+				else
+				{
+					StartCoroutine(spawnMultiShots(3,targetPosition-TOWER_FIRE_VECTOR,fireAngle));
+				}
 				theTower.GetComponent<TowerStats>().mLastFired = Time.time;
 			} else if(Input.GetMouseButton(0) && theTowerWeapon == towerWeapons.Length - 1) {
 				if(laserFireTime <= 0.0f)
@@ -544,6 +562,22 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				mTargetLocation.transform.position = hitLocation;
 			}
 		}
+	}
+	IEnumerator spawnMultiShots(int num, Vector3 multi_dir, float multi_fireAngle)
+	{
+		for(int i = 0; i < num; i++)
+		{
+			GameObject ta = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
+			                                    TOWER_FIRE_VECTOR,
+			                                    Quaternion.identity);
+			ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
+			FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
+			cannon.typeOfAmmo = theTowerWeapon;
+			cannon.dir = multi_dir.normalized;
+			cannon.mAngle = multi_fireAngle;
+			yield return new WaitForSeconds(0.2f);
+		}
+
 	}
 
 }

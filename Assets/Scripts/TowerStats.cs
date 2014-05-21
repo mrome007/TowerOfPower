@@ -14,6 +14,10 @@ public class TowerStats : MonoBehaviour {
 	public float mFireRate;
 	public float mLastFired;
 
+	public int comboKills;
+	public int killsToStreak;
+	public int streakNo;
+	private int currStreak;
 	// Use this for initialization
 	void Start () {
 		mHealth = MAX_HEALTH;
@@ -21,6 +25,10 @@ public class TowerStats : MonoBehaviour {
 		mLastFired = 0.0f;
 		mResources = 1000;
 		upgradeCost = 1000;
+		comboKills = 0;
+		killsToStreak = 5;
+		streakNo = 1;
+		currStreak = streakNo;
 		//Debug.Log (mResources);
 	}
 	
@@ -47,6 +55,18 @@ public class TowerStats : MonoBehaviour {
 				towerPiece.transform.Translate(translateVector);
 			}
 		}
+		if(comboKills == killsToStreak)
+		{
+			streakNo++;
+			if(streakNo > currStreak)
+			{
+				currStreak = streakNo;
+				killStreak(streakNo);
+			}
+			comboKills = 0;
+			killsToStreak += 2;
+		}
+
 	}
 
 	void OnTriggerEnter(Collider collision) {
@@ -57,11 +77,53 @@ public class TowerStats : MonoBehaviour {
 			healthGUI.GetComponent<TowerHealthBar>().health -= 5;
 			healthGUI.GetComponent<TowerHealthBar>().ChangeHealth(-1);
 			mHealth--;
+			comboKills = 0;
 			Destroy (collisionObject);
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
 			sw.numEnemiesRemaining--;
 			Debug.Log(mHealth);
+		}
+	}
+
+	void killStreak(int n)
+	{
+		GameObject go = GameObject.FindGameObjectWithTag("GameController");
+		Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
+		switch(n)
+		{
+		case 2:
+			if((mFireRate - 0.1f) > 0.0f)
+				mFireRate -= 0.1f;
+			break;
+		case 3:
+
+			bsm.multiShot = true;
+			break;
+		case 4:
+			if((mFireRate - 0.1f) > 0.0f)
+				mFireRate -= 0.1f;
+			break;
+
+		case 5:
+			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
+			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
+			bsm.theTowerWeapon = 1;
+			bsm.multiShot = false;
+			break;
+
+		case 6:
+			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
+			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
+			bsm.multiShot = true;
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		
+		default:
+			break;
 		}
 	}
 

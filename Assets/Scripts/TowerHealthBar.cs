@@ -59,7 +59,10 @@ public class TowerHealthBar : MonoBehaviour {
 			box = new Rect(x+5,y,75,Screen.height/2);
 			Graphics.DrawTexture(box, HBImage, mat );
 		}
+		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
+		TowerStats ts = tsg.GetComponent<TowerStats> ();
 		UnityEngine.GUI.Box (new Rect(10,Screen.height/2 + 20, Screen.width/20, 20), curHealth + "/" + maxHealth);
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * 77, 10, 100, 100), ts.comboKills + " Combo" + "\n" + "Streak " + ts.streakNo + "x"); 
 		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *88, 10, 150, 100), 
 		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
 		                     + "\n\n" + "Current Wave: " + waveNo + "\n\n" + "Enemies Remaining: " + numEnemies + "\n" );
