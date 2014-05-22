@@ -78,11 +78,11 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveTime += 15;
 			spawnCount+=1;
 
-			if(waveNo % 6 == 0)
+			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
-				if(speedMultiplier <= 2.5f)
-					speedMultiplier += 0.1f;
+				if(speedMultiplier <= 3.5f)
+					speedMultiplier += 0.175f;
 				if(spawnWait > 1.5f)
 					spawnWait -= 0.4f;
 				if(waveWait > 2.0f)
@@ -148,7 +148,7 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveDuration = waveTime + 15;
 			waveTime += 15;
 			spawnCount+=1;
-			if(waveNo % 6 == 0)
+			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
 				if(speedMultiplier <= 2.5f)

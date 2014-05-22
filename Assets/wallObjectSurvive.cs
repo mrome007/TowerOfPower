@@ -22,7 +22,7 @@ public class wallObjectSurvive : Weapons {
 			wallDuration--;
 			//destroyWall(nsw);
 		}
-		if (wallDuration <= 0)
+		if (wallDuration < 1)
 		{
 			destroyWall (nsw);
 			transform.Translate(Vector3.down*Time.deltaTime*2.0f);
@@ -36,7 +36,7 @@ public class wallObjectSurvive : Weapons {
 
 	void destroyWall(NewSpawnWaves n)
 	{
-		if(wallDuration == 0)
+		if(wallDuration == 1)
 		{
 			planeItsOn.tag = "NotTaken";
 			GridForUnits grid = planeItsOn.GetComponent<GridForUnits>();

@@ -33,6 +33,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	public Material oldMaterial;
 	public Material hoverMaterial;
+	public Material cantBuy;
 
 	public int buyPlane;
 	private int enemyLayer = 10;
@@ -85,6 +86,9 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//multishot
 	public bool multiShot = false;
+
+	//radius upgrade
+	public float theRadiusMult;
 
 	public GameObject findMinInList(List<GameObject> lst)
 	{
@@ -219,6 +223,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		Debug.Log ("thepath3" + thePath3.Count);
 		buyPlane = enemyMask | placementMask;
 		upgradeTowerMult = 1.0f;
+		theRadiusMult = 1.0f;
 		multiShot = false;
 	}
 
@@ -314,8 +319,32 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				{
 					lastPlane = hit.collider.gameObject;
 				//oldMaterial = lastPlane.renderer.material;
-					lastPlane.renderer.material = hoverMaterial;
-
+					GridForUnits lsp = lastPlane.GetComponent<GridForUnits>();
+					if(lsp.whatsInside == null)
+					{
+						int cstTBy = weapons[theWeapon].GetComponent<Weapons>().cost;
+						GameObject towor = GameObject.FindGameObjectWithTag("TheTower");
+						int rsrce = towor.GetComponent<TowerStats>().mResources;
+						if((rsrce - cstTBy) >= 0)
+							lastPlane.renderer.material = hoverMaterial;
+						else
+							lastPlane.renderer.material = cantBuy;
+					}
+					else
+					{
+						Weapons gtpgrd = lsp.whatsInside.GetComponent<Weapons>();
+						GameObject whtTpgrd = gtpgrd.upgradeIt;
+						if(whtTpgrd != null)
+						{
+							int csy = whtTpgrd.GetComponent<Weapons>().cost;
+							GameObject tweer = GameObject.FindGameObjectWithTag("TheTower");
+							int reesrc = tweer.GetComponent<TowerStats>().mResources;
+							if(reesrc - csy >= 0)
+								lastPlane.renderer.material = hoverMaterial;
+							else
+								lastPlane.renderer.material = cantBuy;
+						}
+					}
 					if(lastPlane != null && lastPlane.GetComponent<GridForUnits>().whatsInside != null)
 					{
 						GameObject hoverUpgrade = lastPlane.GetComponent<GridForUnits>().whatsInside.GetComponent<Weapons>().upgradeDummy;
@@ -497,9 +526,11 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				                                   TOWER_FIRE_VECTOR,
 				                                   Quaternion.identity);
 					towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
+
 					/** Create the cannon shot */
 					FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
 					cannon.typeOfAmmo = theTowerWeapon;
+					cannon.radius *= theRadiusMult;
 					Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
 					cannon.dir = dir.normalized;
 					cannon.mAngle = fireAngle;
@@ -572,6 +603,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			                                    Quaternion.identity);
 			ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 			FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
+			cannon.radius *= theRadiusMult;
 			cannon.typeOfAmmo = theTowerWeapon;
 			cannon.dir = multi_dir.normalized;
 			cannon.mAngle = multi_fireAngle;

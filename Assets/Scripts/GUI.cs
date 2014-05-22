@@ -329,7 +329,7 @@ public class GUI : MonoBehaviour {
 						{		
 							ts.mResources -= cost;
 							sel.upgradeTowerMult += 0.5f;
-							theT.GetComponent<TowerStats>().upgradeCost += 1000;
+					theT.GetComponent<TowerStats>().upgradeCost += theT.GetComponent<TowerStats>().upgradeCost;
 						}
 					}
 		
@@ -352,7 +352,7 @@ public class GUI : MonoBehaviour {
 				Application.LoadLevel(Application.loadedLevel);
 		}
 		//WAVE ADVANCE BUTTON
-		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 95, 105, 50), "Advance Wave")) 
+		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 25, 105, 50), "Advance Wave")) 
 		{
 			GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 			NewSpawnWaves nsw = mode.GetComponent<NewSpawnWaves>();
