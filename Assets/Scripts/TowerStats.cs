@@ -24,6 +24,11 @@ public class TowerStats : MonoBehaviour {
 	private float theStreakTimer;
 	private float streakTimerIncr;
 	private int streakNoIncr;
+
+	public int selectTower;
+	public GameObject[] towers;
+	public GameObject towerType;
+	public bool destroyTower;
 	// Use this for initialization
 	void Start () {
 		mHealth = MAX_HEALTH;
@@ -39,8 +44,10 @@ public class TowerStats : MonoBehaviour {
 		theStreakTimer = killStreakTimer;
 		currCombo = comboKills;
 		theNextStreak = "Fire Rate Increase";
-		streakTimerIncr = 1.0f;
+		streakTimerIncr = 2.0f;
 		streakNoIncr = 2;
+		selectTower = 0;
+		destroyTower = false;
 		//Debug.Log (mResources);
 	}
 	
@@ -51,9 +58,13 @@ public class TowerStats : MonoBehaviour {
 			Buy_Shoot_Modes bsm = gc.GetComponent<Buy_Shoot_Modes>();
 			bsm.gameover = true;
 			GameObject[] towerPieces = GameObject.FindGameObjectsWithTag("TowerPiece");
-			for (int i = 0; i < towerPieces.Length; ++i) {
-				GameObject towerPiece = towerPieces[i];
-				Vector3 piecePosition = towerPiece.transform.position;
+			if(destroyTower)
+			{
+				for (int i = 0; i < towerPieces.Length; ++i) {
+					GameObject towerPiece = towerPieces[i];
+					towerPiece.AddComponent<Rigidbody>();
+
+				/*Vector3 piecePosition = towerPiece.transform.position;
 				float xPos = towerPiece.transform.position.z;
 				float yPos = 5;
 				float zPos = towerPiece.transform.position.z;
@@ -64,7 +75,9 @@ public class TowerStats : MonoBehaviour {
 					transform.RotateAround(piecePosition, translateVector, 0.5f);
 				}
 				translateVector = translateVector.normalized;
-				towerPiece.transform.Translate(translateVector);
+				towerPiece.transform.Translate(translateVector);*/
+				}
+				destroyTower = false;
 			}
 		}
 		if(comboKills > currCombo)
@@ -74,9 +87,9 @@ public class TowerStats : MonoBehaviour {
 			{
 				streakNo++;
 				if(streakNo > 2)
-					streakNoIncr += 3;
+					streakNoIncr += 2;
 				else if(streakNo > 4)
-					streakNoIncr += 4;
+					streakNoIncr += 3;
 				if(streakNo > currStreak)
 				{
 					currStreak = streakNo;
@@ -84,7 +97,7 @@ public class TowerStats : MonoBehaviour {
 				}
 				comboKills = 0;
 				killsToStreak += streakNoIncr;
-				theStreakTimer += streakTimerIncr;
+				theStreakTimer += (streakTimerIncr * streakNoIncr)/2.0f;
 				killStreakTimer = theStreakTimer;
 			}
 			if(killStreakTimer <= 0)
@@ -105,6 +118,8 @@ public class TowerStats : MonoBehaviour {
 			healthGUI.GetComponent<TowerHealthBar>().health -= 5;
 			healthGUI.GetComponent<TowerHealthBar>().ChangeHealth(-1);
 			mHealth--;
+			if(mHealth == 0)
+				destroyTower = true;
 			comboKills = 0;
 			killStreakTimer = theStreakTimer;
 			Destroy (collisionObject);
@@ -126,21 +141,40 @@ public class TowerStats : MonoBehaviour {
 			break;
 
 		case 2:
+			foreach(Transform child in gameObject.transform)
+			{
+				Destroy(child.gameObject);
+			}
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
 			theNextStreak = "MULTISHOT";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
+			selectTower++;
 			break;
 		case 3:
+			Destroy(towerType);
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
 			theNextStreak = "Fire Rate Increase";
 			bsm.multiShot = true;
+			selectTower++;
 			break;
 		case 4:
+			Destroy(towerType);
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
+			selectTower++;
 			theNextStreak = "Grenade";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			break;
 
 		case 5:
+			Destroy(towerType);
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
+			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
 			theNextStreak = "Grenade MULTISHOT";
@@ -149,13 +183,20 @@ public class TowerStats : MonoBehaviour {
 			break;
 
 		case 6:
+			Destroy(towerType);
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
+			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
 			theNextStreak = "Radius Increase";
 			bsm.multiShot = true;
 			break;
 		case 7:
-
+			Destroy(towerType);
+			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			                                    Quaternion.identity);
+			selectTower++;
 			bsm.theRadiusMult += 1.0f;
 			break;
 		case 8:
