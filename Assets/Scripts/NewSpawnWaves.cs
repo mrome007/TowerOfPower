@@ -308,7 +308,7 @@ public class NewSpawnWaves : MonoBehaviour {
 
 				if(i == enemyCount/2)
 				{
-					int chanceOfBoss = Random.Range(0,4);
+					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)
 					{
 						Debug.Log ("THERE'S A BOSS INCOMING");
@@ -378,7 +378,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				}
 				if(i == enemyCount/2)
 				{
-					int chanceOfBoss = Random.Range(0,4);
+					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)
 					{
 						Debug.Log ("THERE'S A BOSS INCOMING");
@@ -448,7 +448,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				}
 				if(i == enemyCount/2)
 				{
-					int chanceOfBoss = Random.Range(0,4);
+					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)
 					{
 						Debug.Log ("THERE'S A BOSS INCOMING");
