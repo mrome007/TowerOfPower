@@ -34,7 +34,7 @@ public class TowerStats : MonoBehaviour {
 		mHealth = MAX_HEALTH;
 		mFireRate = 0.5f;
 		mLastFired = 0.0f;
-		mResources = 400;
+		mResources = 500;
 		upgradeCost = 2000;
 		comboKills = 0;
 		killsToStreak = 4;
@@ -122,10 +122,12 @@ public class TowerStats : MonoBehaviour {
 				destroyTower = true;
 			comboKills = 0;
 			killStreakTimer = theStreakTimer;
-			Destroy (collisionObject);
+
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
-			sw.numEnemiesRemaining--;
+			if(collision.gameObject.name != "Shield")
+				sw.numEnemiesRemaining--;
+			Destroy (collisionObject);
 			Debug.Log(mHealth);
 		}
 	}

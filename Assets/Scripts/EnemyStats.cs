@@ -7,10 +7,11 @@ public class EnemyStats : MonoBehaviour {
 	public int mResources;
 	public float mSpeed;
 	public GameObject enemyDummy;
+	public float maxHealth;
 
 	// Use this for initialization
 	void Start () {
-	
+		maxHealth = mHealth;
 	}
 	
 	// Update is called once per frame
@@ -22,7 +23,8 @@ public class EnemyStats : MonoBehaviour {
 			if(gc)
 			{
 				NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
-				sw.numEnemiesRemaining--;
+				if(gameObject.name != "Shield")
+					sw.numEnemiesRemaining--;
 			}
 			GameObject theTower = GameObject.FindGameObjectWithTag("TheTower");
 			TowerStats towerStats = theTower.GetComponent<TowerStats>();

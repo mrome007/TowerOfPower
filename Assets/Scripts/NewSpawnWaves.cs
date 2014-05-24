@@ -4,6 +4,7 @@ using System.Collections;
 public class NewSpawnWaves : MonoBehaviour {
 	public GameObject[] enemy;
 	public GameObject[] outEnemy;
+	public GameObject[] boss;
 	public GameObject enemyOut;
 	public int spawnCount;
 	public float spawnWait;
@@ -41,7 +42,13 @@ public class NewSpawnWaves : MonoBehaviour {
 		wallsWereDestroyed = false;
 		difficulty = 1;
 		advanceTheWave = false;
-
+		/*
+		GameObject eo = (GameObject)Instantiate(boss[1], new Vector3(95.0f,0.0f,15.0f),Quaternion.identity);
+		Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+		MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
+		mud.wayPoints = bsm.thePath;
+		numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
+		*/
 		if(!allBlue)
 		{
 			StartCoroutine(SpawnEasyWaves(waveDuration,spawnCount,healthMultiplier,speedMultiplier,
@@ -298,6 +305,28 @@ public class NewSpawnWaves : MonoBehaviour {
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath3;
 				}
+
+				if(i == enemyCount/2)
+				{
+					int chanceOfBoss = Random.Range(0,4);
+					if(chanceOfBoss == 0)
+					{
+						Debug.Log ("THERE'S A BOSS INCOMING");
+						int selectBaws = Random.Range(0,boss.Length);
+						if(selectBaws < boss.Length-1)
+						{
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,0.0f,45.0f),Quaternion.identity);
+							Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+							MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
+							mud.wayPoints = bsm.thePath3;
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
+						}
+						else
+						{
+							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,45.0f),Quaternion.identity);
+						}
+					}
+				}
 				yield return new WaitForSeconds(spawnWaitTime);
 				waveDur -= spawnWaitTime;
 				waveDur -= Time.deltaTime;
@@ -346,6 +375,27 @@ public class NewSpawnWaves : MonoBehaviour {
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath;
 				}
+				if(i == enemyCount/2)
+				{
+					int chanceOfBoss = Random.Range(0,4);
+					if(chanceOfBoss == 0)
+					{
+						Debug.Log ("THERE'S A BOSS INCOMING");
+						int selectBaws = Random.Range(0,boss.Length);
+						if(selectBaws < boss.Length-1)
+						{
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,0.0f,15.0f),Quaternion.identity);
+							Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+							MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
+							mud.wayPoints = bsm.thePath;
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
+						}
+						else
+						{
+							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,15.0f),Quaternion.identity);
+						}
+					}
+				}
 				yield return new WaitForSeconds(spawnWaitTime);
 				waveDur -= spawnWaitTime;
 				waveDur -= Time.deltaTime;
@@ -393,6 +443,27 @@ public class NewSpawnWaves : MonoBehaviour {
 					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath2;
+				}
+				if(i == enemyCount/2)
+				{
+					int chanceOfBoss = Random.Range(0,4);
+					if(chanceOfBoss == 0)
+					{
+						Debug.Log ("THERE'S A BOSS INCOMING");
+						int selectBaws = Random.Range(0,boss.Length);
+						if(selectBaws < boss.Length-1)
+						{
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,0.0f,-45.0f),Quaternion.identity);
+							Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
+							MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
+							mud.wayPoints = bsm.thePath2;
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
+						}
+						else
+						{
+							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,-45.0f),Quaternion.identity);
+						}
+					}
 				}
 				yield return new WaitForSeconds(spawnWaitTime);
 				waveDur -= spawnWaitTime;

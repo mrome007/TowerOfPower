@@ -8,17 +8,20 @@ public class MoveUsingDFS : MonoBehaviour {
 	public float walkSpeed = 10.0f;
 	public float turnSpeed = 1.0f;
 	public GameObject mTheStart;
+	public bool stop;
 	// Use this for initialization
-	int i;
-	Vector3 dir;
+	public int i;
+	public Vector3 dir;
 	//List<Vector3> lst;
 	public List<GameObject> wayPoints;
 	//Stack<GameObject> stk;
 	public Transform rotateEnem;
+	public bool fromSpawner = false;
 	void Start () 
 	{
 		walkSpeed = gameObject.GetComponent<EnemyStats> ().mSpeed;
-		i = wayPoints.Count-1;
+		if(!fromSpawner)
+			i = wayPoints.Count-1;
 		/*
 		mTheStart = GameObject.Find ("UnitsAllowedStart");
 		stk = new Stack<GameObject> ();
@@ -48,12 +51,14 @@ public class MoveUsingDFS : MonoBehaviour {
 		}
 		dir = lst[0] - transform.position;
 		dir = dir.normalized;
-		*/		  
+		*/
+		stop = false;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		stop = false;
 		GameObject gct = GameObject.FindGameObjectWithTag ("GameController");
 		if(gct)
 		{
@@ -108,6 +113,8 @@ public class MoveUsingDFS : MonoBehaviour {
 			if((transform.position - wayPoints[i].transform.position).sqrMagnitude <= 1.0f)
 			{
 				i--;
+				stop = true;
+				//Debug.Log(stop);
 				if(i >= 0)
 				{
 					dir = wayPoints[i].transform.position - transform.position;
@@ -125,7 +132,7 @@ public class MoveUsingDFS : MonoBehaviour {
 			}
 			Destroy(gameObject);
 		}
-		
+
 	}
 }
 

@@ -21,13 +21,12 @@ public class EnemyHealthShrink : MonoBehaviour {
 		theEnemy = transform.parent.parent.gameObject;
 		shrinkRate = theEnemy.GetComponent<EnemyStats> ().mHealth / mHealth;
 		//Debug.Log (shrinkRate);
-		if(shrinkRate < keepTrackShrink)
+		if(shrinkRate != keepTrackShrink)
 		{
 			transform.localScale = new Vector3 (shrinkRate, transform.localScale.y,
 		       	                            transform.localScale.z);
 			keepTrackShrink = shrinkRate;
 
 		}
-
 	}
 }
