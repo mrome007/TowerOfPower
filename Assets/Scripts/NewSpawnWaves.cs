@@ -323,7 +323,8 @@ public class NewSpawnWaves : MonoBehaviour {
 						}
 						else
 						{
-							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,45.0f),Quaternion.identity);
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,45.0f),Quaternion.identity);
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
 						}
 					}
 				}
@@ -392,7 +393,8 @@ public class NewSpawnWaves : MonoBehaviour {
 						}
 						else
 						{
-							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,15.0f),Quaternion.identity);
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,15.0f),Quaternion.identity);
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
 						}
 					}
 				}
@@ -461,7 +463,8 @@ public class NewSpawnWaves : MonoBehaviour {
 						}
 						else
 						{
-							Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,-45.0f),Quaternion.identity);
+							GameObject eo = (GameObject)Instantiate(boss[selectBaws], new Vector3(95.0f,15.0f,-45.0f),Quaternion.identity);
+							numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
 						}
 					}
 				}
