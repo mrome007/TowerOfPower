@@ -386,6 +386,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 						Debug.Log (allPathsBlocked);
 						if(!allPathsBlocked)
 						{
+							//lastPlane.gameObject.tag = "NotTaken";
 							int costToBuy = weapons[theWeapon].GetComponent<Weapons>().cost;
 							GameObject twr = GameObject.FindGameObjectWithTag("TheTower");
 							int resource = twr.GetComponent<TowerStats>().mResources;
