@@ -72,7 +72,7 @@ public class NewSpawnWaves : MonoBehaviour {
 			{	
 				HellWave = Random.Range(waveNo+8, waveNo + 10);
 			}
-			if(waveNo % 15 == 0)
+			if(waveNo % 12 == 0)
 			{
 				if(difficulty < 3)
 					difficulty++;
@@ -146,7 +146,7 @@ public class NewSpawnWaves : MonoBehaviour {
 			{	
 				HellWave = Random.Range(waveNo+8, waveNo + 10);
 			}
-			if(waveNo % 15 == 0)
+			if(waveNo % 12 == 0)
 			{
 				if(difficulty < 3)
 					difficulty++;
@@ -306,7 +306,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					mud.wayPoints = bsm.thePath3;
 				}
 
-				if(i == enemyCount/2)
+				if(i == enemyCount/2|| i == 1 || i == enemyCount-2)
 				{
 					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)
@@ -376,7 +376,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath;
 				}
-				if(i == enemyCount/2)
+				if(i == enemyCount/2 || i == 1 || i == enemyCount-2)
 				{
 					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)
@@ -446,7 +446,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
 					mud.wayPoints = bsm.thePath2;
 				}
-				if(i == enemyCount/2)
+				if(i == enemyCount/2 || i == 1 || i == enemyCount-2)
 				{
 					int chanceOfBoss = Random.Range(0,9);
 					if(chanceOfBoss == 0)

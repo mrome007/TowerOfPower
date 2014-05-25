@@ -29,7 +29,7 @@ public class DestroyOnContactGrenade : TowerAmmoStats {
 			{
 				GameObject tsg = GameObject.FindGameObjectWithTag("TheTower");
 				tsg.GetComponent<TowerStats>().comboKills++;
-				enemyStats.mResources += 10;
+				enemyStats.mResources += 5;
 			}
 		}
 		if(collisionObject.tag == "Enemy")
@@ -53,7 +53,7 @@ public class DestroyOnContactGrenade : TowerAmmoStats {
 							{
 								GameObject tsg = GameObject.FindGameObjectWithTag("TheTower");
 								tsg.GetComponent<TowerStats>().comboKills++;
-								//es.mResources += 10;
+								//es.mResources += 1;
 							}
 						}
 					}

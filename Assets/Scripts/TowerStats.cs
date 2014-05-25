@@ -97,7 +97,7 @@ public class TowerStats : MonoBehaviour {
 				}
 				comboKills = 0;
 				killsToStreak += streakNoIncr;
-				theStreakTimer += (streakTimerIncr * streakNoIncr)/2.0f;
+				theStreakTimer += (streakTimerIncr * streakNoIncr)/3.0f;
 				killStreakTimer = theStreakTimer;
 			}
 			if(killStreakTimer <= 0)

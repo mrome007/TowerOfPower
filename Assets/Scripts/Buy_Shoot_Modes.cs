@@ -320,7 +320,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					lastPlane = hit.collider.gameObject;
 				//oldMaterial = lastPlane.renderer.material;
 					GridForUnits lsp = lastPlane.GetComponent<GridForUnits>();
-					if(lsp.whatsInside == null)
+					if(lsp.isAvailable)
 					{
 						int cstTBy = weapons[theWeapon].GetComponent<Weapons>().cost;
 						GameObject towor = GameObject.FindGameObjectWithTag("TheTower");
@@ -456,6 +456,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				{
 					if(grid.whatsInside != null)
 					{
+						GameObject gu = grid.whatsInside;
 						Weapons getUpgrade = grid.whatsInside.GetComponent<Weapons>();
 						GameObject whatToUpgrade = getUpgrade.upgradeIt;
 						if(whatToUpgrade != null)
@@ -468,7 +469,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 								twr.GetComponent<TowerStats>().mResources -= costToBuy;
 								Vector3 tempPos = getUpgrade.transform.position;
 								Quaternion tempRot = getUpgrade.transform.rotation;
-								Destroy(getUpgrade.gameObject);
+								Destroy(gu);
+								grid.whatsInside = null;
 								GameObject currWeapon = (GameObject)Instantiate(whatToUpgrade, 
 							                                                tempPos, tempRot);
 								if(currWeapon.tag == "WallWeapon")

@@ -24,10 +24,10 @@ public class wallObjectSurvive : Weapons {
 		}
 		if (wallDuration < 1)
 		{
-			destroyWall (nsw);
 			transform.Translate(Vector3.down*Time.deltaTime*2.0f);
 			if(transform.position.y <= -4.0f)
 			{
+				destroyWall (nsw);
 				planeItsOn.tag = "NotTaken";
 				Destroy(gameObject);
 			}
@@ -36,7 +36,7 @@ public class wallObjectSurvive : Weapons {
 
 	void destroyWall(NewSpawnWaves n)
 	{
-		if(wallDuration == 0)
+		if(wallDuration <= 0)
 		{
 			planeItsOn.tag = "NotTaken";
 			GridForUnits grid = planeItsOn.GetComponent<GridForUnits>();
