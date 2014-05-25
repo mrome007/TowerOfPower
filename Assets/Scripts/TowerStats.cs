@@ -35,7 +35,7 @@ public class TowerStats : MonoBehaviour {
 		mFireRate = 0.5f;
 		mLastFired = 0.0f;
 		mResources = 500;
-		upgradeCost = 2000;
+		upgradeCost = 3000;
 		comboKills = 0;
 		killsToStreak = 4;
 		streakNo = 1;

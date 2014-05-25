@@ -320,29 +320,32 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					lastPlane = hit.collider.gameObject;
 				//oldMaterial = lastPlane.renderer.material;
 					GridForUnits lsp = lastPlane.GetComponent<GridForUnits>();
-					if(lsp.isAvailable)
+					if(lsp)
 					{
-						int cstTBy = weapons[theWeapon].GetComponent<Weapons>().cost;
-						GameObject towor = GameObject.FindGameObjectWithTag("TheTower");
-						int rsrce = towor.GetComponent<TowerStats>().mResources;
-						if((rsrce - cstTBy) >= 0)
-							lastPlane.renderer.material = hoverMaterial;
-						else
-							lastPlane.renderer.material = cantBuy;
-					}
-					else
-					{
-						Weapons gtpgrd = lsp.whatsInside.GetComponent<Weapons>();
-						GameObject whtTpgrd = gtpgrd.upgradeIt;
-						if(whtTpgrd != null)
+						if(lsp.isAvailable)
 						{
-							int csy = whtTpgrd.GetComponent<Weapons>().cost;
-							GameObject tweer = GameObject.FindGameObjectWithTag("TheTower");
-							int reesrc = tweer.GetComponent<TowerStats>().mResources;
-							if(reesrc - csy >= 0)
+							int cstTBy = weapons[theWeapon].GetComponent<Weapons>().cost;
+							GameObject towor = GameObject.FindGameObjectWithTag("TheTower");
+							int rsrce = towor.GetComponent<TowerStats>().mResources;
+							if((rsrce - cstTBy) >= 0)
 								lastPlane.renderer.material = hoverMaterial;
 							else
 								lastPlane.renderer.material = cantBuy;
+						}
+						else
+						{
+							Weapons gtpgrd = lsp.whatsInside.GetComponent<Weapons>();
+							GameObject whtTpgrd = gtpgrd.upgradeIt;
+							if(whtTpgrd != null)
+							{
+								int csy = whtTpgrd.GetComponent<Weapons>().cost;
+								GameObject tweer = GameObject.FindGameObjectWithTag("TheTower");
+								int reesrc = tweer.GetComponent<TowerStats>().mResources;
+								if(reesrc - csy >= 0)
+									lastPlane.renderer.material = hoverMaterial;
+								else
+									lastPlane.renderer.material = cantBuy;
+							}
 						}
 					}
 					if(lastPlane != null && lastPlane.GetComponent<GridForUnits>().whatsInside != null)
