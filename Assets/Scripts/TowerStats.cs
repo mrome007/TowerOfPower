@@ -149,7 +149,7 @@ public class TowerStats : MonoBehaviour {
 			}
 			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
 			                                    Quaternion.identity);
-			theNextStreak = "MULTISHOT";
+			theNextStreak = "SPREADSHOT";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			selectTower++;
@@ -159,7 +159,8 @@ public class TowerStats : MonoBehaviour {
 			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
 			                                    Quaternion.identity);
 			theNextStreak = "Fire Rate Increase";
-			bsm.multiShot = true;
+			bsm.numShots = 3;
+			//bsm.multiShot = true;
 			selectTower++;
 			break;
 		case 4:
@@ -167,7 +168,7 @@ public class TowerStats : MonoBehaviour {
 			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
 			                                    Quaternion.identity);
 			selectTower++;
-			theNextStreak = "Grenade";
+			theNextStreak = "MULTISHOT";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			break;
@@ -179,9 +180,10 @@ public class TowerStats : MonoBehaviour {
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
-			theNextStreak = "Grenade MULTISHOT";
-			bsm.theTowerWeapon = 1;
-			bsm.multiShot = false;
+			theNextStreak = "Grenade";
+			bsm.numShots = 1;
+			//bsm.theTowerWeapon = 1;
+			bsm.multiShot = true;
 			break;
 
 		case 6:
@@ -191,19 +193,26 @@ public class TowerStats : MonoBehaviour {
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
-			theNextStreak = "Radius Increase";
-			bsm.multiShot = true;
+			theNextStreak = "Spread Grenade";
+			bsm.theTowerWeapon = 1;
+			bsm.multiShot = false;
 			break;
 		case 7:
 			Destroy(towerType);
 			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
 			                                    Quaternion.identity);
 			selectTower++;
-			bsm.theRadiusMult += 1.0f;
+			theNextStreak = "Radius Increase";
+			//bsm.theRadiusMult += 1.0f;
+			bsm.numShots = 3;
 			break;
 		case 8:
+			theNextStreak = "Multi Grenade";
+			bsm.theRadiusMult += 1.0f;
 			break;
-		
+		case 9:
+			bsm.multiShot = true;
+			break;
 		default:
 			break;
 		}

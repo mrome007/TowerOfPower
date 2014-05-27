@@ -46,7 +46,7 @@ public class fireMissile : TurretAmmoBase {
 						missileSpeed += 6;
 						slow = 0.1f;
 					}
-					if((target.position - transform.position).magnitude > 5.0f)
+					if((target.position - transform.position).magnitude > 15.0f)
 					{
 						missileRot.LookAt(target);
 						transform.rotation = Quaternion.Lerp(transform.rotation, missileRot.rotation, 

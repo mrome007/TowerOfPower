@@ -89,6 +89,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	//radius upgrade
 	public float theRadiusMult;
+	//number of shots for spread
+	public int numShots;
 
 	public GameObject findMinInList(List<GameObject> lst)
 	{
@@ -225,6 +227,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		upgradeTowerMult = 1.0f;
 		theRadiusMult = 1.0f;
 		multiShot = false;
+		numShots = 1;
 	}
 
 
@@ -313,6 +316,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				if(lastPlane)
 				{
 					lastPlane.renderer.material = oldMaterial;
+					lastPlane.renderer.enabled = false;
 					Destroy(hoverObject);
 				}
 				if(hit.collider.gameObject.tag != "Enemy")
@@ -322,6 +326,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					GridForUnits lsp = lastPlane.GetComponent<GridForUnits>();
 					if(lsp)
 					{
+						lastPlane.renderer.enabled = true;
 						if(lsp.isAvailable)
 						{
 							int cstTBy = weapons[theWeapon].GetComponent<Weapons>().cost;
@@ -364,13 +369,17 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					}
 				}
 				else
+				{
+					//lastPlane.renderer.enabled = false;
 					lastPlane = null;
+				}
 			}
 			else
 			{
 				if(lastPlane)
 				{
 					lastPlane.renderer.material = oldMaterial;
+					lastPlane.renderer.enabled = false;
 					lastPlane = null;
 					Destroy(hoverObject);
 				}
@@ -528,19 +537,19 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				/** Get the tower */
 				if(!multiShot)
 				{
-					towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
-				                                   TOWER_FIRE_VECTOR,
-				                                   Quaternion.identity);
-					towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
+					//towerAmmo = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
+				      //                             TOWER_FIRE_VECTOR,
+				        //                          Quaternion.identity);
+					//towerAmmo.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 
 					/** Create the cannon shot */
-					FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
-					cannon.typeOfAmmo = theTowerWeapon;
-					cannon.radius *= theRadiusMult;
-					Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
-					cannon.dir = dir.normalized;
-					cannon.mAngle = fireAngle;
-
+					//FireTowersBasicAmmo cannon = towerAmmo.GetComponent<FireTowersBasicAmmo>();
+					//cannon.typeOfAmmo = theTowerWeapon;
+					//cannon.radius *= theRadiusMult;
+					//Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
+					//cannon.dir = dir.normalized;
+					//cannon.mAngle = fireAngle;
+					spawnSpreadShots(numShots,targetPosition,fireAngle);
 				}
 				else
 				{
@@ -600,22 +609,54 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			}
 		}
 	}
-	IEnumerator spawnMultiShots(int num, Vector3 multi_dir, float multi_fireAngle)
+	IEnumerator spawnMultiShots(int num, Vector3 multTarget, float multi_fireAngle)
 	{
 		for(int i = 0; i < num; i++)
 		{
+			//GameObject ta = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
+			//                                    TOWER_FIRE_VECTOR,
+			  //                                  Quaternion.identity);
+			//ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
+			//FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
+			//cannon.radius *= theRadiusMult;
+			//cannon.typeOfAmmo = theTowerWeapon;
+			//cannon.dir = multi_dir.normalized;
+			//cannon.mAngle = multi_fireAngle;
+			spawnSpreadShots(numShots, multTarget, multi_fireAngle);
+			yield return new WaitForSeconds(0.2f);
+		}
+
+	}
+
+	void spawnSpreadShots(int num, Vector3 spreadTarget, float multi_fireAngle)
+	{
+		Vector3 []spreadPositions = new Vector3[3];
+		spreadPositions [0] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadTarget.z);
+		float spreadZn;
+		float spreadZp;
+		if((spreadTarget.z+20.0f) > 45)
+			spreadZn = 45;
+		else
+			spreadZn = spreadTarget.z+20.0f;
+		if((spreadTarget.z-20.0f) < -45)
+			spreadZp = -45;
+		else
+			spreadZp = spreadTarget.z-20.0f;
+		spreadPositions [1] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadZn);
+		spreadPositions [2] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadZp );
+		for(int i = 0; i < num; i++)
+		{
 			GameObject ta = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
-			                                    TOWER_FIRE_VECTOR,
-			                                    Quaternion.identity);
+			                                        TOWER_FIRE_VECTOR,
+			                                        Quaternion.identity);
 			ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 			FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
 			cannon.radius *= theRadiusMult;
 			cannon.typeOfAmmo = theTowerWeapon;
-			cannon.dir = multi_dir.normalized;
+			cannon.dir = (spreadPositions[i] - TOWER_FIRE_VECTOR).normalized;
 			cannon.mAngle = multi_fireAngle;
-			yield return new WaitForSeconds(0.2f);
 		}
-
+		
 	}
 
 }

@@ -18,7 +18,7 @@ public class MedicCure : MonoBehaviour {
 		if(other.gameObject.tag == "Enemy")
 		{
 			EnemyStats es = other.gameObject.GetComponent<EnemyStats>();
-			if(es.mHealth < es.maxHealth && es.mHealth > 0)
+			if(es && es.mHealth < es.maxHealth && es.mHealth > 0)
 			{
 				Debug.Log("Wat");
 				es.mHealth += 5.0f;
@@ -31,7 +31,7 @@ public class MedicCure : MonoBehaviour {
 		if(other.gameObject.tag == "Enemy")
 		{
 			EnemyStats es = other.gameObject.GetComponent<EnemyStats>();
-			if(es.mHealth < es.maxHealth && es.mHealth > 0)
+			if(es && es.mHealth < es.maxHealth && es.mHealth > 0)
 			{
 				es.mHealth += 5.0f;
 			}
