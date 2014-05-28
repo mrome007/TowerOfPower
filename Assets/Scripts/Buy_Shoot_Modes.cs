@@ -352,20 +352,21 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 									lastPlane.renderer.material = cantBuy;
 							}
 						}
-					}
-					if(lastPlane != null && lastPlane.GetComponent<GridForUnits>().whatsInside != null)
-					{
-						GameObject hoverUpgrade = lastPlane.GetComponent<GridForUnits>().whatsInside.GetComponent<Weapons>().upgradeDummy;
-						if(hoverUpgrade)
+					
+						if(lastPlane != null && lastPlane.GetComponent<GridForUnits>().whatsInside != null)
 						{
-							hoverObject = (GameObject)Instantiate(hoverUpgrade, lastPlane.transform.position, 
+							GameObject hoverUpgrade = lastPlane.GetComponent<GridForUnits>().whatsInside.GetComponent<Weapons>().upgradeDummy;
+							if(hoverUpgrade)
+							{
+								hoverObject = (GameObject)Instantiate(hoverUpgrade, lastPlane.transform.position, 
+						     	                                 Quaternion.identity);
+							}
+						}
+						else
+						{
+							hoverObject = (GameObject)Instantiate(dummyWeapons[theWeapon], lastPlane.transform.position, 
 						                                      Quaternion.identity);
 						}
-					}
-					else
-					{
-						hoverObject = (GameObject)Instantiate(dummyWeapons[theWeapon], lastPlane.transform.position, 
-						                                      Quaternion.identity);
 					}
 				}
 				else
@@ -553,7 +554,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				}
 				else
 				{
-					StartCoroutine(spawnMultiShots(3,targetPosition-TOWER_FIRE_VECTOR,fireAngle));
+					StartCoroutine(spawnMultiShots(3,targetPosition,fireAngle));
 				}
 				theTower.GetComponent<TowerStats>().mLastFired = Time.time;
 			} else if(Input.GetMouseButton(0) && theTowerWeapon == towerWeapons.Length - 1) {

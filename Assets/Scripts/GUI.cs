@@ -286,14 +286,14 @@ public class GUI : MonoBehaviour {
 										sel.theWeapon = 0;
 								whichinfo = 1 ;
 						}
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 35, Screen.height / 100 * 95, 105, 50), button4Text)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 105, 105, 50), button4Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
 										sel.theWeapon = 2;
 								whichinfo = 4 ;
 						}		
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 46, Screen.height / 100 * 95, 105, 50), button5Text)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 105, 105, 50), button5Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
@@ -316,7 +316,7 @@ public class GUI : MonoBehaviour {
 						whichinfo = 2 ;
 					}
 			//UPGRADE BUTTON
-			if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 35, Screen.height / 100 * 95, 130, 70), "UPGRADE TOWER" + "\n Cost: " 
+			if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 130, 70), "UPGRADE TOWER" + "\n Cost: " 
 			                            + GameObject.FindGameObjectWithTag ("TheTower").GetComponent<TowerStats>().upgradeCost)) {
 						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();

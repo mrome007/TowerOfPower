@@ -88,7 +88,7 @@ public class TowerStats : MonoBehaviour {
 				streakNo++;
 				if(streakNo > 2)
 					streakNoIncr += 2;
-				else if(streakNo > 4)
+				else if(streakNo > 6)
 					streakNoIncr += 3;
 				if(streakNo > currStreak)
 				{
