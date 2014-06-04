@@ -57,7 +57,7 @@ public class FireTowersBasicAmmo : MonoBehaviour {
 								{
 									GameObject tsg = GameObject.FindGameObjectWithTag("TheTower");
 									tsg.GetComponent<TowerStats>().comboKills++;
-									//es.mResources += 5;
+									es.mResources += 5;
 								}
 							}
 						}

@@ -9,7 +9,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private const float TOWER_FIRE_Z = 0.0f;
 
 	private Vector3 TOWER_FIRE_VECTOR = new Vector3(TOWER_FIRE_X, TOWER_FIRE_Y, TOWER_FIRE_Z);
-
+	public Transform towerAmmoSpawn;
 	/** The maximum firing angle in radians */
 	private const float MAX_FIRE_ANGLE = Mathf.PI / 2; /** 45 degrees */
 
@@ -25,7 +25,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	private float mClickY;
 	private float mReleaseY;
 
-	private Vector3 targetPosition;
+	public Vector3 targetPosition;
 
 	private GameObject lastPlane;
 	private GameObject hoverObject;
@@ -91,6 +91,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public float theRadiusMult;
 	//number of shots for spread
 	public int numShots;
+	public float fireAngle;
 
 	public GameObject findMinInList(List<GameObject> lst)
 	{
@@ -534,7 +535,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				} else if (deltaY < -maxAngleScreenRatio) {
 					deltaY = -maxAngleScreenRatio;
 				}
-				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
+				fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
 				/** Get the tower */
 				if(!multiShot)
 				{
@@ -588,20 +589,20 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				} else if (deltaY < -maxAngleScreenRatio) {
 					deltaY = -maxAngleScreenRatio;
 				}
-				float fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
+				fireAngle = deltaY / maxAngleScreenRatio * MAX_FIRE_ANGLE;
 				//Debug.Log("Fire Angle: " + fireAngle);
-				Vector3 dir = targetPosition - TOWER_FIRE_VECTOR;
+				Vector3 dir = targetPosition - towerAmmoSpawn.position;
 				dir = dir.normalized;
 				dir.y += Mathf.Sin(fireAngle);
 				dir = dir.normalized;
 				float yAccel = FireTowersBasicAmmo.ACCEL_GRAVITY;
 				float yVelocity = 2.0f * dir.y;
-				float yPosInit = TOWER_FIRE_Y;
+				float yPosInit = towerAmmoSpawn.position.y;//TOWER_FIRE_Y;
 				float timeToHitPlus = (-yVelocity + Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
 				float timeToHitMinus = (-yVelocity - Mathf.Sqrt(yVelocity * yVelocity - 4 * (yAccel / 2) * yPosInit)) / yAccel;
 				float timeToHit = Mathf.Max(timeToHitPlus, timeToHitMinus) / 90.0f;
 				//Debug.Log( "Time to hit (max): " + timeToHit);
-				Vector3 hitLocation = new Vector3(TOWER_FIRE_X + dir.x * timeToHit * 100.0f, 0, TOWER_FIRE_Z + dir.z * timeToHit * 100.0f);
+				Vector3 hitLocation = new Vector3(towerAmmoSpawn.position.x + dir.x * timeToHit * 100.0f, 0, towerAmmoSpawn.position.z + dir.z * timeToHit * 100.0f);
 				//Debug.Log ("x, y, z: " + hitLocation.x + ", " + hitLocation.y + ", " + hitLocation.z);
 				Destroy (mTargetLocation);
 				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -648,13 +649,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		for(int i = 0; i < num; i++)
 		{
 			GameObject ta = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
-			                                        TOWER_FIRE_VECTOR,
+			                                        towerAmmoSpawn.position,
 			                                        Quaternion.identity);
 			ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 			FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
 			cannon.radius *= theRadiusMult;
 			cannon.typeOfAmmo = theTowerWeapon;
-			cannon.dir = (spreadPositions[i] - TOWER_FIRE_VECTOR).normalized;
+			cannon.dir = (spreadPositions[i] - towerAmmoSpawn.position).normalized;
 			cannon.mAngle = multi_fireAngle;
 		}
 		

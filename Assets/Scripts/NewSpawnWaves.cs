@@ -81,16 +81,17 @@ public class NewSpawnWaves : MonoBehaviour {
 			if(advanced > 0)
 				waveCompleted += advanced;
 			Debug.Log("NEW WAVE === wave number: " + waveNo);
-			waveDuration = waveTime + 15;
-			waveTime += 15;
+			waveDuration = waveTime + 10;
+			waveTime += 10;
 			spawnCount+=1;
-
+			if(startWait < 25)
+				startWait += 1;
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
 				if(speedMultiplier <= 3.5f)
 					speedMultiplier += 0.175f;
-				if(spawnWait > 1.5f)
+				if(spawnWait > 0.5f)
 					spawnWait -= 0.4f;
 				if(waveWait > 2.0f)
 					waveWait -= 0.05f;
@@ -152,15 +153,17 @@ public class NewSpawnWaves : MonoBehaviour {
 					difficulty++;
 			}
 			Debug.Log("NEW WAVE === wave number: " + waveNo);
-			waveDuration = waveTime + 15;
-			waveTime += 15;
+			waveDuration = waveTime + 10;
+			waveTime += 10;
 			spawnCount+=1;
+			if(startWait < 25)
+				startWait += 1;
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.5f;
 				if(speedMultiplier <= 2.5f)
 					speedMultiplier += 0.1f;
-				if(spawnWait > 1.5f)
+				if(spawnWait > 0.5f)
 					spawnWait -= 0.4f;
 				if(waveWait > 2.0f)
 					waveWait -= 0.05f;
