@@ -7,6 +7,7 @@ public class FireSlowField : MonoBehaviour {
 	public float mDamage;
 	public float mDuration;
 	public float mAngle;
+	public float enemySlowD;
 	// Use this for initialization
 	void Start () {
 		//renderer.material.color.a = 0.5f;

@@ -8,10 +8,13 @@ public class EnemyStats : MonoBehaviour {
 	public float mSpeed;
 	public GameObject enemyDummy;
 	public float maxHealth;
-
+	bool beenSlowed = false;
+	float origSpeed;
+	public float duration;
 	// Use this for initialization
 	void Start () {
 		maxHealth = mHealth;
+		origSpeed = mSpeed;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +36,15 @@ public class EnemyStats : MonoBehaviour {
 			Instantiate(enemyDummy,transform.position,transform.rotation);
 			Destroy (gameObject);
 		}
+		if(beenSlowed)
+		{
+			duration -= Time.deltaTime;
+			if(duration <= 0)
+			{
+				beenSlowed = false;
+				mSpeed = origSpeed;
+			}
+		}
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -46,6 +58,8 @@ public class EnemyStats : MonoBehaviour {
 		}
 		if(other.gameObject.tag == "slowAmmo")
 		{
+			beenSlowed = true;
+			duration = other.gameObject.GetComponent<FireSlowField>().enemySlowD;
 			if(mSpeed - other.gameObject.GetComponent<FireSlowField>().mDamage > 1.0f)
 				mSpeed -= other.gameObject.GetComponent<FireSlowField>().mDamage;
 			else

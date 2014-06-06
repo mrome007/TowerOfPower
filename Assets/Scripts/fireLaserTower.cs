@@ -7,6 +7,7 @@ public class fireLaserTower : Weapons {
 	public Transform spawn;
 	public float duration;
 	public float angle;
+	public float enemySlowDur;
 	private Transform target;
 	private float nextFireTime = 0.0f;
 
@@ -63,5 +64,6 @@ public class fireLaserTower : Weapons {
 		fsf.mDamage = damage;
 		fsf.mDuration = duration;
 		fsf.mAngle = angle;
+		fsf.enemySlowD = enemySlowDur;
 	}
 }

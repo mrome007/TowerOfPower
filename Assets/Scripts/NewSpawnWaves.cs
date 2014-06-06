@@ -88,8 +88,8 @@ public class NewSpawnWaves : MonoBehaviour {
 				startWait += 1;
 			if(waveNo % 4 == 0)
 			{
-				healthMultiplier += 0.5f;
-				if(speedMultiplier <= 3.5f)
+				healthMultiplier += 0.30f;
+				if(speedMultiplier <= 2.0f)
 					speedMultiplier += 0.175f;
 				if(spawnWait > 0.5f)
 					spawnWait -= 0.4f;
@@ -160,8 +160,8 @@ public class NewSpawnWaves : MonoBehaviour {
 				startWait += 1;
 			if(waveNo % 4 == 0)
 			{
-				healthMultiplier += 0.5f;
-				if(speedMultiplier <= 2.5f)
+				healthMultiplier += 0.3f;
+				if(speedMultiplier <= 2.0f)
 					speedMultiplier += 0.1f;
 				if(spawnWait > 0.5f)
 					spawnWait -= 0.4f;
@@ -250,7 +250,7 @@ public class NewSpawnWaves : MonoBehaviour {
 			{
 				numEnemiesRemaining++;
 				GameObject spawnedEnemy;
-				if(selectEnemy < enemy.Length-1)
+				if(selectEnemy < enemy.Length-2)
 					spawnedEnemy = (GameObject)Instantiate(enemy[selectEnemy], startPoint,Quaternion.identity);
 				else 
 					spawnedEnemy = (GameObject)Instantiate(enemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
@@ -294,7 +294,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				numEnemiesRemaining++;
 				int selectEnemy = Random.Range (0, outEnemy.Length);
 				GameObject eO;
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,45.0f),Quaternion.identity);
 				else 
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
@@ -302,7 +302,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 				{
 					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
@@ -365,7 +365,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				numEnemiesRemaining++;
 
 				GameObject eO;
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,15.0f),Quaternion.identity);
 				else 
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
@@ -373,7 +373,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 				
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 				{
 					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
@@ -434,7 +434,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				numEnemiesRemaining++;
 				int selectEnemy = Random.Range (0, outEnemy.Length);
 				GameObject eO;
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,-45.0f),Quaternion.identity);
 				else 
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
@@ -443,7 +443,7 @@ public class NewSpawnWaves : MonoBehaviour {
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 
 	
-				if(selectEnemy < outEnemy.Length-1)
+				if(selectEnemy < outEnemy.Length-2)
 				{
 					Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
 					MoveUsingDFS mud = eO.GetComponent<MoveUsingDFS>();
