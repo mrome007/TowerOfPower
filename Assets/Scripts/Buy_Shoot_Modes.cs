@@ -636,20 +636,22 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		spreadPositions [0] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadTarget.z);
 		float spreadZn;
 		float spreadZp;
-		if((spreadTarget.z+20.0f) > 45)
+		if((spreadTarget.z+5.0f) > 45)
 			spreadZn = 45;
 		else
-			spreadZn = spreadTarget.z+20.0f;
-		if((spreadTarget.z-20.0f) < -45)
+			spreadZn = spreadTarget.z+5.0f;
+		if((spreadTarget.z-5.0f) < -45)
 			spreadZp = -45;
 		else
-			spreadZp = spreadTarget.z-20.0f;
+			spreadZp = spreadTarget.z-5.0f;
 		spreadPositions [1] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadZn);
 		spreadPositions [2] = new Vector3 (spreadTarget.x, spreadTarget.y, spreadZp );
+		Vector3 theSpos = new Vector3 (0.0f, 0.0f, -10.0f);
+		Vector3 taSpawnIt = towerAmmoSpawn.position;
 		for(int i = 0; i < num; i++)
 		{
 			GameObject ta = (GameObject)Instantiate(towerWeapons[theTowerWeapon], 
-			                                        towerAmmoSpawn.position,
+			                                        taSpawnIt,
 			                                        Quaternion.identity);
 			ta.GetComponent<TowerAmmoStats>().mDamage *= upgradeTowerMult;
 			FireTowersBasicAmmo cannon = ta.GetComponent<FireTowersBasicAmmo>();
@@ -657,6 +659,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			cannon.typeOfAmmo = theTowerWeapon;
 			cannon.dir = (spreadPositions[i] - towerAmmoSpawn.position).normalized;
 			cannon.mAngle = multi_fireAngle;
+			theSpos *= -1.0f;
+			taSpawnIt = towerAmmoSpawn.position + theSpos;
 		}
 		
 	}

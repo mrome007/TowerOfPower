@@ -86,10 +86,11 @@ public class TowerStats : MonoBehaviour {
 			if(comboKills >= killsToStreak && killStreakTimer > 0.0f)
 			{
 				streakNo++;
+
 				if(streakNo > 2)
 					streakNoIncr += 2;
 				else if(streakNo > 6)
-					streakNoIncr += 3;
+					streakNoIncr += 4;
 				if(streakNo > currStreak)
 				{
 					currStreak = streakNo;
@@ -99,6 +100,7 @@ public class TowerStats : MonoBehaviour {
 				killsToStreak += streakNoIncr;
 				theStreakTimer += (streakTimerIncr * streakNoIncr)/3.0f;
 				killStreakTimer = theStreakTimer;
+				//killsToStreak = 1;
 			}
 			if(killStreakTimer <= 0)
 			{
@@ -136,6 +138,7 @@ public class TowerStats : MonoBehaviour {
 	{
 		GameObject go = GameObject.FindGameObjectWithTag("GameController");
 		Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
+		GameObject f = GameObject.Find("TowerCannons");
 		switch(n)
 		{
 		case 1:
@@ -143,30 +146,42 @@ public class TowerStats : MonoBehaviour {
 			break;
 
 		case 2:
-			foreach(Transform child in gameObject.transform)
+			//foreach(Transform child in gameObject.transform)
+			//{
+			//	Destroy(child.gameObject);
+			//}
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
+			if(f)
 			{
-				Destroy(child.gameObject);
+				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
 			theNextStreak = "SPREADSHOT";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			selectTower++;
 			break;
 		case 3:
-			Destroy(towerType);
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
+			//Destroy(towerType);
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
+			if(f)
+			{
+				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
+			}
 			theNextStreak = "Fire Rate Increase";
 			bsm.numShots = 3;
 			//bsm.multiShot = true;
 			selectTower++;
 			break;
 		case 4:
-			Destroy(towerType);
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
+			//Destroy(towerType);
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
+			if(f)
+			{
+				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
+			}
 			selectTower++;
 			theNextStreak = "MULTISHOT";
 			if((mFireRate - 0.1f) > 0.0f)
@@ -174,9 +189,13 @@ public class TowerStats : MonoBehaviour {
 			break;
 
 		case 5:
-			Destroy(towerType);
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
+			//Destroy(towerType);
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
+			if(f)
+			{
+				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
+			}
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
@@ -187,9 +206,9 @@ public class TowerStats : MonoBehaviour {
 			break;
 
 		case 6:
-			Destroy(towerType);
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
+			//Destroy(towerType);
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
@@ -198,9 +217,9 @@ public class TowerStats : MonoBehaviour {
 			bsm.multiShot = false;
 			break;
 		case 7:
-			Destroy(towerType);
-			towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
-			                                    Quaternion.identity);
+			//Destroy(towerType);
+			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
+			  //                                  Quaternion.identity);
 			selectTower++;
 			theNextStreak = "Radius Increase";
 			//bsm.theRadiusMult += 1.0f;
