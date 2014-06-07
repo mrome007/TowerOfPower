@@ -22,6 +22,18 @@ public class EnemyStats : MonoBehaviour {
 	{
 		if(mHealth <= 0)
 		{
+			if(gameObject.name == "ufo" || gameObject.name == "ufo(Clone)")
+			{
+				foreach(Transform child in gameObject.transform)
+				{
+					if(child.gameObject.tag == "Enemy")
+					{
+						child.gameObject.transform.parent = null;
+						child.gameObject.transform.position = new Vector3(child.gameObject.transform.position.x, 0.0f, child.gameObject.transform.position.z);
+					}
+				}
+
+			}
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			if(gc)
 			{

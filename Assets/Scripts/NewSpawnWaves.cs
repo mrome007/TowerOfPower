@@ -253,8 +253,18 @@ public class NewSpawnWaves : MonoBehaviour {
 				if(selectEnemy < enemy.Length-2)
 					spawnedEnemy = (GameObject)Instantiate(enemy[selectEnemy], startPoint,Quaternion.identity);
 				else 
-					spawnedEnemy = (GameObject)Instantiate(enemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
-					                                            Random.Range(-50,50)),Quaternion.identity);
+				{
+					if(selectEnemy == outEnemy.Length-1)
+					{
+						spawnedEnemy = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(15.0f,20.0f),
+						                                                                Random.Range(-50.0f,50.0f)),Quaternion.identity);
+					}
+					else
+					{
+						spawnedEnemy = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						                                                                Random.Range(-50,50)),Quaternion.identity);
+					}
+				}
 
 
 				spawnedEnemy.GetComponent<EnemyStats>().mSpeed = sMult*spawnedEnemy.GetComponent<EnemyStats>().mSpeed;
@@ -297,8 +307,18 @@ public class NewSpawnWaves : MonoBehaviour {
 				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,45.0f),Quaternion.identity);
 				else 
-					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
-					                                            Random.Range(-50,50)),Quaternion.identity);
+				{
+					if(selectEnemy == outEnemy.Length-1)
+					{
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(15.0f,20.0f),
+						                                                                Random.Range(-50.0f,50.0f)),Quaternion.identity);
+					}
+					else
+					{
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						                                                                Random.Range(-50,50)),Quaternion.identity);
+					}
+				}
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 
@@ -368,8 +388,18 @@ public class NewSpawnWaves : MonoBehaviour {
 				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,15.0f),Quaternion.identity);
 				else 
-					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
-					                                                                Random.Range(-50,50)),Quaternion.identity);
+				{
+					if(selectEnemy == outEnemy.Length-1)
+					{
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(15.0f,20.0f),
+						                                                                Random.Range(-50.0f,50.0f)),Quaternion.identity);
+					}
+					else
+					{
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						                                                                Random.Range(-50,50)),Quaternion.identity);
+					}
+				}
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 				
@@ -437,8 +467,18 @@ public class NewSpawnWaves : MonoBehaviour {
 				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,-45.0f),Quaternion.identity);
 				else 
+				{
+					if(selectEnemy == outEnemy.Length-1)
+					{
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(15.0f,20.0f),
+						                                                                Random.Range(-50.0f,50.0f)),Quaternion.identity);
+					}
+					else
+					{
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
 					                                                                Random.Range(-50,50)),Quaternion.identity);
+					}
+				}
 				eO.GetComponent<EnemyStats>().mSpeed = sMult*eO.GetComponent<EnemyStats>().mSpeed;
 				eO.GetComponent<EnemyStats>().mHealth = hMult*eO.GetComponent<EnemyStats>().mHealth;
 
