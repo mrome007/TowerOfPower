@@ -29,7 +29,6 @@ public class TowerStats : MonoBehaviour {
 	public GameObject[] towers;
 	public GameObject towerType;
 	public bool destroyTower;
-
 	// Use this for initialization
 	void Start () {
 		mHealth = MAX_HEALTH;

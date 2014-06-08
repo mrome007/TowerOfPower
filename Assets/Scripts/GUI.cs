@@ -253,7 +253,7 @@ public class GUI : MonoBehaviour {
 	void OnGUI () 
 	{
 				//button 1
-				if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 2, Screen.height / 100 * 95, 105, 50), button1Text, customGUI)) {
+				if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 2, Screen.height / 100 * 95, 105, 50), button1Text)) {
 						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");	
 						if (mode.GetComponent<Buy_Shoot_Modes> ().shootMode == true) {
 								mode.GetComponent<Buy_Shoot_Modes> ().shootMode = false;
@@ -273,28 +273,28 @@ public class GUI : MonoBehaviour {
 				GameObject mmode = GameObject.FindGameObjectWithTag ("GameController");
 				Buy_Shoot_Modes sell = mmode.GetComponent<Buy_Shoot_Modes> ();
 				if (sell.buyMode) {
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), button2Text,customGUI)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), button2Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
 										sel.theWeapon = 1;
 								whichinfo = 3 ;
 						}
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 105, 50), button3Text,customGUI)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 105, 50), button3Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
 										sel.theWeapon = 0;
 								whichinfo = 1 ;
 						}
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 105, 105, 50), button4Text,customGUI)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 105, 105, 50), button4Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
 										sel.theWeapon = 2;
 								whichinfo = 4 ;
 						}		
-						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 105, 105, 50), button5Text,customGUI)) {
+						if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 105, 105, 50), button5Text)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 								if (sel.buyMode)
@@ -309,7 +309,6 @@ public class GUI : MonoBehaviour {
 						if (sel.shootMode)
 							sel.theTowerWeapon = 1;
 					}*/
-			/*
 					if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), "cannonball")) {
 						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
@@ -317,10 +316,9 @@ public class GUI : MonoBehaviour {
 							sel.theTowerWeapon = 0;
 						whichinfo = 2 ;
 					}
-			*/
 			//UPGRADE BUTTON
 			if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 130, 70), "UPGRADE TOWER" + "\n Cost: " 
-			                            + GameObject.FindGameObjectWithTag ("TheTower").GetComponent<TowerStats>().upgradeCost, customGUI)) {
+			                            + GameObject.FindGameObjectWithTag ("TheTower").GetComponent<TowerStats>().upgradeCost)) {
 						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
 						GameObject theT = GameObject.FindGameObjectWithTag("TheTower");
@@ -350,26 +348,23 @@ public class GUI : MonoBehaviour {
 		{
 			UnityEngine.GUI.Box (new Rect(Screen.width/2,Screen.height/2-50, 200, 20), "Survived "+
 			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
-			                     	+ " Waves", customGUI);
+			                     	+ " Waves");
 			if(UnityEngine.GUI.Button(new Rect(Screen.width/2,Screen.height/2,200,50), restart))
 				Application.LoadLevel(Application.loadedLevel);
 		}
 		//WAVE ADVANCE BUTTON
-		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 25, 105, 50), "Advance Wave",customGUI)) 
+		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 25, 105, 50), "Advance Wave")) 
 		{
 			GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 			NewSpawnWaves nsw = mode.GetComponent<NewSpawnWaves>();
 			nsw.advanceTheWave = true;
 		}
-
-
 		//INFO BOX
-		UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "", customGUI );
 		switch (whichinfo) {
 		case 0: //default tower stats
 			theinfo = "" + "#x" + "Shoot Mode: " + "#n" + "Cannon" + "\n\n"
 				+ "Click and hold to aim." + "\n" + "Drag to change distance." +"\n" +"Release to fire." + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "", customGUI );
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "" );
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 
 			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "Info: Tower \n Damage: 100 \n Attack Speed: 0.5 \n Type: Normal" );
@@ -381,13 +376,13 @@ public class GUI : MonoBehaviour {
 					+ "Attack Speed: " + "0.6" + "/" + "#FFDDDDFF" + "0.3" + "#!" + "/" + "#FF6666FF" + "0.1" + "\n" + "#!"
 					+ "Range: " + "2" + "/" + "#FFDDDDFF" + "25" + "#!" + "/" + "#FF6666FF" + "30" + "\n" + "#!" 
 					+ "Cost: " + "400" + "/" + "#FFDDDDFF" + "600" + "#!" + "/" + "#FF6666FF" + "800" + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"", customGUI);
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 2:	//Shoot mode default cannon
 			theinfo = "" + "#x" + "Shoot Mode: " + "#n" + "Cannon" + "\n\n"
 					+ "Click and hold to aim." + "\n" + "Drag to change distance." +"\n" +"Release to fire." + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "" );
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), "" );
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 3:	//Buy mode wall
@@ -395,7 +390,7 @@ public class GUI : MonoBehaviour {
 					+ "Type: " + "#i" + "Unit Blocker" + "\n" + "#n"
 					+ "Duration: " + "3" + "/" + "#FFDDDDFF" + "5" + "#!" + "/" + "#FF6666FF" + "9" + "\n" + "#!" 
 					+ "Cost: " + "10" + "/" + "#FFDDDDFF" + "50" + "#!" + "/" + "#FF6666FF" + "90" + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 4:	//Buy mode slow
@@ -405,7 +400,7 @@ public class GUI : MonoBehaviour {
 					+ "Attack Speed: " + "7" + "/" + "#FFDDDDFF" + "5" + "#!" + "/" + "#FF6666FF" + "3" + "\n" + "#!"
 					+ "Range: " + "?" + "/" + "#FFDDDDFF" + "2?" + "#!" + "/" + "#FF6666FF" + "3?" + "\n" + "#!"
 					+ "Cost: " + "300" + "/" + "#FFDDDDFF" + "550" + "#!" + "/" + "#FF6666FF" + "700" + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 5: //Buy mode track
@@ -415,7 +410,7 @@ public class GUI : MonoBehaviour {
 					+ "Attack Speed: " + "6" + "/" + "#FFDDDDFF" + "4" + "#!" + "/" + "#FF6666FF" + "3" + "\n" + "#!"
 					+ "Range: " + "35" + "/" + "#FFDDDDFF" + "40" + "#!" + "/" + "#FF6666FF" + "50" + "\n" + "#!"
 					+ "Cost: " + "500" + "/" + "#FFDDDDFF" + "900" + "#!" + "/" + "#FF6666FF" + "1100" + "\n" ;
-			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
+			UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100),"");
 			FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 
 			break;

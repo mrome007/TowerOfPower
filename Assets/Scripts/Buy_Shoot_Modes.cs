@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(AudioSource))]
 public class Buy_Shoot_Modes : MonoBehaviour {
 
 	private const float TOWER_FIRE_X = -80.0f;
@@ -96,11 +95,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	//number of shots for spread
 	public int numShots;
 	public float fireAngle;
-
-	//for SOUND
-	public AudioClip towershot ;
-
-
 
 	public GameObject findMinInList(List<GameObject> lst)
 	{
@@ -655,8 +649,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				mTargetLocation.transform.localScale = new Vector3(5, 5, 5);
 				mTargetLocation.transform.position = hitLocation;
 
-
-
 			}
 		}
 	}
@@ -710,9 +702,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			cannon.mAngle = multi_fireAngle;
 			theSpos *= -1.0f;
 			taSpawnIt = towerAmmoSpawn.position + theSpos;
-			//Sound
-			AudioListener.volume = 1;
-			audio.PlayOneShot(towershot);
 		}
 		
 	}
