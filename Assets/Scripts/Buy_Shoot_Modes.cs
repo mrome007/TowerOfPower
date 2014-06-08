@@ -23,6 +23,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public int theTowerWeapon = 0;
 
 	private float mClickY;
+	private float mClickX;
 	private float mReleaseY;
 
 	public Vector3 targetPosition;
@@ -44,6 +45,8 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 	public GameObject[] dummyWeapons;
 
 	private GameObject mTargetLocation;
+	private GameObject mTargetPole;
+	private GameObject mTargetLine;
 
 	//for the upgrades.
 	private GridForUnits grid;
@@ -512,6 +515,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				{
 					Debug.Log("In onDown");
 					mClickY = Input.mousePosition.y;
+					mClickX = Input.mousePosition.x;
 					mIsClickDown = true;
 					Plane playerPlane = new Plane(Vector3.up, transform.position);
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -582,6 +586,22 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					}
 				}
 			} else if (mIsClickDown && theTowerWeapon != towerWeapons.Length - 1) {
+				//Plane playerPlane = new Plane(Vector3.up, transform.position);
+				//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				
+				//float hitdist;
+
+				//Vector3 newTarget = new Vector3();
+				//if(playerPlane.Raycast(ray, out hitdist))
+				//{
+				//	newTarget = ray.GetPoint(hitdist);
+				//}
+//				float deltaX = targetPosition.x - newTarget.x;
+				float deltaX = (mClickX - Input.mousePosition.x) / 4;
+				float deltaZ = deltaX * Mathf.Acos(targetPosition.z / targetPosition.x);
+				mClickX = Input.mousePosition.x;
+				targetPosition.z -= deltaX;
+
 				float maxAngleScreenRatio = Screen.height / 2;
 				float deltaY = Input.mousePosition.y - mClickY;
 				if (deltaY > maxAngleScreenRatio) {
@@ -605,9 +625,30 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				Vector3 hitLocation = new Vector3(towerAmmoSpawn.position.x + dir.x * timeToHit * 100.0f, 0, towerAmmoSpawn.position.z + dir.z * timeToHit * 100.0f);
 				//Debug.Log ("x, y, z: " + hitLocation.x + ", " + hitLocation.y + ", " + hitLocation.z);
 				Destroy (mTargetLocation);
+				Destroy (mTargetPole);
+				Destroy (mTargetLine);
 				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				mTargetPole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+				mTargetLine = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+				Vector3 targetLineStart = new Vector3(TOWER_FIRE_X, 5, TOWER_FIRE_Z);
+				Vector3 targetLineStop = new Vector3(hitLocation.x, 5, hitLocation.z);
+				float hitDistX = Mathf.Abs(hitLocation.x - towerAmmoSpawn.position.x);
+				float hitDistZ = Mathf.Abs(hitLocation.z - towerAmmoSpawn.position.z);
+				float totalHitDist = Mathf.Sqrt(hitDistX * hitDistX + hitDistZ * hitDistZ);
+				mTargetPole.transform.localScale = new Vector3(2, Mathf.Tan(fireAngle) * hitDistX / 4, 2);
+				float angle = Mathf.Atan(hitDistZ / hitDistX);
+				float poleDistX = Mathf.Cos(angle) * totalHitDist / 2;
+				float poleDistZ = Mathf.Sin(angle) * totalHitDist / 2;
+				float poleX = towerAmmoSpawn.position.x + poleDistX;
+				float poleZ = towerAmmoSpawn.position.z + poleDistZ;
+				if (hitLocation.z < 0) {
+					poleZ = -poleZ;
+				}
+				Vector3 halfWay = new Vector3(poleX, 0, poleZ);
+				mTargetPole.transform.position = halfWay;
 				mTargetLocation.transform.localScale = new Vector3(5, 5, 5);
 				mTargetLocation.transform.position = hitLocation;
+
 			}
 		}
 	}
