@@ -628,27 +628,38 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				Destroy (mTargetPole);
 				Destroy (mTargetLine);
 				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-				mTargetPole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+	//			mTargetPole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 				mTargetLine = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-				Vector3 targetLineStart = new Vector3(TOWER_FIRE_X, 5, TOWER_FIRE_Z);
-				Vector3 targetLineStop = new Vector3(hitLocation.x, 5, hitLocation.z);
+				Destroy(mTargetLine.collider);
 				float hitDistX = Mathf.Abs(hitLocation.x - towerAmmoSpawn.position.x);
 				float hitDistZ = Mathf.Abs(hitLocation.z - towerAmmoSpawn.position.z);
 				float totalHitDist = Mathf.Sqrt(hitDistX * hitDistX + hitDistZ * hitDistZ);
-				mTargetPole.transform.localScale = new Vector3(2, Mathf.Tan(fireAngle) * hitDistX / 4, 2);
 				float angle = Mathf.Atan(hitDistZ / hitDistX);
-				float poleDistX = Mathf.Cos(angle) * totalHitDist / 2;
-				float poleDistZ = Mathf.Sin(angle) * totalHitDist / 2;
-				float poleX = towerAmmoSpawn.position.x + poleDistX;
-				float poleZ = towerAmmoSpawn.position.z + poleDistZ;
-				if (hitLocation.z < 0) {
-					poleZ = -poleZ;
+
+				//mTargetPole.transform.localScale = new Vector3(2, Mathf.Tan(fireAngle) * hitDistX / 4, 2);
+				//float poleDistX = Mathf.Cos(angle) * totalHitDist / 2;
+				//float poleDistZ = Mathf.Sin(angle) * totalHitDist / 2;
+				//float poleX = towerAmmoSpawn.position.x + poleDistX;
+				//float poleZ = towerAmmoSpawn.position.z + poleDistZ;
+				//if (hitLocation.z < 0) {
+				//	poleZ = -poleZ;
+				//}
+				//Vector3 halfWay = new Vector3(poleX, 0, poleZ);
+				//mTargetPole.transform.position = halfWay;
+				Vector3 lineLocation = TOWER_FIRE_VECTOR;
+				mTargetLine.renderer.material.color = new Color32(255, 0, 0, 0);
+				lineLocation.x = towerAmmoSpawn.position.x;
+				lineLocation.y = 0;
+				lineLocation.z = towerAmmoSpawn.position.z;
+				if (hitLocation.z > 0) {
+					angle = -angle;
 				}
-				Vector3 halfWay = new Vector3(poleX, 0, poleZ);
-				mTargetPole.transform.position = halfWay;
+				mTargetLine.transform.localScale = new Vector3(400, 0.25f, 0.25f);
+				mTargetLine.transform.position = lineLocation;
+				mTargetLine.transform.RotateAround(Vector3.zero, Vector3.up, Mathf.Rad2Deg * angle); 
+				mTargetLine.transform.position = lineLocation;
 				mTargetLocation.transform.localScale = new Vector3(5, 5, 5);
 				mTargetLocation.transform.position = hitLocation;
-
 			}
 		}
 	}
