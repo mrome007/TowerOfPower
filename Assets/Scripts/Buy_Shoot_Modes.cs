@@ -313,6 +313,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		}
 		if(buyMode && !gameover)
 		{
+			if(Input.GetMouseButton(0)){
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if(Physics.Raycast(ray,out hit,1000,buyPlane))
@@ -389,8 +390,10 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					Destroy(hoverObject);
 				}
 			}
-			if(Input.GetMouseButtonDown(0) && lastPlane)
+		}
+			if(Input.GetMouseButtonUp(0) && lastPlane)
 			{
+				Debug.Log("HELLO THERE");
 				grid = lastPlane.GetComponent<GridForUnits>();
 				if(grid.isAvailable)
 				{
