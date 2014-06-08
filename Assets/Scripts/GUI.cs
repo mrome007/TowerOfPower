@@ -18,6 +18,7 @@ public class GUI : MonoBehaviour {
 	public Font italic ;
 	public Font bold ;
 
+	public GUIStyle customGUI;
 
 
 	//CUSTOM TEXT EDITOR STUFF

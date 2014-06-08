@@ -56,7 +56,8 @@ public class TowerHealthBar : MonoBehaviour {
 		if (Event.current.type.Equals (EventType.Repaint)) {
 			boxback = new Rect(x,y*(float)1.15 +5,75*(float)1.15,Screen.height/2);
 			Graphics.DrawTexture(boxback, HBbackground );
-			box = new Rect(x+5,y,75,Screen.height/2);
+			//box = new Rect(x+5,y,75,Screen.height/2);
+			box = new Rect( x +5, y + 100, Screen.width/3, 50);
 			Graphics.DrawTexture(box, HBImage, mat );
 		}
 		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
