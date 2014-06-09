@@ -14,7 +14,7 @@ public class NewSpawnWaves : MonoBehaviour {
 	public int waveNo;
 	public int numEnemiesRemaining = 0;
 	public int maxEnemyOnScreen = 0;
-	private float waveTime = 30.0f;
+	public float waveTime = 30.0f;
 	Vector3 startPoint = new Vector3(58.5f, 0.0f, -24.4f);
 	public int waveCompleted;
 	public int advanced;
@@ -29,14 +29,14 @@ public class NewSpawnWaves : MonoBehaviour {
 	public bool allBlue = false;
 	void Start () {
 		waveDuration = waveTime;
-		waveNo = 1;
-		waveCompleted = 0;
+		//waveNo = 1;
+		//waveCompleted = 0;
 		maxEnemyOnScreen = 40;
 		numEnemiesRemaining = 0;
 		theGC = GameObject.Find ("GameController");
 		advanced = 0;
-		healthMultiplier = 1.0f;
-		speedMultiplier = 1.0f;
+		//healthMultiplier = 1.0f;
+		//speedMultiplier = 1.0f;
 		HellWave = Random.Range (8, 10);
 		Debug.Log ("HELL WAVE NO: " + HellWave);
 		wallsWereDestroyed = false;
@@ -84,8 +84,8 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveDuration = waveTime + 10;
 			waveTime += 10;
 			spawnCount+=1;
-			if(startWait < 25)
-				startWait += 1;
+			if(startWait < 25.0f)
+				startWait += 1.0f;
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.30f;
@@ -156,8 +156,8 @@ public class NewSpawnWaves : MonoBehaviour {
 			waveDuration = waveTime + 10;
 			waveTime += 10;
 			spawnCount+=1;
-			if(startWait < 25)
-				startWait += 1;
+			if(startWait < 25.0f)
+				startWait += 1.0f;
 			if(waveNo % 4 == 0)
 			{
 				healthMultiplier += 0.3f;

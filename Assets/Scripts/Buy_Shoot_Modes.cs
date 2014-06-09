@@ -237,7 +237,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		int enemyMask = 1 << enemyLayer;
 		int placementMask = 1 << placementPlaneLayer;
 		gameover = false;
-		theWeapon = 0;
+		theWeapon = 1;
 		theTowerWeapon = 0;
 		thePathsHaveChanged = false;
 		//make this as a public function to easily use
@@ -408,12 +408,13 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 					lastPlane.renderer.material = oldMaterial;
 					lastPlane.renderer.enabled = false;
 					lastPlane = null;
-					Destroy(hoverObject);
+						Destroy(hoverObject);
 				}
 			}
 		}
 			if(Input.GetMouseButtonUp(0) && lastPlane)
 			{
+				Destroy(hoverObject);
 				Debug.Log("HELLO THERE");
 				grid = lastPlane.GetComponent<GridForUnits>();
 				if(grid.isAvailable)
@@ -508,7 +509,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 							if(resource - costToBuy >= 0)
 							{
 								twr.GetComponent<TowerStats>().mResources -= costToBuy;
-								Vector3 tempPos = getUpgrade.transform.position;
+								Vector3 tempPos = lastPlane.transform.position;
 								Quaternion tempRot = getUpgrade.transform.rotation;
 								Destroy(gu);
 								grid.whatsInside = null;

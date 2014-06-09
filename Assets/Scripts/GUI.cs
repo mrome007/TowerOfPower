@@ -19,7 +19,7 @@ public class GUI : MonoBehaviour {
 	public Font bold ;
 
 	public GUIStyle customGUI;
-
+	public bool hardcore = false;
 
 	//CUSTOM TEXT EDITOR STUFF
 	int HexStringToInt( string hexString ) {
@@ -258,7 +258,7 @@ public class GUI : MonoBehaviour {
 						if (mode.GetComponent<Buy_Shoot_Modes> ().shootMode == true) {
 								mode.GetComponent<Buy_Shoot_Modes> ().shootMode = false;
 								mode.GetComponent<Buy_Shoot_Modes> ().buyMode = true;
-								mode.GetComponent<Buy_Shoot_Modes> ().theWeapon = 0;
+								mode.GetComponent<Buy_Shoot_Modes> ().theWeapon = 1;
 								whichinfo = 1 ;
 								button1Text = "ATTACK MODE";
 						} else if (mode.GetComponent<Buy_Shoot_Modes> ().buyMode == true) {
@@ -280,6 +280,7 @@ public class GUI : MonoBehaviour {
 										sel.theWeapon = 1;
 								whichinfo = 3 ;
 						}
+			if(!hardcore){
 			if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 24, Screen.height / 100 * 95, 105, 50), button3Text ,customGUI)) {
 								GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 								Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();
@@ -302,7 +303,7 @@ public class GUI : MonoBehaviour {
 								whichinfo = 5 ;
 						}		
 			
-				} else if (sell.shootMode) {
+			}	} else if (sell.shootMode) {
 					/*if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 * 13, Screen.height / 100 * 95, 105, 50), "grenade")) {
 						GameObject mode = GameObject.FindGameObjectWithTag ("GameController");
 						Buy_Shoot_Modes sel = mode.GetComponent<Buy_Shoot_Modes> ();

@@ -11,6 +11,7 @@ public class EnemyStats : MonoBehaviour {
 	bool beenSlowed = false;
 	float origSpeed;
 	public float duration;
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = mHealth;
