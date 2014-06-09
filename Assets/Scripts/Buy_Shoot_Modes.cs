@@ -398,7 +398,6 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				else
 				{
 					//lastPlane.renderer.enabled = false;
-					//lastPlane.renderer.material = oldMaterial;
 					lastPlane = null;
 				}
 			}
@@ -415,9 +414,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		}
 			if(Input.GetMouseButtonUp(0) && lastPlane)
 			{
-
 				Destroy(hoverObject);
-				lastPlane.renderer.enabled = false;
 				Debug.Log("HELLO THERE");
 				grid = lastPlane.GetComponent<GridForUnits>();
 				if(grid.isAvailable)
