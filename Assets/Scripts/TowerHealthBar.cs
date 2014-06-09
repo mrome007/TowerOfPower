@@ -290,11 +290,11 @@ public class TowerHealthBar : MonoBehaviour {
 		}
 		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
 		TowerStats ts = tsg.GetComponent<TowerStats> ();
-		UnityEngine.GUI.Box (new Rect(10,Screen.height/2 + 20, Screen.width/20, 20), curHealth + "/" + maxHealth, customGUI);
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * 71, 10, 150, 100), ts.comboKills + " Combo" + "\n" + "Streak " + ts.streakNo + "x" +
+		UnityEngine.GUI.Box (new Rect(10,Screen.height/2 + 20, Screen.width / 100*8, Screen.width / 100*2), curHealth + "/" + maxHealth, customGUI);
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * 71, 10,  Screen.width / 100*16, 100), ts.comboKills + " Combo" + "\n" + "Streak " + ts.streakNo + "x" +
 		                     	"\n" + "Timer: " + ts.killStreakTimer + "\n" + "Kills To Streak: " + ts.killsToStreak 
 		                     	+ "\n" + ts.theNextStreak, customGUI); 
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *88, 10, 150, 100), 
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *88, 10, Screen.width / 100*17, 100), 
 		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
 		                     + "\n\n" + "Current Wave: " + waveNo + "\n\n" + "Enemies Remaining: " + numEnemies + "\n",customGUI );
 	
