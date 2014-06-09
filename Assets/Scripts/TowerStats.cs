@@ -132,6 +132,7 @@ public class TowerStats : MonoBehaviour {
 			int countUfoChild = 0;
 			if(collisionObject.name == "ufo" || collisionObject.name == "ufo(Clone)")
 			{
+				/*
 				foreach(Transform child in collisionObject.transform)
 				{
 					if(child.gameObject.tag == "Enemy")
@@ -140,6 +141,15 @@ public class TowerStats : MonoBehaviour {
 						//child.gameObject.transform.parent = null;
 						//child.gameObject.transform.position = new Vector3(child.gameObject.transform.position.x, 0.0f, child.gameObject.transform.position.z);
 					}
+				}*/
+				Transform []ts = collisionObject.GetComponentsInChildren<Transform>();
+				for(int i = 0; i < ts.Length; i++)
+				{
+					if(ts[i].gameObject.tag == "Enemy" && ts[i].gameObject.name != collisionObject.gameObject.name)
+					{
+						Debug.Log("hello");
+						countUfoChild++;
+					}
 				}
 				Debug.Log(countUfoChild);
 				sw.numEnemiesRemaining -= countUfoChild;
@@ -147,6 +157,7 @@ public class TowerStats : MonoBehaviour {
 			}
 			Destroy (collisionObject);
 			Debug.Log(mHealth);
+			Debug.Log("Enemies Remaining: " + sw.numEnemiesRemaining);
 		}
 	}
 

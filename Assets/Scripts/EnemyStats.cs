@@ -24,15 +24,28 @@ public class EnemyStats : MonoBehaviour {
 		{
 			if(gameObject.name == "ufo" || gameObject.name == "ufo(Clone)")
 			{
+				Transform [] ts = gameObject.GetComponentsInChildren<Transform>();
+				for(int i = 0; i < ts.Length; i++)
+				{
+					if(ts[i].gameObject.tag == "Enemy" && ts[i].gameObject.name != gameObject.name)
+					{
+						ts[i].gameObject.transform.parent = null;
+						ts[i].gameObject.transform.position = new Vector3(ts[i].gameObject.transform.position.x, 0.0f, ts[i].gameObject.transform.position.z);
+						Debug.Log("WWWWWWWWWWWWWWWWW");
+					}
+				}
+				/*
 				foreach(Transform child in gameObject.transform)
 				{
+					Debug.Log("WWWWWWWWWWWWWWWWW");
 					if(child.gameObject.tag == "Enemy")
 					{
+
 						child.gameObject.transform.parent = null;
 						child.gameObject.transform.position = new Vector3(child.gameObject.transform.position.x, 0.0f, child.gameObject.transform.position.z);
 					}
 				}
-
+				*/
 			}
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			if(gc)
@@ -67,6 +80,7 @@ public class EnemyStats : MonoBehaviour {
 			TurretAmmoBase getAmmoInfo = other.gameObject.GetComponent<TurretAmmoBase>();
 			float damageRate = getAmmoInfo.mTheDamage;
 			mHealth -= damageRate;
+			Debug.Log ("losing health");
 		}
 		if(other.gameObject.tag == "slowAmmo")
 		{

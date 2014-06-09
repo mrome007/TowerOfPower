@@ -43,10 +43,10 @@ public class NewSpawnWaves : MonoBehaviour {
 		difficulty = 1;
 		advanceTheWave = false;
 		/*
-		GameObject eo = (GameObject)Instantiate(boss[2], new Vector3(95.0f,15.0f,15.0f),Quaternion.identity);
+		GameObject eo = (GameObject)Instantiate(boss[1], new Vector3(95.0f,0.0f,15.0f),Quaternion.identity);
 		Buy_Shoot_Modes bsm = theGC.GetComponent<Buy_Shoot_Modes>();
-		//MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
-		//mud.wayPoints = bsm.thePath;
+		MoveUsingDFS mud = eo.GetComponent<MoveUsingDFS>();
+		mud.wayPoints = bsm.thePath;
 		numEnemiesRemaining += eo.GetComponent<BossBase> ().numEnemiesReq;
 		*/
 		if(!allBlue)

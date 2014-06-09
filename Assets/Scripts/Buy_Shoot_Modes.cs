@@ -130,6 +130,21 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		//Queue<GameObject> minVisits = new Queue<GameObject> ();
 		List<GameObject> currPath = new List<GameObject> ();
 		BinaryHeap bhp = new BinaryHeap (200);
+		Transform [] ts = walkablePlaneParent.GetComponentsInChildren<Transform> ();
+		for(int i = 0; i < ts.Length; i++)
+		{
+			if(ts[i].gameObject.tag != "Taken" && ts[i].gameObject.name != walkablePlaneParent.name)
+			{
+				GridForUnits gfn = ts[i].gameObject.GetComponent<GridForUnits>();
+				if(gfn)
+				{
+					gfn.distance = 10000;
+					gfn.hasBeenVisited = false;
+				}
+				//distances.Add(child.gameObject);
+			}
+		}
+		/*
 		foreach(Transform child in walkablePlaneParent.transform)
 		{
 			if(child.gameObject.tag != "Taken")
@@ -139,7 +154,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				gfn.hasBeenVisited = false;
 				//distances.Add(child.gameObject);
 			}
-		}
+		}*/
 		//Debug.Log (distances.Count);
 		//start = GameObject.Find ("UnitsAllowedStart");
 		if(start)

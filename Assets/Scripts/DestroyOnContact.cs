@@ -28,7 +28,7 @@ public class DestroyOnContact : TowerAmmoStats {
 				tsg.GetComponent<TowerStats>().comboKills++;
 				enemyStats.mResources += 30;
 			}
-			Destroy (this);
+			Destroy (gameObject);
 		}
 
 	

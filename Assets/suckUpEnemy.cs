@@ -42,7 +42,7 @@ public class suckUpEnemy : MonoBehaviour {
 				//other.gameObject.GetComponent<MoveEnemyUsingWayPoints>().walkSpeed = 0.0f;
 				theEnem = other.gameObject;
 				//theEnem.transform.position = new Vector3(transform.position.x,theEnem.transform.position.y,transform.position.z);
-				other.gameObject.transform.parent = transform.parent.transform;
+				other.gameObject.transform.parent = transform.parent;
 				goingUp = true;
 				sec = 0.7f;
 			}
@@ -53,7 +53,7 @@ public class suckUpEnemy : MonoBehaviour {
 				//other.gameObject.GetComponent<MoveUsingDFS>().walkSpeed = 0.0f;
 				theEnem = other.gameObject;
 				//theEnem.transform.position = new Vector3(transform.position.x,theEnem.transform.position.y,transform.position.z);
-				other.gameObject.transform.parent = transform.parent.transform;
+				other.gameObject.transform.parent = transform.parent;
 				goingUp = true;
 				sec = 0.7f;
 			}
