@@ -261,7 +261,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					}
 					else
 					{
-						spawnedEnemy = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						spawnedEnemy = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(10.0f, 15.0f),
 						                                                                Random.Range(-50,50)),Quaternion.identity);
 					}
 				}
@@ -315,7 +315,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					}
 					else
 					{
-						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(10.0f, 15.0f),
 						                                                                Random.Range(-50,50)),Quaternion.identity);
 					}
 				}
@@ -396,7 +396,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					}
 					else
 					{
-						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(10.0f, 15.0f),
 						                                                                Random.Range(-50,50)),Quaternion.identity);
 					}
 				}
@@ -475,7 +475,7 @@ public class NewSpawnWaves : MonoBehaviour {
 					}
 					else
 					{
-					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(0, 20),
+						eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(Random.Range(85.0f,100.0f),Random.Range(10.0f, 15.0f),
 					                                                                Random.Range(-50,50)),Quaternion.identity);
 					}
 				}
