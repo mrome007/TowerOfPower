@@ -129,6 +129,22 @@ public class TowerStats : MonoBehaviour {
 			NewSpawnWaves sw = gc.GetComponent<NewSpawnWaves>();
 			if(collision.gameObject.name != "Shield")
 				sw.numEnemiesRemaining--;
+			int countUfoChild = 0;
+			if(collisionObject.name == "ufo" || collisionObject.name == "ufo(Clone)")
+			{
+				foreach(Transform child in collisionObject.transform)
+				{
+					if(child.gameObject.tag == "Enemy")
+					{
+						countUfoChild++;
+						//child.gameObject.transform.parent = null;
+						//child.gameObject.transform.position = new Vector3(child.gameObject.transform.position.x, 0.0f, child.gameObject.transform.position.z);
+					}
+				}
+				Debug.Log(countUfoChild);
+				sw.numEnemiesRemaining -= countUfoChild;
+				mHealth -= countUfoChild;
+			}
 			Destroy (collisionObject);
 			Debug.Log(mHealth);
 		}
