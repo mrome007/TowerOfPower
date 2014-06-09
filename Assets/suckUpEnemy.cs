@@ -39,6 +39,7 @@ public class suckUpEnemy : MonoBehaviour {
 			   other.gameObject.name == "EnemyTypeSlow(Clone)")
 			{
 				Destroy(other.gameObject.GetComponent<MoveEnemyUsingWayPoints>());
+				//other.gameObject.GetComponent<MoveEnemyUsingWayPoints>().walkSpeed = 0.0f;
 				theEnem = other.gameObject;
 				//theEnem.transform.position = new Vector3(transform.position.x,theEnem.transform.position.y,transform.position.z);
 				other.gameObject.transform.parent = transform.parent.transform;
@@ -49,6 +50,7 @@ public class suckUpEnemy : MonoBehaviour {
 			   other.gameObject.name == "EnemyTypeSlowOutside(Clone)")
 			{
 				Destroy(other.gameObject.GetComponent<MoveUsingDFS>());
+				//other.gameObject.GetComponent<MoveUsingDFS>().walkSpeed = 0.0f;
 				theEnem = other.gameObject;
 				//theEnem.transform.position = new Vector3(transform.position.x,theEnem.transform.position.y,transform.position.z);
 				other.gameObject.transform.parent = transform.parent.transform;
