@@ -20,6 +20,6 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	Application.LoadLevel("TheGameNoRedHalf");
+	Application.LoadLevel("TheGameNoRed");
 
 }

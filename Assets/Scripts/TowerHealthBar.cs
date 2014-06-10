@@ -19,6 +19,11 @@ public class TowerHealthBar : MonoBehaviour {
 	public Rect boxback ;
 	private string numEnemies;
 	private string waveNo;
+	private string stats1 ;
+	private string stats2 ;
+	public Font normal ;
+	public Font italic ;
+	public Font bold ;
 
 	public GUIStyle customGUI;
 
@@ -291,11 +296,13 @@ public class TowerHealthBar : MonoBehaviour {
 		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
 		TowerStats ts = tsg.GetComponent<TowerStats> ();
 		UnityEngine.GUI.Box (new Rect(10,Screen.height/2 + 20, Screen.width / 100*8, Screen.width / 100*2), curHealth + "/" + maxHealth, customGUI);
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * 71, 10,  Screen.width / 100*16, 100), ts.comboKills + " Combo" + "\n" + "Streak " + ts.streakNo + "x" +
-		                     	"\n" + "Timer: " + ts.killStreakTimer + "\n" + "Kills To Streak: " + ts.killsToStreak 
-		                     	+ "\n" + ts.theNextStreak, customGUI); 
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *88, 10, Screen.width / 100*17, 100), 
-		                     "Resources: " + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
-		                     + "\n\n" + "Current Wave: " + waveNo + "\n\n" + "Enemies Remaining: " + numEnemies + "\n",customGUI );
-	
+		stats1 =  ts.comboKills + " Combo" + "\n" + "Streak " + ts.streakNo + "x" +
+		                     	"\n" + "Timer: " + ts.killStreakTimer + "\n" + "Kills To Streak" + "#x" + ": " + "#n" + ts.killsToStreak 
+		                     	+ "\n" + ts.theNextStreak; 
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * 66, 10,  Screen.width / 100*16, 100),"" ,customGUI);
+		FancyLabel(new Rect (Screen.width / 100 * 66, 10,  Screen.width / 100*16, 100), stats1, normal, bold, italic, TextAlignment.Left);
+		stats2 = "Resources" + "#x" + ": " + "#n" + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
+		                     + "\n\n" + "Current Wave" + "#x" + ": " + "#n" + waveNo + "\n\n" + "Enemies Remaining" + "#x" + ": " + "#n" + numEnemies + "\n";
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *81, 10, Screen.width / 100*17, 100),"" ,customGUI);
+		FancyLabel(new Rect (Screen.width / 100 *81, 10, Screen.width / 100*17, 100), stats2, normal, bold, italic, TextAlignment.Left);
 	}}

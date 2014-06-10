@@ -10,6 +10,7 @@ public class GUI : MonoBehaviour {
 	string button5Text = "TRACKING MISSILE";
 	
 	string restart = "Click to Restart";
+	string mainmenu = "Quit to Menu";
 
 	private int whichinfo = 0;
 	private string damage ;
@@ -343,8 +344,10 @@ public class GUI : MonoBehaviour {
 			UnityEngine.GUI.Box (new Rect(Screen.width/2,Screen.height/2-50, 200, 20), "Survived "+
 			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
 			                     	+ " Waves");
-			if(UnityEngine.GUI.Button(new Rect(Screen.width/2,Screen.height/2,200,50), restart))
+			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*45,Screen.height/2,200,50), restart, customGUI))
 				Application.LoadLevel(Application.loadedLevel);
+			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*55,Screen.height/2,200,50), mainmenu, customGUI))
+				Application.LoadLevel("StartMenu");
 		}
 		//WAVE ADVANCE BUTTON
 		if (UnityEngine.GUI.Button (new Rect (Screen.width / 100 *93, Screen.height / 100 * 25, 105, 50), "Advance Wave" ,customGUI)) 
