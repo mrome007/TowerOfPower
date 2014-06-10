@@ -329,7 +329,7 @@ public class TowerHealthBar : MonoBehaviour {
 
 
 		//stat2
-		stats2 = "Resources" + "#x" + ": " +"#F66A35FF"+ "#n" + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
+		stats2 = " Resources" + "#x" + ": " +"#F66A35FF"+ "#n" + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
 			+"#FFFFFFFF" + " Current Wave" + "#x" + ": " + "#n" +"#F66A35FF"+ waveNo  +"#FFFFFFFF"+ " Enemies Remaining" + "#x" + ": "+"#F66A35FF" + "#n" + numEnemies + "\n";
 		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *(float)38, Screen.height/100*5, Screen.width / 100*70,  Screen.height/100*5),"" ,customGUI);
 		FancyLabel(new Rect (Screen.width / 100 *(float)43.5, Screen.height/100*(float)5.7, Screen.width / 100*60, Screen.height/5), stats2, normal, bold, italic, TextAlignment.Left);
