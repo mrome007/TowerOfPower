@@ -23,6 +23,6 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 	audio.PlayOneShot(sound,1);
-	Application.LoadLevel("TheGameNoRed");
+	Application.LoadLevel("TheGameHardcore");
 
 }
