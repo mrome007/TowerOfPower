@@ -190,7 +190,7 @@ public class TowerStats : MonoBehaviour {
 			{
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
-			theNextStreak = "Triple Shot";
+			theNextStreak = "Burst Shot";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			selectTower++;
@@ -204,7 +204,8 @@ public class TowerStats : MonoBehaviour {
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
 			theNextStreak = "Fire Rate UP";
-			bsm.numShots = 3;
+			bsm.numShots = 1;
+			bsm.multiShot = true;
 			//bsm.multiShot = true;
 			selectTower++;
 			break;
@@ -217,7 +218,7 @@ public class TowerStats : MonoBehaviour {
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
 			selectTower++;
-			theNextStreak = "Burst Shot";
+			theNextStreak = "Triple Shot";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			break;
@@ -234,9 +235,9 @@ public class TowerStats : MonoBehaviour {
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
 			theNextStreak = "Splash DMG";
-			bsm.numShots = 1;
+			bsm.numShots = 3;
 			//bsm.theTowerWeapon = 1;
-			bsm.multiShot = true;
+			bsm.multiShot = false;
 			break;
 
 		case 6:
