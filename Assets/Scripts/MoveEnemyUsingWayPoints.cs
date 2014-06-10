@@ -9,8 +9,9 @@ public float turnSpeed = 1.0f;
 // Use this for initialization
 int i;
 Vector3 dir;
-
+	
 public Transform rotateEnem;
+public Transform rot;
 void Start () 
 {
 	walkSpeed = gameObject.GetComponent<EnemyStats>().mSpeed;
@@ -38,14 +39,20 @@ void Update ()
 			i++;
 			if(i < wayPoints.Length)
 			{
+				rotateEnem.LookAt(wayPoints[i].position);
+				rot.eulerAngles = new Vector3(rot.eulerAngles.x, rotateEnem.eulerAngles.y, rot.eulerAngles.z);
 				dir = wayPoints[i].position - transform.position;
 				dir = dir.normalized;
 			}
 		}
-			if(i > 1)
+			if(i < wayPoints.Length)
 			{
-				if((transform.position - wayPoints[i].position).sqrMagnitude > 150.0f)
+
+				if((transform.position - wayPoints[i].position).sqrMagnitude > 2500.0f)
 				{
+					Debug.Log(transform.position - wayPoints[i].position);
+					rotateEnem.LookAt(wayPoints[i].position);
+					rot.eulerAngles = new Vector3(rot.eulerAngles.x, rotateEnem.eulerAngles.y, rot.eulerAngles.z);
 					Debug.Log("Distance greater than 100" + (transform.position - wayPoints[i].position).sqrMagnitude);
 					dir = wayPoints[i].position - transform.position;
 					dir = dir.normalized;
