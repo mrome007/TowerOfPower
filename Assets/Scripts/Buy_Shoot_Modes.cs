@@ -739,7 +739,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 			cannon.mAngle = multi_fireAngle;
 			theSpos *= -1.0f;
 			taSpawnIt = towerAmmoSpawn.position + theSpos;
-			AudioListener.volume = 0.1f;
+			AudioListener.volume = 1.0f;
 			audio.PlayOneShot(towershot);
 		}
 		
