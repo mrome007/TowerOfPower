@@ -2,8 +2,8 @@
 @script RequireComponent(AudioSource)
 
 var sound : AudioClip;
-var playNormal : Texture2D;
-var playHover : Texture2D;
+var hardcoreNormal : Texture2D;
+var hardcoreHover : Texture2D;
 
 function Start () {
 
@@ -11,19 +11,18 @@ function Start () {
 
 function OnMouseEnter () {
 
-	guiTexture.texture = playHover;
+	guiTexture.texture = hardcoreHover;
 
 }
 
 function OnMouseExit () {
 
-	guiTexture.texture = playNormal;
+	guiTexture.texture = hardcoreNormal;
 
 }
 
 function OnMouseDown () {
-
 	audio.PlayOneShot(sound,1);
-	Application.LoadLevel("TheGameNoRedHalf");
+	Application.LoadLevel("TheGameNoRed");
 
 }
