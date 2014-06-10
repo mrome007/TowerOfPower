@@ -341,10 +341,10 @@ public class GUI : MonoBehaviour {
 		Buy_Shoot_Modes bsm = md.GetComponent<Buy_Shoot_Modes> ();
 		if(bsm.gameover)
 		{
-			UnityEngine.GUI.Box (new Rect(Screen.width/100*50,Screen.height/100*50, 200, 20), "Survived   "+
+			UnityEngine.GUI.Box (new Rect(Screen.width/100*20,Screen.height/100*44, 200, 20), "Survived   "+
 			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
 			                     	+ " Waves", customGUI);
-			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*35,Screen.height/100*50,Screen.width/100*10,Screen.height/100*5), restart, customGUI))
+			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*45,Screen.height/100*50,Screen.width/100*10,Screen.height/100*5), restart, customGUI))
 				Application.LoadLevel(Application.loadedLevel);
 			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*55,Screen.height/100*50,Screen.width/100*10,Screen.height/100*5), mainmenu, customGUI))
 				Application.LoadLevel("StartMenu");

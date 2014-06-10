@@ -288,30 +288,32 @@ public class TowerHealthBar : MonoBehaviour {
 	void OnGUI()
 	{
 		if (Event.current.type.Equals (EventType.Repaint)) {
-			boxback = new Rect(x,y*(float)1.15 +5,75*(float)1.15,Screen.height/2);
+			boxback = new Rect(Screen.width/100*(float)0.6,Screen.height/100*(float)3.5,Screen.width/100*(float)5.75,Screen.height/100*43);
 			Graphics.DrawTexture(boxback, HBbackground );
 			//box = new Rect(x+5,y,75,Screen.height/2);
-			box = new Rect( x +5, y + 5, Screen.width/100*5, Screen.height/100*45);
+			box = new Rect( Screen.width/100*(float)1, Screen.height/100*(float)1.2, Screen.width/100*5, Screen.height/100*45);
 			Graphics.DrawTexture(box, HBImage, mat );
 		}
 		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
 		TowerStats ts = tsg.GetComponent<TowerStats> ();
 		//health
+		UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
 		if (curHealth >= 15) {
 			healthstat = "HP" + "#x" + ": " + "#n" + curHealth + "#x" + " / " + "#n" + maxHealth;
-						UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*55, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
-						FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 55, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+						UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
+						FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
 				}
 		else if (curHealth >= 6 && curHealth <= 14) {
-			healthstat = "#FFDDDDFF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
-			UnityEngine.GUI.Box (new Rect (10, Screen.height / 2 + 20, Screen.width / 100 * 8, Screen.width / 100 * 2), "", customGUI);
-			FancyLabel (new Rect (Screen.width / 100 * 2, Screen.height / 100 * 55, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+			healthstat =  "HP" + "#x" + ": " + "#n" +"#FFDDDDFF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
+			//UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 22), "", customGUI);
+			FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 7, Screen.height / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
 		}
 		else if (curHealth <= 5) {
-			healthstat = "#FF6666FF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
-			UnityEngine.GUI.Box (new Rect (10, Screen.height / 2 + 20, Screen.width / 100 * 8, Screen.width / 100 * 2), "", customGUI);
-			FancyLabel (new Rect (Screen.width / 100 * 2, Screen.height / 100 * 55, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+			healthstat =  "HP" + "#x" + ": " + "#n" + "#FF6666FF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
+			//UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 8, Screen.width / 100 * 2), "", customGUI);
+			FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
 		}
+
 
 
 
