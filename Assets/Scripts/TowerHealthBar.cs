@@ -321,8 +321,8 @@ public class TowerHealthBar : MonoBehaviour {
 		stats1 = "#F66A35FF"+ ts.comboKills +"#FFFFFFFF" + " Combo"  + "\n" + "Streak" + "#x" + ":                      " + "#n" +"#F66A35FF" + ts.streakNo  + "#FFFFFFFF"+ "x" +
 			"\n" + "Timer" + "#x" + ":                         " + "#n" +"#F66A35FF" + ts.killStreakTimer + "#FFFFFFFF" +"\n" + "Kills To Streak" + "#x" + ":       " + "#n" + "#F66A35FF" +ts.killsToStreak 
 				+ "#FFFFFFFF" +"\n" + "Reward" + "#x" + ":  " + "#n" + "#F66A35FF" +ts.theNextStreak; 
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * (float)77, Screen.height/100*17,  Screen.width / 100*27, Screen.height/100*18),"" ,customGUI);
-		FancyLabel(new Rect (Screen.width / 100 * (float)79, Screen.height/100*(float)19.7,  Screen.width / 100*23, Screen.height/5), stats1, normal, bold, italic, TextAlignment.Left);
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * (float)77, Screen.height/100*17,  Screen.width / 100*28.5f, Screen.height/100*18),"" ,customGUI);
+		FancyLabel(new Rect (Screen.width / 100 * (float)79, Screen.height/100*(float)19.7,  Screen.width / 100*25, Screen.height/5), stats1, normal, bold, italic, TextAlignment.Left);
 
 
 
