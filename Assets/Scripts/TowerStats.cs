@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class TowerStats : MonoBehaviour {
 
 	private const int MAX_HEALTH = 20;
@@ -29,6 +30,11 @@ public class TowerStats : MonoBehaviour {
 	public GameObject[] towers;
 	public GameObject towerType;
 	public bool destroyTower;
+
+	private bool gameOverPlayed = false;
+
+	public AudioClip gameOverSound;
+
 	// Use this for initialization
 	void Start () {
 		mHealth = MAX_HEALTH;
@@ -54,6 +60,11 @@ public class TowerStats : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (mHealth <= 0) {
+			if (!gameOverPlayed) {
+				AudioListener.volume = 1;
+				audio.PlayOneShot(gameOverSound);
+				gameOverPlayed = true;
+			}
 			GameObject gc = GameObject.FindGameObjectWithTag("GameController");
 			Buy_Shoot_Modes bsm = gc.GetComponent<Buy_Shoot_Modes>();
 			bsm.gameover = true;
