@@ -63,7 +63,12 @@ public class TowerStats : MonoBehaviour {
 				for (int i = 0; i < towerPieces.Length; ++i) {
 					GameObject towerPiece = towerPieces[i];
 					towerPiece.AddComponent<Rigidbody>();
-
+					GameObject theBase = GameObject.Find("theTowerB");
+					if(theBase)
+					{
+						Instantiate(towerType, new Vector3(-85.0f,0.0f,0.0f), Quaternion.identity);
+						Destroy(theBase);
+					}
 				/*Vector3 piecePosition = towerPiece.transform.position;
 				float xPos = towerPiece.transform.position.z;
 				float yPos = 5;

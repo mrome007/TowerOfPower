@@ -42,6 +42,15 @@ void Update ()
 				dir = dir.normalized;
 			}
 		}
+			if(i > 1)
+			{
+				if((transform.position - wayPoints[i].position).sqrMagnitude > 150.0f)
+				{
+					Debug.Log("Distance greater than 100" + (transform.position - wayPoints[i].position).sqrMagnitude);
+					dir = wayPoints[i].position - transform.position;
+					dir = dir.normalized;
+				}
+			}
 	}
 		else
 		{

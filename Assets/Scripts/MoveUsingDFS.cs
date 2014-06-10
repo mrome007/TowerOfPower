@@ -106,6 +106,7 @@ public class MoveUsingDFS : MonoBehaviour {
 		}
 		if(i >= 0)
 		{
+
 			walkSpeed = gameObject.GetComponent<EnemyStats>().mSpeed;
 			transform.Translate (dir * Time.deltaTime * walkSpeed);
 			//transform.position = Vector3.Lerp(transform.position, wayPoints[i].position, 
@@ -117,6 +118,16 @@ public class MoveUsingDFS : MonoBehaviour {
 				//Debug.Log(stop);
 				if(i >= 0)
 				{
+					dir = wayPoints[i].transform.position - transform.position;
+					dir = dir.normalized;
+				}
+			}
+			Debug.Log(i);
+			if(i > 1)
+			{
+				if((transform.position - wayPoints[i].transform.position).sqrMagnitude > 150.0f)
+				{
+					Debug.Log("Distance greater than 100" + (transform.position - wayPoints[i].transform.position).sqrMagnitude);
 					dir = wayPoints[i].transform.position - transform.position;
 					dir = dir.normalized;
 				}
