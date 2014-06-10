@@ -16,6 +16,7 @@ public class MoveUsingDFS : MonoBehaviour {
 	public List<GameObject> wayPoints;
 	//Stack<GameObject> stk;
 	public Transform rotateEnem;
+	public Transform rot;
 	public bool fromSpawner = false;
 	void Start () 
 	{
@@ -118,6 +119,8 @@ public class MoveUsingDFS : MonoBehaviour {
 				//Debug.Log(stop);
 				if(i >= 0)
 				{
+					rotateEnem.LookAt(wayPoints[i].transform.position);
+					rot.eulerAngles = new Vector3(rot.eulerAngles.x, rotateEnem.eulerAngles.y, rot.eulerAngles.z);
 					dir = wayPoints[i].transform.position - transform.position;
 					dir = dir.normalized;
 				}
@@ -127,6 +130,8 @@ public class MoveUsingDFS : MonoBehaviour {
 			{
 				if((transform.position - wayPoints[i].transform.position).sqrMagnitude > 150.0f)
 				{
+					rotateEnem.LookAt(wayPoints[i].transform.position);
+					rot.eulerAngles = new Vector3(rot.eulerAngles.x, rotateEnem.eulerAngles.y, rot.eulerAngles.z);
 					Debug.Log("Distance greater than 100" + (transform.position - wayPoints[i].transform.position).sqrMagnitude);
 					dir = wayPoints[i].transform.position - transform.position;
 					dir = dir.normalized;
