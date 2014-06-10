@@ -339,11 +339,13 @@ public class GUI : MonoBehaviour {
 		//GAME OVER BUTTON
 		GameObject md = GameObject.FindGameObjectWithTag ("GameController");
 		Buy_Shoot_Modes bsm = md.GetComponent<Buy_Shoot_Modes> ();
+		//towerinfo
+		GameObject tw = GameObject.FindGameObjectWithTag ("TheTower");
 		if(bsm.gameover)
 		{
-			UnityEngine.GUI.Box (new Rect(Screen.width/100*45,Screen.height/100*30, Screen.width/100*20, Screen.height/100*20), "Survived   "+
-			                     	(md.GetComponent<NewSpawnWaves>().waveCompleted)
-			                     	+ " Waves", customGUI);
+			UnityEngine.GUI.Box (new Rect(Screen.width/100*45,Screen.height/100*30, Screen.width/100*20, Screen.height/100*20), "Survived  "+
+			                     (md.GetComponent<NewSpawnWaves>().waveCompleted + " Waves" + "\n\n" + "Score: " + tw.GetComponent<TowerStats>().mScore)
+			                     	, customGUI);
 			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*(float)47.5,Screen.height/100*54,Screen.width/100*15,Screen.height/100*5), restart, customGUI))
 				Application.LoadLevel(Application.loadedLevel);
 			if(UnityEngine.GUI.Button(new Rect(Screen.width/100*(float)50.5,Screen.height/100*64,Screen.width/100*10,Screen.height/100*5), mainmenu, customGUI))

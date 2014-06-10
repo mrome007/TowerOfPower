@@ -57,7 +57,7 @@ public class EnemyStats : MonoBehaviour {
 			}
 			GameObject theTower = GameObject.FindGameObjectWithTag("TheTower");
 			TowerStats towerStats = theTower.GetComponent<TowerStats>();
-			towerStats.mScore += mScore;
+			towerStats.mScore += mResources;
 			towerStats.mResources += mResources;
 			Instantiate(enemyDummy,transform.position,transform.rotation);
 			Destroy (gameObject);
