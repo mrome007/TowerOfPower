@@ -149,6 +149,8 @@ public class TowerStats : MonoBehaviour {
 					{
 						Debug.Log("hello");
 						countUfoChild++;
+						healthGUI.GetComponent<TowerHealthBar>().health -= 5;
+						healthGUI.GetComponent<TowerHealthBar>().ChangeHealth(-1);
 					}
 				}
 				Debug.Log(countUfoChild);

@@ -414,6 +414,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 		}
 			if(Input.GetMouseButtonUp(0) && lastPlane)
 			{
+				lastPlane.renderer.enabled = false;
 				Destroy(hoverObject);
 				Debug.Log("HELLO THERE");
 				grid = lastPlane.GetComponent<GridForUnits>();
