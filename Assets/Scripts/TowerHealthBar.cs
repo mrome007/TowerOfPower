@@ -288,51 +288,51 @@ public class TowerHealthBar : MonoBehaviour {
 	void OnGUI()
 	{
 		if (Event.current.type.Equals (EventType.Repaint)) {
-			boxback = new Rect(Screen.width/100*(float)0.6,Screen.height/100*(float)3.5,Screen.width/100*(float)5.75,Screen.height/100*43);
+			boxback = new Rect(Screen.width/100*(float)2.35,Screen.height/100*(float)3,Screen.width/100*(float)5.75,Screen.height/100*43);
 			Graphics.DrawTexture(boxback, HBbackground );
 			//box = new Rect(x+5,y,75,Screen.height/2);
-			box = new Rect( Screen.width/100*(float)1, Screen.height/100*(float)1.2, Screen.width/100*5, Screen.height/100*45);
+			box = new Rect( Screen.width/100*(float)2.65, Screen.height/100*(float).7, Screen.width/100*5, Screen.height/100*45);
 			Graphics.DrawTexture(box, HBImage, mat );
 		}
 		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
 		TowerStats ts = tsg.GetComponent<TowerStats> ();
 		//health
-		UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
+		UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)2, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
 		if (curHealth >= 15) {
-			healthstat = "HP" + "#x" + ": " + "#n" + curHealth + "#x" + " / " + "#n" + maxHealth;
-						UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
-						FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+			healthstat = "HP" + "#x" + ": " + "#n" + curHealth ;
+						UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)2, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 2), "", customGUI);
+						FancyLabel (new Rect (Screen.width / 100 * (float)2.5, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.height / 100 * 3), healthstat, normal, bold, italic, TextAlignment.Left);
 				}
 		else if (curHealth >= 6 && curHealth <= 14) {
-			healthstat =  "HP" + "#x" + ": " + "#n" +"#FFDDDDFF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
+			healthstat =  "HP" + "#x" + ": " + "#n" +"#FFDDDDFF" + curHealth +"#!" ;
 			//UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 7, Screen.height / 100 * 22), "", customGUI);
-			FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 7, Screen.height / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+			FancyLabel (new Rect (Screen.width / 100 * (float)2.5, Screen.height / 100 * 48, Screen.width / 100 * 7, Screen.height / 100 * 3), healthstat, normal, bold, italic, TextAlignment.Left);
 		}
 		else if (curHealth <= 5) {
-			healthstat =  "HP" + "#x" + ": " + "#n" + "#FF6666FF" + curHealth +"#!" + "#x" + " / " + "#n" + maxHealth;
+			healthstat =  "HP" + "#x" + ": " + "#n" + "#FF6666FF" + curHealth +"#!" ;
 			//UnityEngine.GUI.Box (new Rect (Screen.width/100*(float)0.5, Screen.height /100*48, Screen.width / 100 * 8, Screen.width / 100 * 2), "", customGUI);
-			FancyLabel (new Rect (Screen.width / 100 * 1, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.width / 100 * 2), healthstat, normal, bold, italic, TextAlignment.Left);
+			FancyLabel (new Rect (Screen.width / 100 * (float)2.5, Screen.height / 100 * 48, Screen.width / 100 * 8, Screen.height / 100 * 3), healthstat, normal, bold, italic, TextAlignment.Left);
 		}
 
 
 
 
 		//stat1
-		stats1 =  ts.comboKills + " Combo" + "\n" + "Streak" + "#x" + ": " + "#n" + ts.streakNo + "x" +
-			"\n" + "Timer" + "#x" + ": " + "#n" + ts.killStreakTimer + "\n" + "Kills To Streak" + "#x" + ": " + "#n" + ts.killsToStreak 
-		                     	+ "\n" + "Reward" + "#x" + ": " + "#n" + ts.theNextStreak; 
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * (float)64.5, Screen.height/100*2,  Screen.width / 100*16, Screen.height/100*10),"" ,customGUI);
-		FancyLabel(new Rect (Screen.width / 100 * 66, Screen.height/100*(float)3.5,  Screen.width / 100*16, Screen.height/5), stats1, normal, bold, italic, TextAlignment.Left);
+		stats1 = "#F66A35FF"+ ts.comboKills +"#FFFFFFFF" + " Combo"  + "\n" + "Streak" + "#x" + ":                      " + "#n" +"#F66A35FF" + ts.streakNo  + "#FFFFFFFF"+ "x" +
+			"\n" + "Timer" + "#x" + ":                         " + "#n" +"#F66A35FF" + ts.killStreakTimer + "#FFFFFFFF" +"\n" + "Kills To Streak" + "#x" + ":       " + "#n" + "#F66A35FF" +ts.killsToStreak 
+				+ "#FFFFFFFF" +"\n" + "Reward" + "#x" + ":  " + "#n" + "#F66A35FF" +ts.theNextStreak; 
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 * (float)77, Screen.height/100*17,  Screen.width / 100*27, Screen.height/100*18),"" ,customGUI);
+		FancyLabel(new Rect (Screen.width / 100 * (float)79, Screen.height/100*(float)19.7,  Screen.width / 100*23, Screen.height/5), stats1, normal, bold, italic, TextAlignment.Left);
 
 
 
 
 
 		//stat2
-		stats2 = "Resources" + "#x" + ": " + "#n" + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
-		                     + "\n\n" + "Current Wave" + "#x" + ": " + "#n" + waveNo + "\n\n" + "Enemies Remaining" + "#x" + ": " + "#n" + numEnemies + "\n";
-		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *81, Screen.height/100*2, Screen.width / 100*17,  Screen.height/100*10),"" ,customGUI);
-		FancyLabel(new Rect (Screen.width / 100 *(float)82.5, Screen.height/100*(float)3.5, Screen.width / 100*17, Screen.height/5), stats2, normal, bold, italic, TextAlignment.Left);
+		stats2 = "Resources" + "#x" + ": " +"#F66A35FF"+ "#n" + GameObject.FindGameObjectWithTag("TheTower").GetComponent<TowerStats> ().mResources
+			+"#FFFFFFFF" + " Current Wave" + "#x" + ": " + "#n" +"#F66A35FF"+ waveNo  +"#FFFFFFFF"+ " Enemies Remaining" + "#x" + ": "+"#F66A35FF" + "#n" + numEnemies + "\n";
+		UnityEngine.GUI.Box (new Rect (Screen.width / 100 *(float)38, Screen.height/100*5, Screen.width / 100*70,  Screen.height/100*5),"" ,customGUI);
+		FancyLabel(new Rect (Screen.width / 100 *(float)43.5, Screen.height/100*(float)5.7, Screen.width / 100*60, Screen.height/5), stats2, normal, bold, italic, TextAlignment.Left);
 	}}
 
 
