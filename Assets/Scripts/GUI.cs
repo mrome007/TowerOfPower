@@ -359,11 +359,25 @@ public class GUI : MonoBehaviour {
 			nsw.advanceTheWave = true;
 		}
 		//INFO BOX
+
 		UnityEngine.GUI.Box (new Rect(Screen.width/100 * (float)0.5,Screen.height/100*72, Screen.width/100*30, Screen.height/100*22),"" ,customGUI);
+		GameObject tgc = GameObject.FindGameObjectWithTag ("GameController");
+		Buy_Shoot_Modes ws = tgc.GetComponent<Buy_Shoot_Modes>();
+		float towerDamage = ws.towerWeapons[ws.theTowerWeapon].GetComponent<TowerAmmoStats>().mDamage;
+		string towerType = "";
+		if(ws.theTowerWeapon == 0)
+			towerType = "Standard" ;
+		else
+			towerType = "Splash" ;
+		GameObject tsg = GameObject.FindGameObjectWithTag ("TheTower");
+		TowerStats tss = tsg.GetComponent<TowerStats> ();
+
 		switch (whichinfo) {
 		case 0: //default tower stats
+
+
 			theinfo = "" + "Tower Stats" + "\n\n"
-				+ "Click and hold to aim." + "\n" + "Drag to change distance." +"\n" +"Release to fire." + "\n" ;
+				+ "Damage" + "#x" + ": " + "#n" + towerDamage * ws.GetComponent<Buy_Shoot_Modes>().upgradeTowerMult+ "\n" + "Type" + "#x" + ": " + "#n" + towerType + "\n" + "Fire Rate" + "#x" + ": " + "#n" + tw.GetComponent<TowerStats>().mFireRate + "\n";
 			//UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), ""  ,customGUI);
 			//FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, Screen.width/100*20, Screen.height/100*10), theinfo, normal, bold, italic, TextAlignment.Left);
 
@@ -380,9 +394,9 @@ public class GUI : MonoBehaviour {
 			//FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 2:	//Shoot mode default cannon
-			theinfo = ""  + "\n\n\n"+"       Shoot Mode" + "#x" + ": " + "#n"  + "Cannon" + "\n\n"
-					 ;
-		//	UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), ""  ,customGUI);
+			theinfo = "" + "Tower Stats" + "\n\n"
+				+ "Damage" + "#x" + ": " + "#n" + towerDamage * ws.GetComponent<Buy_Shoot_Modes>().upgradeTowerMult+ "\n" + "Type" + "#x" + ": " + "#n" + towerType + "\n" + "Fire Rate" + "#x" + ": " + "#n" + tw.GetComponent<TowerStats>().mFireRate + "\n";
+			//	UnityEngine.GUI.Box (new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), ""  ,customGUI);
 			//FancyLabel( new Rect(Screen.width/100 * 2,Screen.height/100*75, 200, 100), theinfo, normal, bold, italic, TextAlignment.Left);
 			break;
 		case 3:	//Buy mode wall
