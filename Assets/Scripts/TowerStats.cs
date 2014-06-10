@@ -43,7 +43,7 @@ public class TowerStats : MonoBehaviour {
 		killStreakTimer = 20.0f;
 		theStreakTimer = killStreakTimer;
 		currCombo = comboKills;
-		theNextStreak = "Fire Rate Increase";
+		theNextStreak = "Fire Rate UP";
 		streakTimerIncr = 2.0f;
 		streakNoIncr = 2;
 		selectTower = 0;
@@ -190,7 +190,7 @@ public class TowerStats : MonoBehaviour {
 			{
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
-			theNextStreak = "SPREADSHOT";
+			theNextStreak = "Triple Shot";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			selectTower++;
@@ -203,7 +203,7 @@ public class TowerStats : MonoBehaviour {
 			{
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
-			theNextStreak = "Fire Rate Increase";
+			theNextStreak = "Fire Rate UP";
 			bsm.numShots = 3;
 			//bsm.multiShot = true;
 			selectTower++;
@@ -217,7 +217,7 @@ public class TowerStats : MonoBehaviour {
 				f.GetComponent<upgradeCannons>().timeToUpgrade = true;
 			}
 			selectTower++;
-			theNextStreak = "MULTISHOT";
+			theNextStreak = "Burst Shot";
 			if((mFireRate - 0.1f) > 0.0f)
 				mFireRate -= 0.1f;
 			break;
@@ -233,7 +233,7 @@ public class TowerStats : MonoBehaviour {
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
-			theNextStreak = "Grenade";
+			theNextStreak = "Splash DMG";
 			bsm.numShots = 1;
 			//bsm.theTowerWeapon = 1;
 			bsm.multiShot = true;
@@ -246,7 +246,7 @@ public class TowerStats : MonoBehaviour {
 			selectTower++;
 			//GameObject go = GameObject.FindGameObjectWithTag("GameController");
 			//Buy_Shoot_Modes bsm = go.GetComponent<Buy_Shoot_Modes>();
-			theNextStreak = "Spread Grenade";
+			theNextStreak = "Triple Splash";
 			bsm.theTowerWeapon = 1;
 			bsm.multiShot = false;
 			break;
@@ -255,12 +255,12 @@ public class TowerStats : MonoBehaviour {
 			//towerType = (GameObject)Instantiate(towers[selectTower], new Vector3(-63.0f,36.0f,3.0f),
 			  //                                  Quaternion.identity);
 			selectTower++;
-			theNextStreak = "Radius Increase";
+			theNextStreak = "Radius UP";
 			//bsm.theRadiusMult += 1.0f;
 			bsm.numShots = 3;
 			break;
 		case 8:
-			theNextStreak = "Multi Grenade";
+			theNextStreak = "Burst Splash";
 			bsm.theRadiusMult += 1.0f;
 			break;
 		case 9:
