@@ -45,6 +45,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 
 	public GameObject[] dummyWeapons;
 
+	public Material mTargetMaterial;
 	private GameObject mTargetLocation;
 	private GameObject mTargetPole;
 	private GameObject mTargetLine;
@@ -654,6 +655,7 @@ public class Buy_Shoot_Modes : MonoBehaviour {
 				Destroy (mTargetPole);
 				Destroy (mTargetLine);
 				mTargetLocation = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				mTargetLocation.renderer.material = mTargetMaterial;
 	//			mTargetPole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 				mTargetLine = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 				Destroy(mTargetLine.collider);
