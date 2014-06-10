@@ -234,7 +234,14 @@ public class NewSpawnWaves : MonoBehaviour {
 		yield return new WaitForSeconds (startWait);
 		waveDur -= startWait;
 		waveDur -= Time.deltaTime;
-		int selectEnemy = Random.Range (0, enemy.Length);
+		int selectEnemy = 0;
+		if(waveNo < 5){
+
+			selectEnemy = Random.Range(0,enemy.Length-2);
+		}
+		else{
+		 	selectEnemy = Random.Range (0, enemy.Length);
+		}
 		while(waveDur >= 0)
 		{
 			Debug.Log("WAVE ACTIVE: " + waveDur + "WAVE DURATION: " + waveDuration);
@@ -302,7 +309,14 @@ public class NewSpawnWaves : MonoBehaviour {
 			for(int i = 0; i < enemyCount; i++)
 			{
 				numEnemiesRemaining++;
-				int selectEnemy = Random.Range (0, outEnemy.Length);
+				int selectEnemy = 0;
+				if(waveNo < 5){
+					
+					selectEnemy = Random.Range(0,enemy.Length-2);
+				}
+				else{
+					selectEnemy = Random.Range (0, enemy.Length);
+				}
 				GameObject eO;
 				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,45.0f),Quaternion.identity);
@@ -371,7 +385,14 @@ public class NewSpawnWaves : MonoBehaviour {
 		yield return new WaitForSeconds (startWait);
 		waveDur -= startWait;
 		waveDur -= Time.deltaTime;
-		int selectEnemy = Random.Range (0, outEnemy.Length);
+		int selectEnemy = 0;
+		if(waveNo < 5){
+			
+			selectEnemy = Random.Range(0,enemy.Length-2);
+		}
+		else{
+			selectEnemy = Random.Range (0, enemy.Length);
+		}
 		while(waveDur >= 0)
 		{
 			yield return new WaitForSeconds(waveWaitTime);
@@ -462,7 +483,14 @@ public class NewSpawnWaves : MonoBehaviour {
 			for(int i = 0; i < enemyCount; i++)
 			{
 				numEnemiesRemaining++;
-				int selectEnemy = Random.Range (0, outEnemy.Length);
+				int selectEnemy = 0;
+				if(waveNo < 5){
+					
+					selectEnemy = Random.Range(0,enemy.Length-2);
+				}
+				else{
+					selectEnemy = Random.Range (0, enemy.Length);
+				}
 				GameObject eO;
 				if(selectEnemy < outEnemy.Length-2)
 					eO = (GameObject)Instantiate(outEnemy[selectEnemy], new Vector3(95.0f,0.0f,-45.0f),Quaternion.identity);
