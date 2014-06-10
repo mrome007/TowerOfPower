@@ -20,6 +20,6 @@ function OnMouseExit () {
 
 function OnMouseDown () {
 
-	//load tutorial scene
+	Application.LoadLevel("TheGameNoRedHalf");
 
 }
