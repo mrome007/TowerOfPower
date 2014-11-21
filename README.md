@@ -1,4 +1,6 @@
-cs179ProjectVer1
+Tower of Power
 ================
+Youtube Link:
+http://youtu.be/9YxQJPYp5oU
 
-basic gameplay of tower of power
+Tower Defense Game where the tower can go on the Offense.
